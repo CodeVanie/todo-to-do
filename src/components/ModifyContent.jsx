@@ -40,13 +40,14 @@ function ModifyContent({ tasks, categories, sortTypes, onDeleteTask, onDeleteCat
                 <div ref={scrollRef} className="page-modify-sheets">
                     <div className="page-modify-sheet">
                         <div className="page-modify-sheet-actionbar">
-                            <div className='page-modify-sheet-actionbar-action right-0 h-20 border-red-700' onClick={() => onDeleteCateg(handleDeleteChange(selectedItems, categories))}>
+                            <div className='page-modify-sheet-actionbar-delete' 
+                                 onClick={() => onDeleteCateg(handleDeleteChange(selectedItems, categories))}>
                                 <img src={deletelogo} alt="" className='w-6 h-7'/>
                             </div>
-                            <div className='page-modify-sheet-actionbar-action h-15 right-2 border-purple-700'>
+                            <div className='page-modify-sheet-actionbar-edit'>
                                 <img src={editlogo} alt="" className='w-6 h-7'/>
                             </div>
-                            <div className='page-modify-sheet-actionbar-action h-15 right-0 mr-24 border-blue-700'>
+                            <div className='page-modify-sheet-actionbar-add'>
                                 <img src={addlogo} alt="" className='w-7 h-7'/>
                             </div>
                         </div>
@@ -64,13 +65,14 @@ function ModifyContent({ tasks, categories, sortTypes, onDeleteTask, onDeleteCat
                     </div>
                     <div className="page-modify-sheet">
                         <div className="page-modify-sheet-actionbar">
-                            <div className='page-modify-sheet-actionbar-action right-0 h-20 border-red-700' onClick={() => onDeleteTask(handleDeleteChange(selectedItems, tasks))}>
+                            <div className='page-modify-sheet-actionbar-delete' 
+                                 onClick={() => onDeleteTask(handleDeleteChange(selectedItems, tasks))}>
                                 <img src={deletelogo} alt="" className='w-6 h-7'/>
                             </div>
-                            <div className='page-modify-sheet-actionbar-action h-15 right-2 border-purple-700'>
+                            <div className='page-modify-sheet-actionbar-edit'>
                                 <img src={editlogo} alt="" className='w-6 h-7'/>
                             </div>
-                            <div className='page-modify-sheet-actionbar-action h-15 right-0 mr-24 border-blue-700'>
+                            <div className='page-modify-sheet-actionbar-add'>
                                 <img src={addlogo} alt="" className='w-7 h-7'/>
                             </div>
                         </div>
@@ -92,13 +94,13 @@ function ModifyContent({ tasks, categories, sortTypes, onDeleteTask, onDeleteCat
                     </div>
                     <div className="page-modify-sheet">
                         <div className="page-modify-sheet-actionbar">
-                            <div className='page-modify-sheet-actionbar-action right-0 h-20 border-red-700'>
+                            <div className='page-modify-sheet-actionbar-delete'>
                                 <img src={deletelogo} alt="" className='w-6 h-7'/>
                             </div>
-                            <div className='page-modify-sheet-actionbar-action h-15 right-2 border-purple-700'>
+                            <div className='page-modify-sheet-actionbar-edit'>
                                 <img src={editlogo} alt="" className='w-6 h-7'/>
                             </div>
-                            <div className='page-modify-sheet-actionbar-action h-15 right-0 mr-24 border-blue-700'>
+                            <div className='page-modify-sheet-actionbar-add'>
                                 <img src={addlogo} alt="" className='w-7 h-7'/>
                             </div>
                         </div>

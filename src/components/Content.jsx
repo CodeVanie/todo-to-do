@@ -13,12 +13,12 @@ function Content({ selectedPage, tasks, categories, sortTypes, onDeleteTask, onD
                                     categories={categories} sortTypes={sortTypes}/>}
                 {selectedPage === "aboutme" && <AboutContent />}
                 {selectedPage === "projects" && <ProjectsContent />}
-                {selectedPage === "extra1" && <ModifyContent tasks={tasks} 
+                {selectedPage === "modify" && <ModifyContent tasks={tasks} 
                                     categories={categories} 
                                     sortTypes={sortTypes} 
                                     onDeleteTask={onDeleteTask}
                                     onDeleteCateg={onDeleteCateg}/>}
-                {selectedPage === "extra2" && <Profile />}
+                {selectedPage === "profile" && <Profile />}
             </div>
         </>
     )

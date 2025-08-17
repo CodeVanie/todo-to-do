@@ -32,8 +32,8 @@ function Header({ currentPage, onNavBarClick }) {
                     <li id='aboutme' onClick={() => onNavBarClick("aboutme")}><img src={aboutme} alt="aboutme" /></li> {/* About Me */}
                     <li id='projects' onClick={() => onNavBarClick("projects")}><img src={projects} alt="projects" /></li> {/* Projects */}
                     <li id='home' onClick={() => onNavBarClick("home")}><img src={home} alt="home" /></li> {/* Home */}
-                    <li id='extra1' onClick={() => onNavBarClick("extra1")}><img src={modify} alt="extra1" /></li> {/* Extra1 */}
-                    <li id='profile' onClick={() => onNavBarClick("profile")}><img src={profile} alt="extra2" /></li> {/* Profile */}
+                    <li id='modify' onClick={() => onNavBarClick("modify")}><img src={modify} alt="modify" /></li> {/* Modify */}
+                    <li id='profile' onClick={() => onNavBarClick("profile")}><img src={profile} alt="profile" /></li> {/* Profile */}
                 </ul>
             </div>
         </>

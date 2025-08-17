@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import TaskItem from "./TaskItem";
 
 function HomeContent({ tasks, categories, sortTypes }) {
 
@@ -90,14 +91,9 @@ function HomeContent({ tasks, categories, sortTypes }) {
             <div className="page-home-list">
                 <ol>
                     {taskList.map((task, index) => 
-                        <li key={index}>
-                            <span>{task.text}</span>
-                            <div className="flex w-3/4 h-5 text-sm rounded-t-2xl bg-yellow-600/75 p-1 justify-around items-center gap-x-1">
-                                <div>{task.prirty}</div>
-                                <div>{task.category}</div>
-                                <div>{task.duedate}</div>
-                            </div>
-                        </li>)}
+                        <TaskItem key={index} task={task} 
+                        className="w-3/4 h-5 text-sm rounded-t-2xl bg-yellow-600/75 p-1 justify-around gap-x-1"/>
+                    )}
                 </ol>
             </div>
         </div>

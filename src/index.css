@@ -34,7 +34,7 @@ body {
 /* HEADER */
 
 .main-header {
-  @apply flex flex-col h-35 w-full bg-blue-200 justify-between p-2; 
+  @apply flex flex-col h-33 w-full bg-blue-200 justify-between p-1;
 }
 .main-header-top {
   @apply flex w-full h-full items-center font-bold justify-between text-yellow-700;
@@ -94,7 +94,7 @@ body {
   @apply flex shrink-0 justify-center items-center h-9 rounded-2xl cursor-pointer flex-1;
 }
 .page-home-list {
-  @apply flex bg-amber-50/70 h-[61vh] rounded-4xl mt-2 overflow-hidden;
+  @apply flex bg-amber-50/70 h-[62vh] rounded-4xl mt-2 overflow-hidden;
 }
 .page-home-list ol {
   @apply flex flex-col w-full overflow-y-auto p-3 gap-y-2;
@@ -112,13 +112,19 @@ body {
   @apply flex gap-x-4 w-full overflow-x-auto snap-x snap-mandatory px-10 py-5;
 }
 .page-modify-sheet {
-  @apply flex flex-col shrink-0 w-full h-[72vh] rounded-3xl snap-center relative;
+  @apply flex flex-col shrink-0 w-full h-[73vh] rounded-3xl snap-center relative;
 }
 .page-modify-sheet-actionbar {
   @apply flex flex-row-reverse justify-center w-full h-10;
 }
-.page-modify-sheet-actionbar-action {
-  @apply flex justify-center items-start relative pt-2 w-10 top-0 z-0 bg-yellow-200/75 rounded-3xl border-2;
+.page-modify-sheet-actionbar-delete {
+  @apply flex justify-center items-start relative pt-2 w-10 top-0 z-0 bg-yellow-200/75 rounded-3xl border-2 h-20 right-0 border-red-700;
+}
+.page-modify-sheet-actionbar-edit {
+  @apply flex justify-center items-start relative pt-2 w-10 top-0 z-0 bg-yellow-200/75 rounded-3xl border-2 h-15 right-2 border-purple-700;
+}
+.page-modify-sheet-actionbar-add {
+  @apply flex justify-center items-start relative pt-2 w-10 top-0 z-0 bg-yellow-200/75 rounded-3xl border-2 h-15 right-0 mr-24 border-blue-700;
 }
 .page-modify-sheet h1 {
   @apply flex text-center border border-black rounded-t-3xl h-10 justify-center items-center font-bold flex-shrink-0 text-white relative;
