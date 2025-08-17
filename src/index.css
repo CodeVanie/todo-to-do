@@ -1,0 +1,134 @@
+/* IMPORTS */
+
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Libertinus Sans";
+  src: url("/src/assets/fonts/LibertinusSans-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Libertinus Sans";
+  src: url("/src/assets/fonts/LibertinusSans-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Libertinus Sans";
+  src: url("/src/assets/fonts/LibertinusSans-Italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+}
+@theme {
+  --font-quicks: "Quicksand", sans-serif;
+}
+
+/* GLOBAL */
+
+body {
+  @apply bg-[url(assets/images/content-bg.jpg)] bg-center bg-no-repeat bg-cover bg-fixed font-quicks min-w-[360px] min-h-[640px];
+}
+
+/* HEADER */
+
+.main-header {
+  @apply flex flex-col h-35 w-full bg-blue-200 justify-between p-2; 
+}
+.main-header-top {
+  @apply flex w-full h-full items-center font-bold justify-between text-yellow-700;
+}
+.main-header-top-logo {
+  @apply flex w-36 shrink-0 items-center;
+}
+.main-header-top-logo img {
+  @apply w-15 h-15 mt-1; 
+}
+.main-header-top-logo h1 {
+  @apply text-2xl; 
+}
+.main-header-top a {
+  @apply underline w-44 text-end shrink-0;
+}
+.main-header-nav-bar {
+  @apply flex flex-row justify-evenly;
+}
+.main-header-nav-bar li {
+  @apply flex flex-1 w-20 h-10 justify-center items-center rounded-lg border-x-1 border-yellow-700/75;
+}
+.main-header-nav-bar li img {
+  @apply h-6 w-6;
+}
+
+/* ABOUT */
+
+.page-about {
+  @apply flex flex-col p-3;
+}
+.page-about-header {
+  @apply flex text-2xl font-bold pb-3 text-yellow-700 justify-center;
+}
+.page-about p {
+  @apply text-yellow-700 text-justify indent-7 font-semibold;
+}
+
+/* HOME */
+
+.page-home {
+  @apply flex flex-col p-3;
+}
+.page-home-controls {
+  @apply flex w-full h-20 bg-amber-400/70 rounded-2xl justify-between gap-x-3 overflow-x-auto snap-x snap-mandatory;
+}
+.page-home-control {
+  @apply flex flex-col shrink-0 h-full w-full snap-center justify-evenly;
+}
+.page-home-control h3 {
+  @apply self-center;
+}
+.page-home-control ol {
+  @apply flex flex-row flex-wrap w-full p-2 gap-2 overflow-y-auto snap-proximity;
+}
+.page-home-control ol li {
+  @apply flex shrink-0 justify-center items-center h-9 rounded-2xl cursor-pointer flex-1;
+}
+.page-home-list {
+  @apply flex bg-amber-50/70 h-[61vh] rounded-4xl mt-2 overflow-hidden;
+}
+.page-home-list ol {
+  @apply flex flex-col w-full overflow-y-auto p-3 gap-y-2;
+}
+.page-home-list ol li {
+  @apply flex flex-col shrink-0 justify-between items-center w-full h-14 bg-yellow-500/50 font-bold text-2xl rounded-3xl;
+}
+
+/* MODIFY */
+
+.page-modify {
+  @apply flex flex-col;
+}
+.page-modify-sheets {
+  @apply flex gap-x-4 w-full overflow-x-auto snap-x snap-mandatory px-10 py-5;
+}
+.page-modify-sheet {
+  @apply flex flex-col shrink-0 w-full h-[72vh] rounded-3xl snap-center relative;
+}
+.page-modify-sheet-actionbar {
+  @apply flex flex-row-reverse justify-center w-full h-10;
+}
+.page-modify-sheet-actionbar-action {
+  @apply flex justify-center items-start relative pt-2 w-10 top-0 z-0 bg-yellow-200/75 rounded-3xl border-2;
+}
+.page-modify-sheet h1 {
+  @apply flex text-center border border-black rounded-t-3xl h-10 justify-center items-center font-bold flex-shrink-0 text-white relative;
+}
+.page-modify-sheet-list {
+  @apply flex w-full h-full border rounded-b-3xl bg-white justify-center overflow-hidden;
+}
+.page-modify-sheet-list ol {
+  @apply flex flex-col w-full overflow-y-auto;
+}
+.page-modify-sheet-list ol li {
+  @apply flex w-full shrink-0 flex-col justify-around items-center h-18 font-bold border-b-3 border-b-gray-400/75 text-2xl;
+}
