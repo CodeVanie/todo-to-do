@@ -1,9 +1,5 @@
-import aboutme from '../assets/images/about-logo.png'
-import projects from '../assets/images/projects-logo.png'
-import home from '../assets/images/home-logo.png'
-import modify from '../assets/images/modify-logo.png'
+import { aboutme, projects, home, modify, profile } from '../assets/images/nav-logos.js'
 import header from '../assets/images/todotodologo.png'
-import profile from '../assets/images/profile-logo.png'
 import React, { useEffect } from 'react'
 
 function Header({ currentPage, onNavBarClick }) {
@@ -20,22 +16,24 @@ function Header({ currentPage, onNavBarClick }) {
 
     return (
         <>
-            <div className="main-header">
-                <div className='main-header-top'>
-                    <div className='main-header-top-logo'>
-                        <img src={header} alt="header" />
-                        <h1>To-Do TODO</h1>
+            <header className="main-header">
+                <nav>
+                    <div className='main-header-top'>
+                        <div className='main-header-top-logo'>
+                            <img src={header} alt="header" />
+                            <h1>To-Do TODO</h1>
+                        </div>
+                        <a href="">← Go back to CodeVANIE's Portfolio</a>
                     </div>
-                    <a href="">← Go back to CodeVANIE's Portfolio</a>
-                </div>
-                <ul className="main-header-nav-bar">
-                    <li id='aboutme' onClick={() => onNavBarClick("aboutme")}><img src={aboutme} alt="aboutme" /></li> {/* About Me */}
-                    <li id='projects' onClick={() => onNavBarClick("projects")}><img src={projects} alt="projects" /></li> {/* Projects */}
-                    <li id='home' onClick={() => onNavBarClick("home")}><img src={home} alt="home" /></li> {/* Home */}
-                    <li id='modify' onClick={() => onNavBarClick("modify")}><img src={modify} alt="modify" /></li> {/* Modify */}
-                    <li id='profile' onClick={() => onNavBarClick("profile")}><img src={profile} alt="profile" /></li> {/* Profile */}
-                </ul>
-            </div>
+                    <ul className="main-header-nav-bar">
+                        <li id='aboutme' onClick={() => onNavBarClick("aboutme")}><img src={aboutme} alt="aboutme" /></li> {/* About Me */}
+                        <li id='projects' onClick={() => onNavBarClick("projects")}><img src={projects} alt="projects" /></li> {/* Projects */}
+                        <li id='home' onClick={() => onNavBarClick("home")}><img src={home} alt="home" /></li> {/* Home */}
+                        <li id='modify' onClick={() => onNavBarClick("modify")}><img src={modify} alt="modify" /></li> {/* Modify */}
+                        <li id='profile' onClick={() => onNavBarClick("profile")}><img src={profile} alt="profile" /></li> {/* Profile */}
+                    </ul>
+                </nav>
+            </header>
         </>
     );
 }

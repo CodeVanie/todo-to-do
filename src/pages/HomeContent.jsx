@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import TaskItem from "./TaskItem";
+import TaskItem from "../components/TaskItem";
 
 function HomeContent({ tasks, categories, sortTypes }) {
 

@@ -1,14 +1,14 @@
-import AboutContent from "./AboutContent"
-import ModifyContent from "./ModifyContent"
-import Profile from "./Profile"
-import HomeContent from "./HomeContent"
-import ProjectsContent from "./ProjectsContent"
+import AboutContent from "../pages/AboutContent"
+import ModifyContent from "../pages/ModifyContent"
+import ProfileContent from "../pages/ProfileContent"
+import HomeContent from "../pages/HomeContent"
+import ProjectsContent from "../pages/ProjectsContent"
 
 function Content({ selectedPage, tasks, categories, sortTypes, onDeleteTask, onDeleteCateg }) {
 
     return (
         <>
-            <div className="border border-yellow-700 w-full h-full">
+            <main className="border border-yellow-700 w-full h-full">
                 {selectedPage === "home" && <HomeContent tasks={tasks} 
                                     categories={categories} sortTypes={sortTypes}/>}
                 {selectedPage === "aboutme" && <AboutContent />}
@@ -18,8 +18,8 @@ function Content({ selectedPage, tasks, categories, sortTypes, onDeleteTask, onD
                                     sortTypes={sortTypes} 
                                     onDeleteTask={onDeleteTask}
                                     onDeleteCateg={onDeleteCateg}/>}
-                {selectedPage === "profile" && <Profile />}
-            </div>
+                {selectedPage === "profile" && <ProfileContent />}
+            </main>
         </>
     )
 }

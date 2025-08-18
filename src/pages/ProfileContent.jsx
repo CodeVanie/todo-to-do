@@ -1,5 +1,5 @@
 
-function Profile() {
+function ProfileContent() {
     return (
         <>
             <h1 className="page-header">Profile</h1>
@@ -7,4 +7,4 @@ function Profile() {
     )
 }
 
-export default Profile
+export default ProfileContent

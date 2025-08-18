@@ -1,7 +1,5 @@
 import { useState } from "react"
-import Content from "./components/Content"
-import Header from "./components/Header"
-import Footer from "./components/Footer";
+import { Header, Content, Footer } from "./components/body.js"
 
 function App() {
 
@@ -90,16 +88,14 @@ function App() {
 
   return (
     <>
-      <div className="flex flex-col">
-        <header><Header currentPage={selectedPage} onNavBarClick={setSelectedPage}/></header>
-        <main><Content selectedPage={selectedPage} 
+        <Header currentPage={selectedPage} onNavBarClick={setSelectedPage}/>
+        <Content selectedPage={selectedPage} 
                        tasks={tasks} 
                        categories={categories} 
                        sortTypes={sortTypes}
                        onDeleteTask={setTasks}
-                       onDeleteCateg={setCategories}/></main>
+                       onDeleteCateg={setCategories}/>
         <Footer />
-      </div>
     </>
   )
 }
