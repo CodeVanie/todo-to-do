@@ -51,12 +51,12 @@ function ModifyContent({ tasks, categories, sortTypes, onDeleteTask, onDeleteCat
                                 <img src={addlogo} alt="" className='w-7 h-7'/>
                             </div>
                         </div>
-                        <h1 className="bg-green-500 text-white">Edit Category List</h1>
+                        <h1>Edit Category List</h1>
                         <div className="page-modify-sheet-list">
                             <ol>
                                 {categories.map((category, index) => 
                                     <li key={index} onClick={() => handleSelectedItems(category.id)}
-                                        className={selectedItems.has(category.id) ? 'bg-orange-200' : 'bg-white'}
+                                        className={selectedItems.has(category.id) ? 'bg-orange-200' : 'bg-ptlbrown-100'}
                                     >
                                         <div>{category.text}</div>
                                     </li>)}
@@ -76,12 +76,12 @@ function ModifyContent({ tasks, categories, sortTypes, onDeleteTask, onDeleteCat
                                 <img src={addlogo} alt="" className='w-7 h-7'/>
                             </div>
                         </div>
-                        <h1 className="bg-blue-500">Edit To-Do List</h1>
+                        <h1>Edit To-Do List</h1>
                         <div className="page-modify-sheet-list">
                             <ol>
                                 {tasks.map((task, index) => 
                                     <li key={index} onClick={() => handleSelectedItems(task.id)}
-                                        className={selectedItems.has(task.id) ? 'bg-orange-200' : 'bg-white'}>
+                                        className={selectedItems.has(task.id) ? 'bg-orange-200' : 'bg-ptlbrown-100'}>
                                             <h2>{task.text}</h2>
                                             <div className="flex text-sm justify-center items-center gap-x-4 w-full text-yellow-700">
                                                 <div>{task.prirty}</div>
@@ -104,12 +104,12 @@ function ModifyContent({ tasks, categories, sortTypes, onDeleteTask, onDeleteCat
                                 <img src={addlogo} alt="" className='w-7 h-7'/>
                             </div>
                         </div>
-                        <h1 className="bg-red-500 text-white">Edit Sort List</h1>
+                        <h1>Edit Sort List</h1>
                         <div className="page-modify-sheet-list">
                             <ol>
                                 {sortTypes.map((sort, index) => 
                                     <li key={index} onClick={() => handleSelectedItems(sort.id)}
-                                        className={selectedItems.has(sort.id) ? 'bg-orange-200' : 'bg-white'}>
+                                        className={selectedItems.has(sort.id) ? 'bg-orange-200' : 'bg-ptlbrown-100'}>
                                         <div>{sort.text}</div>
                                     </li>)}
                             </ol>

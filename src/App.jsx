@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Header, Content, Footer } from "./components/body.js"
 
 function App() {
@@ -30,7 +30,7 @@ function App() {
           }, 
           {
               id: "s_3",
-              text: "Alphabetical"
+              text: "Letters"
           }];
   const now = new Date();
   const shortDateTime = now.toLocaleString('en-US', { dateStyle: 'short', timeStyle: 'short' });
@@ -86,17 +86,22 @@ function App() {
               duedate: shortDateTime
           }]);
 
+    var headFootBG = selectedPage === "modify" ? "bg-[url(/images/content-bg.jpg)] text-yellow-900" : 
+                                                 "bg-[url(/images/header-bg.jpg)] bg-cover text-ptlbrown-100";
+
   return (
-    <>
-        <Header currentPage={selectedPage} onNavBarClick={setSelectedPage}/>
+    <div className="main-app">
+        <Header currentPage={selectedPage} 
+                onNavBarClick={setSelectedPage} 
+                bgImage={headFootBG}/>
         <Content selectedPage={selectedPage} 
                        tasks={tasks} 
                        categories={categories} 
                        sortTypes={sortTypes}
                        onDeleteTask={setTasks}
                        onDeleteCateg={setCategories}/>
-        <Footer />
-    </>
+        <Footer bgImage={headFootBG}/>
+    </div>
   )
 }
 

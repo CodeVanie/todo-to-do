@@ -73,8 +73,8 @@ function HomeContent({ tasks, categories, sortTypes }) {
                     <h3>Sort By</h3>
                     <ol>
                         {sortTypes.map((sort, index) => 
-                            <li key={index} className="bg-red-500 hover:bg-red-700">
-                                <div className="text-white font-bold">{sort.text}</div>
+                            <li key={index}>
+                                {sort.text}
                             </li>)}
                     </ol>
                 </div>
@@ -82,8 +82,8 @@ function HomeContent({ tasks, categories, sortTypes }) {
                     <h3>Filter By</h3>
                     <ol>
                         {categories.map((category, index) => 
-                            <li key={index} className="bg-green-500 hover:bg-green-700" onClick={() => handleFiltering(category)}>
-                                <div className="text-white font-bold">{category.text}</div>
+                            <li key={index} onClick={() => handleFiltering(category)}>
+                                {category.text}
                             </li>)}
                     </ol>
                 </div>
@@ -92,7 +92,7 @@ function HomeContent({ tasks, categories, sortTypes }) {
                 <ol>
                     {taskList.map((task, index) => 
                         <TaskItem key={index} task={task} 
-                        className="w-3/4 h-5 text-sm rounded-t-2xl bg-yellow-600/75 p-1 justify-around gap-x-1"/>
+                        className="w-3/4 h-5 text-sm rounded-t-2xl bg-yellow-900/75 p-1 justify-around gap-x-1 border border-ptlbrown-100"/>
                     )}
                 </ol>
             </div>

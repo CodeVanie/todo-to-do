@@ -1,22 +1,26 @@
-import { aboutme, projects, home, modify, profile } from '../assets/images/nav-logos.js'
+import { aboutme, projects, home, modify, profile, aboutmed, projectsd, homed, modifyd, profiled } from '../assets/images/nav-logos.js'
 import header from '../assets/images/todotodologo.png'
 import React, { useEffect } from 'react'
 
-function Header({ currentPage, onNavBarClick }) {
+function Header({ currentPage, onNavBarClick, bgImage }) {
 
+    var [aboutmeLogo, projectsLogo, homeLogo, modifyLogo, profileLogo] = 
+    currentPage === "modify" ? [aboutmed, projectsd, homed, modifyd, profiled] : 
+                               [aboutme, projects, home, modify, profile];
     // Add a style for a selected page everytime this component mounts and the currentPage value changes.
     useEffect(() => {
         var pageId = "#" + currentPage;
-        document.querySelector(pageId).classList.add("border-b-4")
+        currentPage === "modify" ? document.querySelector(pageId).classList.add("border-b", "text-red-950") :
+                                   document.querySelector(pageId).classList.add("border-b", "text-ptlbrown-300")
 
         return () => {
-            document.querySelector(pageId).classList.remove("border-b-4")
+            currentPage === "modify" ? document.querySelector(pageId).classList.remove("border-b", "text-red-950") :
+                                   document.querySelector(pageId).classList.remove("border-b", "text-ptlbrown-300")
         }
     }, [currentPage])
 
     return (
-        <>
-            <header className="main-header">
+            <header className={`main-header ${bgImage}`}>
                 <nav>
                     <div className='main-header-top'>
                         <div className='main-header-top-logo'>
@@ -26,15 +30,14 @@ function Header({ currentPage, onNavBarClick }) {
                         <a href="">← Go back to CodeVANIE's Portfolio</a>
                     </div>
                     <ul className="main-header-nav-bar">
-                        <li id='aboutme' onClick={() => onNavBarClick("aboutme")}><img src={aboutme} alt="aboutme" /></li> {/* About Me */}
-                        <li id='projects' onClick={() => onNavBarClick("projects")}><img src={projects} alt="projects" /></li> {/* Projects */}
-                        <li id='home' onClick={() => onNavBarClick("home")}><img src={home} alt="home" /></li> {/* Home */}
-                        <li id='modify' onClick={() => onNavBarClick("modify")}><img src={modify} alt="modify" /></li> {/* Modify */}
-                        <li id='profile' onClick={() => onNavBarClick("profile")}><img src={profile} alt="profile" /></li> {/* Profile */}
+                        <li id='aboutme' onClick={() => onNavBarClick("aboutme")}><img src={aboutmeLogo} alt="aboutme" /></li> {/* About Me */}
+                        <li id='projects' onClick={() => onNavBarClick("projects")}><img src={projectsLogo} alt="projects" /></li> {/* Projects */}
+                        <li id='home' onClick={() => onNavBarClick("home")}><img src={homeLogo} alt="home" /></li> {/* Home */}
+                        <li id='modify' onClick={() => onNavBarClick("modify")}><img src={modifyLogo} alt="modify" /></li> {/* Modify */}
+                        <li id='profile' onClick={() => onNavBarClick("profile")}><img src={profileLogo} alt="profile" /></li> {/* Profile */}
                     </ul>
                 </nav>
             </header>
-        </>
     );
 }
 

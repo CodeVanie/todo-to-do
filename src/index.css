@@ -22,24 +22,30 @@
 }
 @theme {
   --font-quicks: "Quicksand", sans-serif;
+  --color-ptlbrown-100: #e7b574;
+  --color-ptlbrown-200: #d7a460;
+  --color-ptlbrown-300: #c48f4a;
 }
 
 /* GLOBAL */
 
 body {
-  @apply bg-[url(assets/images/content-bg.jpg)] bg-center bg-no-repeat bg-cover bg-fixed font-quicks min-w-[360px] min-h-screen flex flex-col;
+  @apply bg-[url(/images/content-bg.jpg)] bg-center bg-no-repeat bg-cover bg-fixed font-quicks min-w-[360px] transition duration-300 ease-in;
+}
+.main-app {
+  @apply flex flex-col min-h-screen;
 }
 
 /* HEADER */
 
 .main-header {
-  @apply w-full bg-blue-200 p-3;
+  @apply w-full bg-center p-3 transition duration-300 ease-in;
 }
 .main-header nav {
   @apply flex flex-col justify-around;
 }
 .main-header-top {
-  @apply flex w-full items-center font-bold justify-between text-yellow-700 mb-2;
+  @apply flex w-full font-bold items-center justify-between mb-2;
 }
 .main-header-top-logo {
   @apply flex w-36 shrink-0 items-center;
@@ -57,7 +63,7 @@ body {
   @apply flex flex-row justify-evenly;
 }
 .main-header-nav-bar li {
-  @apply flex flex-1 w-20 h-10 justify-center items-center rounded-lg border-x-1 border-yellow-700/75;
+  @apply flex flex-1 w-20 h-10 justify-center items-center transition duration-200 ease-in-out;
 }
 .main-header-nav-bar li img {
   @apply h-6 w-6;
@@ -69,10 +75,10 @@ body {
   @apply flex flex-col p-3;
 }
 .page-about-header {
-  @apply flex text-2xl font-bold pb-3 text-yellow-700 justify-center;
+  @apply flex text-2xl font-bold pb-3 text-red-950 justify-center;
 }
 .page-about p {
-  @apply text-yellow-700 text-justify indent-7 font-semibold;
+  @apply text-red-950 text-justify indent-7 font-bold;
 }
 
 /* HOME */
@@ -81,62 +87,69 @@ body {
   @apply flex flex-col p-3;
 }
 .page-home-controls {
-  @apply flex w-full h-20 bg-amber-400/70 rounded-2xl justify-between gap-x-3 overflow-x-auto snap-x snap-mandatory;
+  @apply flex w-full h-20 bg-[url(/images/header-bg.jpg)] bg-cover bg-center rounded-2xl justify-between gap-x-3 overflow-x-auto snap-x snap-mandatory opacity-75;
 }
 .page-home-control {
-  @apply flex flex-col shrink-0 h-full w-full snap-center justify-evenly;
+  @apply flex flex-col shrink-0 h-full w-full snap-center justify-evenly text-black font-bold;
 }
 .page-home-control h3 {
   @apply self-center;
 }
 .page-home-control ol {
-  @apply flex flex-row flex-wrap w-full p-2 gap-2 overflow-y-auto snap-proximity;
+  @apply flex flex-row flex-wrap w-full p-2 gap-2 overflow-y-auto snap-proximity text-red-950 font-bold;
 }
 .page-home-control ol li {
-  @apply flex shrink-0 justify-center items-center h-9 rounded-2xl cursor-pointer flex-1;
+  @apply flex shrink-0 justify-center items-center h-9 rounded-2xl cursor-pointer flex-1 bg-ptlbrown-100 hover:bg-ptlbrown-200;
 }
 .page-home-list {
-  @apply flex bg-amber-50/70 h-[63vh] rounded-4xl mt-2 overflow-hidden;
+  @apply flex bg-ptlbrown-100/70 h-[63vh] rounded-4xl mt-2 overflow-hidden;
 }
 .page-home-list ol {
   @apply flex flex-col w-full overflow-y-auto p-3 gap-y-2;
 }
 .page-home-list ol li {
-  @apply flex flex-col shrink-0 justify-between items-center w-full h-14 bg-yellow-500/50 font-bold text-2xl rounded-3xl;
+  @apply flex flex-col shrink-0 justify-between items-center w-full h-14 bg-red-950/75 font-bold text-2xl rounded-3xl text-ptlbrown-200;
 }
 
 /* MODIFY */
 
 .page-modify {
-  @apply flex flex-col;
+  @apply flex flex-col bg-[url(/images/header-bg.jpg)] bg-cover bg-no-repeat bg-center bg-fixed;
 }
 .page-modify-sheets {
   @apply flex gap-x-4 w-full overflow-x-auto snap-x snap-mandatory px-10 py-5;
 }
 .page-modify-sheet {
-  @apply flex flex-col shrink-0 w-full h-[74vh] rounded-3xl snap-center relative;
+  @apply flex flex-col shrink-0 w-full h-[75vh] rounded-3xl snap-center relative;
 }
 .page-modify-sheet-actionbar {
   @apply flex flex-row-reverse justify-center w-full h-10;
 }
 .page-modify-sheet-actionbar-delete {
-  @apply flex justify-center items-start relative pt-2 w-10 top-0 z-0 bg-yellow-200/75 rounded-3xl border-2 h-20 right-0 border-red-700;
+  @apply flex justify-center items-start relative pt-2 w-10 top-0 z-0 bg-ptlbrown-200/75 rounded-3xl border-2 h-20 right-0 border-red-700;
 }
 .page-modify-sheet-actionbar-edit {
-  @apply flex justify-center items-start relative pt-2 w-10 top-0 z-0 bg-yellow-200/75 rounded-3xl border-2 h-15 right-2 border-purple-700;
+  @apply flex justify-center items-start relative pt-2 w-10 top-0 z-0 bg-ptlbrown-200/75 rounded-3xl border-2 h-15 right-2 border-purple-700;
 }
 .page-modify-sheet-actionbar-add {
-  @apply flex justify-center items-start relative pt-2 w-10 top-0 z-0 bg-yellow-200/75 rounded-3xl border-2 h-15 right-0 mr-24 border-blue-700;
+  @apply flex justify-center items-start relative pt-2 w-10 top-0 z-0 bg-ptlbrown-200/75 rounded-3xl border-2 h-15 right-0 mr-24 border-blue-700;
 }
 .page-modify-sheet h1 {
-  @apply flex text-center rounded-t-3xl h-10 justify-center items-center font-bold flex-shrink-0 text-white relative;
+  @apply flex text-center rounded-t-3xl h-10 justify-center items-center font-bold flex-shrink-0 text-white relative bg-red-950;
 }
 .page-modify-sheet-list {
-  @apply flex w-full h-full rounded-b-3xl bg-white justify-center overflow-hidden;
+  @apply flex w-full h-full rounded-b-3xl bg-ptlbrown-100 justify-center overflow-hidden;
 }
 .page-modify-sheet-list ol {
   @apply flex flex-col w-full overflow-y-auto;
 }
 .page-modify-sheet-list ol li {
-  @apply flex w-full shrink-0 flex-col justify-around items-center h-18 font-bold border-b-3 border-b-gray-400/75 text-2xl;
+  @apply flex w-full shrink-0 flex-col justify-around items-center h-18 font-bold border-b-3 border-b-yellow-700/75 text-2xl;
+}
+
+
+/* FOOTER */
+
+.main-footer {
+  @apply px-20 py-5 text-center text-[14px] bg-center font-bold transition duration-300 ease-in;
 }

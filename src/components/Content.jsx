@@ -7,8 +7,7 @@ import ProjectsContent from "../pages/ProjectsContent"
 function Content({ selectedPage, tasks, categories, sortTypes, onDeleteTask, onDeleteCateg }) {
 
     return (
-        <>
-            <main className="border border-yellow-700 w-full h-full">
+            <main className="flex-grow">
                 {selectedPage === "home" && <HomeContent tasks={tasks} 
                                     categories={categories} sortTypes={sortTypes}/>}
                 {selectedPage === "aboutme" && <AboutContent />}
@@ -20,7 +19,6 @@ function Content({ selectedPage, tasks, categories, sortTypes, onDeleteTask, onD
                                     onDeleteCateg={onDeleteCateg}/>}
                 {selectedPage === "profile" && <ProfileContent />}
             </main>
-        </>
     )
 }
 
