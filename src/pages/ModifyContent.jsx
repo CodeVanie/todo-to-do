@@ -83,7 +83,7 @@ function ModifyContent({ tasks, categories, sortTypes, onDeleteTask, onDeleteCat
                                     <li key={index} onClick={() => handleSelectedItems(task.id)}
                                         className={selectedItems.has(task.id) ? 'bg-orange-200' : 'bg-ptlbrown-100'}>
                                             <h2>{task.text}</h2>
-                                            <div className="flex text-sm justify-center items-center gap-x-4 w-full text-yellow-700">
+                                            <div className="flex text-sm justify-center items-center gap-x-4 w-full text-yellow-900">
                                                 <div>{task.prirty}</div>
                                                 <div>{task.category}</div>
                                                 <div>{task.duedate}</div>

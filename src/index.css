@@ -39,7 +39,7 @@ body {
 /* HEADER */
 
 .main-header {
-  @apply w-full bg-center p-3 transition duration-300 ease-in;
+  @apply w-full bg-center p-3 transition duration-500 ease-in-out;
 }
 .main-header nav {
   @apply flex flex-col justify-around;
@@ -65,8 +65,11 @@ body {
 .main-header-nav-bar li {
   @apply flex flex-1 w-20 h-10 justify-center items-center transition duration-200 ease-in-out;
 }
-.main-header-nav-bar li img {
-  @apply h-6 w-6;
+.main-header-nav-bar-icon {
+  @apply relative w-7 h-7;
+}
+.main-header-nav-bar-icon img {
+  @apply h-full w-full absolute object-contain transition duration-500 ease-in-out;
 }
 
 /* ABOUT */

@@ -86,7 +86,7 @@ function App() {
               duedate: shortDateTime
           }]);
 
-    var headFootBG = selectedPage === "modify" ? "bg-[url(/images/content-bg.jpg)] text-yellow-900" : 
+    var headFootBG = selectedPage === "modify" ? "bg-[url(/images/content-bg.jpg)] text-red-950" : 
                                                  "bg-[url(/images/header-bg.jpg)] bg-cover text-ptlbrown-100";
 
   return (
