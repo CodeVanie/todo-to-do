@@ -67,23 +67,24 @@ function HomeContent({ tasks, categories, sortTypes }) {
                 //     👇
                 // </button>
     return (
-        <div className="page-home">
+        <div className="flex flex-col p-3 gap-y-2">
             <div className="page-home-controls">
                 <div className="page-home-control">
-                    <h3>Sort By</h3>
+                    <h3 className="self-center font-bold">Sort By</h3>
                     <ol>
                         {sortTypes.map((sort, index) => 
-                            <li key={index}>
-                                {sort.text}
+                            <li key={index} className="grid">
+                                <button className="page-home-control-buttons">{sort.text}</button> 
                             </li>)}
                     </ol>
                 </div>
                 <div className="page-home-control">
-                    <h3>Filter By</h3>
+                    <h3 className="self-center font-bold">Filter By</h3>
                     <ol>
                         {categories.map((category, index) => 
-                            <li key={index} onClick={() => handleFiltering(category)}>
-                                {category.text}
+                            <li key={index} className="grid">
+                                <button className="page-home-control-buttons" 
+                                        onClick={() => handleFiltering(category)}>{category.text}</button> 
                             </li>)}
                     </ol>
                 </div>
@@ -91,8 +92,7 @@ function HomeContent({ tasks, categories, sortTypes }) {
             <div className="page-home-list">
                 <ol>
                     {taskList.map((task, index) => 
-                        <TaskItem key={index} task={task} 
-                        className="w-3/4 h-5 text-sm rounded-t-2xl bg-yellow-900/75 p-1 justify-around gap-x-1 border border-ptlbrown-100"/>
+                        <TaskItem key={index} task={task} />
                     )}
                 </ol>
             </div>

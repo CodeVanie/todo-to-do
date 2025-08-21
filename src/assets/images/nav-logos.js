@@ -8,6 +8,10 @@ import projectsd from './projects-logo-dark.png'
 import homed from './home-logo-dark.png'
 import modifyd from './modify-logo-dark.png'
 import profiled from './profile-logo-dark.png'
+import addlogo from './add-logo.png'
+import editlogo from './edit-logo.png'
+import deletelogo from './delete-logo.png'
+import cancellogo from './cancel-logo.png'
 
 export {
     aboutme,
@@ -19,5 +23,9 @@ export {
     projectsd,
     homed,
     modifyd,
-    profiled
+    profiled,
+    addlogo,
+    editlogo,
+    deletelogo,
+    cancellogo
 }

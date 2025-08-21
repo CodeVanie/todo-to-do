@@ -2,24 +2,6 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
 @import "tailwindcss";
-@font-face {
-  font-family: "Libertinus Sans";
-  src: url("/src/assets/fonts/LibertinusSans-Regular.woff2") format("woff2");
-  font-weight: 400;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Libertinus Sans";
-  src: url("/src/assets/fonts/LibertinusSans-Bold.woff2") format("woff2");
-  font-weight: 700;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Libertinus Sans";
-  src: url("/src/assets/fonts/LibertinusSans-Italic.woff2") format("woff2");
-  font-weight: 400;
-  font-style: italic;
-}
 @theme {
   --font-quicks: "Quicksand", sans-serif;
   --color-ptlbrown-100: #e7b574;
@@ -27,132 +9,83 @@
   --color-ptlbrown-300: #c48f4a;
 }
 
-/* GLOBAL */
-
-body {
-  @apply bg-[url(/images/content-bg.jpg)] bg-center bg-no-repeat bg-cover bg-fixed font-quicks min-w-[360px] transition duration-300 ease-in;
+/* LAYERS */
+@layer base {
+  body {
+    @apply bg-[url(/images/content-bg.jpg)] bg-center bg-no-repeat bg-cover bg-fixed font-quicks min-w-[360px] transition duration-300 ease-in;
+  }
 }
-.main-app {
-  @apply flex flex-col min-h-screen;
-}
-
-/* HEADER */
-
-.main-header {
-  @apply w-full bg-center p-3 transition duration-500 ease-in-out;
-}
-.main-header nav {
-  @apply flex flex-col justify-around;
-}
-.main-header-top {
-  @apply flex w-full font-bold items-center justify-between mb-2;
-}
-.main-header-top-logo {
-  @apply flex w-36 shrink-0 items-center;
-}
-.main-header-top-logo img {
-  @apply w-11 h-11; 
-}
-.main-header-top-logo h1 {
-  @apply text-xl leading-tight; 
-}
-.main-header-top a {
-  @apply underline w-44 text-end shrink-0 text-base leading-tight;
-}
-.main-header-nav-bar {
-  @apply flex flex-row justify-evenly;
-}
-.main-header-nav-bar li {
-  @apply flex flex-1 w-20 h-10 justify-center items-center transition duration-200 ease-in-out;
-}
-.main-header-nav-bar-icon {
-  @apply relative w-7 h-7;
-}
-.main-header-nav-bar-icon img {
-  @apply h-full w-full absolute object-contain transition duration-500 ease-in-out;
-}
-
-/* ABOUT */
-
-.page-about {
-  @apply flex flex-col p-3;
-}
-.page-about-header {
-  @apply flex text-2xl font-bold pb-3 text-red-950 justify-center;
-}
-.page-about p {
-  @apply text-red-950 text-justify indent-7 font-bold;
-}
-
-/* HOME */
-
-.page-home {
-  @apply flex flex-col p-3;
-}
-.page-home-controls {
-  @apply flex w-full h-20 bg-[url(/images/header-bg.jpg)] bg-cover bg-center rounded-2xl justify-between gap-x-3 overflow-x-auto snap-x snap-mandatory opacity-75;
-}
-.page-home-control {
-  @apply flex flex-col shrink-0 h-full w-full snap-center justify-evenly text-black font-bold;
-}
-.page-home-control h3 {
-  @apply self-center;
-}
-.page-home-control ol {
-  @apply flex flex-row flex-wrap w-full p-2 gap-2 overflow-y-auto snap-proximity text-red-950 font-bold;
-}
-.page-home-control ol li {
-  @apply flex shrink-0 justify-center items-center h-9 rounded-2xl cursor-pointer flex-1 bg-ptlbrown-100 hover:bg-ptlbrown-200;
-}
-.page-home-list {
-  @apply flex bg-ptlbrown-100/70 h-[63vh] rounded-4xl mt-2 overflow-hidden;
-}
-.page-home-list ol {
-  @apply flex flex-col w-full overflow-y-auto p-3 gap-y-2;
-}
-.page-home-list ol li {
-  @apply flex flex-col shrink-0 justify-between items-center w-full h-14 bg-red-950/75 font-bold text-2xl rounded-3xl text-ptlbrown-200;
-}
-
-/* MODIFY */
-
-.page-modify {
-  @apply flex flex-col bg-[url(/images/header-bg.jpg)] bg-cover bg-no-repeat bg-center bg-fixed;
-}
-.page-modify-sheets {
-  @apply flex gap-x-4 w-full overflow-x-auto snap-x snap-mandatory px-10 py-5;
-}
-.page-modify-sheet {
-  @apply flex flex-col shrink-0 w-full h-[75vh] rounded-3xl snap-center relative;
-}
-.page-modify-sheet-actionbar {
-  @apply flex flex-row-reverse justify-center w-full h-10;
-}
-.page-modify-sheet-actionbar-delete {
-  @apply flex justify-center items-start relative pt-2 w-10 top-0 z-0 bg-ptlbrown-200/75 rounded-3xl border-2 h-20 right-0 border-red-700;
-}
-.page-modify-sheet-actionbar-edit {
-  @apply flex justify-center items-start relative pt-2 w-10 top-0 z-0 bg-ptlbrown-200/75 rounded-3xl border-2 h-15 right-2 border-purple-700;
-}
-.page-modify-sheet-actionbar-add {
-  @apply flex justify-center items-start relative pt-2 w-10 top-0 z-0 bg-ptlbrown-200/75 rounded-3xl border-2 h-15 right-0 mr-24 border-blue-700;
-}
-.page-modify-sheet h1 {
-  @apply flex text-center rounded-t-3xl h-10 justify-center items-center font-bold flex-shrink-0 text-white relative bg-red-950;
-}
-.page-modify-sheet-list {
-  @apply flex w-full h-full rounded-b-3xl bg-ptlbrown-100 justify-center overflow-hidden;
-}
-.page-modify-sheet-list ol {
-  @apply flex flex-col w-full overflow-y-auto;
-}
-.page-modify-sheet-list ol li {
-  @apply flex w-full shrink-0 flex-col justify-around items-center h-18 font-bold border-b-3 border-b-yellow-700/75 text-2xl;
-}
-
-
-/* FOOTER */
-
-.main-footer {
-  @apply px-20 py-5 text-center text-[14px] bg-center font-bold transition duration-300 ease-in;
+/* COMPONENTS */
+@layer components {
+  /* ABOUT */
+  .about-parag {
+    @apply text-red-950 text-justify indent-7 font-bold;
+  }
+  /* HEADER */
+  .main-header {
+    @apply bg-center pt-3 px-2 transition duration-500 ease-in-out;
+  }
+  .main-header nav ul li {
+    @apply flex flex-1 py-2 justify-center items-center transition duration-500 ease-in-out active:border-yellow-900/75 [&:nth-child(4)]:active:border-ptlbrown-100/75;
+  }
+  .main-header-nav-bar-icon {
+    @apply relative w-5 h-5;
+  }
+  .main-header-nav-bar-icon img {
+    @apply absolute object-contain transition duration-500 ease-in-out;
+  }
+  /* HOME */
+  .page-home-control-buttons {
+    @apply place-items-center py-2 rounded-3xl cursor-pointer text-red-950 font-bold bg-ptlbrown-100 hover:bg-ptlbrown-200 ;
+  }
+  .page-home-controls {
+    @apply flex w-full bg-[url(/images/header-bg.jpg)] bg-cover bg-center rounded-2xl justify-between gap-x-3 overflow-x-auto snap-x snap-mandatory opacity-75;
+  }
+  .page-home-control {
+    @apply flex flex-col h-20 shrink-0 w-full snap-center p-1;
+  }
+  .page-home-control ol {
+    @apply grid grid-cols-3 p-1 gap-2 overflow-y-auto snap-proximity;
+  }
+  .page-home-list {
+    @apply flex bg-ptlbrown-100/70 h-[69vh] rounded-4xl overflow-hidden border-red-950;
+  }
+  .page-home-list ol {
+    @apply flex flex-col w-full overflow-y-auto p-3 gap-y-2;
+  }
+  .page-home-list ol li {
+    @apply flex flex-col shrink-0 justify-between items-center w-full h-14 bg-red-950/75 font-bold text-2xl rounded-3xl text-ptlbrown-200;
+  }
+  .page-home-list-item-propery {
+    @apply flex items-center w-3/4 h-5 text-sm rounded-t-2xl bg-yellow-900/75 p-1 justify-around gap-x-1 border border-ptlbrown-100;
+  }
+  /* MODIFY */
+  .page-modify {
+    @apply flex flex-col bg-[url(/images/header-bg.jpg)] bg-cover bg-no-repeat bg-center bg-fixed;
+  }
+  .page-modify-action-button {
+    @apply bg-ptlbrown-100 rounded-full border-2 border-red-950 w-14 p-2;
+  }
+  .page-modify-sheets {
+    @apply flex gap-x-4 w-full overflow-x-auto snap-x snap-mandatory px-10 pb-3;
+  }
+  .page-modify-sheet {
+      @apply flex flex-col shrink-0 w-full h-[73vh] rounded-3xl snap-center;
+  }
+  .page-modify-sheet h1 {
+    @apply flex text-center rounded-t-3xl h-10 justify-center items-center font-bold flex-shrink-0 text-white relative bg-red-950;
+  }
+  .page-modify-sheet-list {
+    @apply flex w-full h-full rounded-b-3xl bg-ptlbrown-100 justify-center overflow-hidden;
+  }
+  .page-modify-sheet-list ol {
+    @apply flex flex-col w-full overflow-y-auto;
+  }
+  .page-modify-sheet-list ol li {
+    @apply flex w-full shrink-0 flex-col justify-around items-center h-18 font-bold border-b-3 border-b-yellow-700/75 text-2xl;
+  }
+  /* FOOTER */
+  .main-footer {
+    @apply px-20 py-5 text-center text-[14px] bg-center font-bold transition duration-300 ease-in;
+  }
 }

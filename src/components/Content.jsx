@@ -7,18 +7,18 @@ import ProjectsContent from "../pages/ProjectsContent"
 function Content({ selectedPage, tasks, categories, sortTypes, onDeleteTask, onDeleteCateg }) {
 
     return (
-            <main className="flex-grow">
-                {selectedPage === "home" && <HomeContent tasks={tasks} 
-                                    categories={categories} sortTypes={sortTypes}/>}
-                {selectedPage === "aboutme" && <AboutContent />}
-                {selectedPage === "projects" && <ProjectsContent />}
-                {selectedPage === "modify" && <ModifyContent tasks={tasks} 
-                                    categories={categories} 
-                                    sortTypes={sortTypes} 
-                                    onDeleteTask={onDeleteTask}
-                                    onDeleteCateg={onDeleteCateg}/>}
-                {selectedPage === "profile" && <ProfileContent />}
-            </main>
+        <main className="flex-grow">
+            {selectedPage === "home" && <HomeContent tasks={tasks} 
+                                categories={categories} sortTypes={sortTypes}/>}
+            {selectedPage === "aboutme" && <AboutContent />}
+            {selectedPage === "projects" && <ProjectsContent />}
+            {selectedPage === "modify" && <ModifyContent tasks={tasks} 
+                                categories={categories} 
+                                sortTypes={sortTypes} 
+                                onDeleteTask={onDeleteTask}
+                                onDeleteCateg={onDeleteCateg}/>}
+            {selectedPage === "profile" && <ProfileContent />}
+        </main>
     )
 }
 
