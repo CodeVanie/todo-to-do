@@ -5,10 +5,9 @@ import { DataContext } from '../components/Content.jsx';
 
 function ModifyContent() {
 
-    const { tasks, categories, sortTypes, setTasks, setCategories } = useContext(DataContext);
+    const { tasks, categories, sortTypes, setTasks, setCategories, isAddModalOpen, setIsAddModalOpen } = useContext(DataContext);
     const [selectedItems, setSelectedItems] = useState(new Set());
     const [selectedType, setSelectedType] = useState(null);
-    const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [showError, setShowError] = useState(false);
     const scrollRef = useRef(null); 

@@ -51,63 +51,9 @@ function App() {
   const shortDateTime = sixMonthsFromNow.toLocaleString('en-US', { dateStyle: 'short', timeStyle: 'short' });
   
   // Stateful variable to track the list of tasks
-  const [tasks, setTasks] = useState([
-          {
-              id: "t_1",
-              title: "Eat Breakfast",
-              priority: "!!!",
-              category: categories[0].label,
-              details: "",
-              deadline: "Daily"
-          }, 
-          {
-              id: "t_2",
-              title: "Take a shower",
-              priority: "!",
-              category: categories[1].label,
-              details: "",
-              deadline: "Daily"
-          }, 
-          {
-              id: "t_3",
-              title: "Walk the dog",
-              priority: "!!",
-              category: categories[1].label,
-              details: "",
-              deadline: "Weekly"
-          }, 
-          {
-              id: "t_4",
-              title: "Brace Adjustment",
-              priority: "!!",
-              category: categories[2].label,
-              details: "",
-              deadline: "Monthly"
-          }, 
-          {
-              id: "t_5",
-              title: "Drink Vitamins",
-              priority: "!",
-              category: categories[0].label,
-              details: "",
-              deadline: "Daily"
-          }, 
-          {
-              id: "t_6",
-              title: "Teeth Cleaning",
-              priority: "!",
-              category: categories[2].label,
-              details: "",
-              deadline: shortDateTime
-          }, 
-          {
-              id: "t_7",
-              title: "Wash My Face",
-              priority: "!",
-              category: categories[1].label,
-              details: "",
-              deadline: "Daily"
-          }]);
+  const [tasks, setTasks] = useState([]);
+
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
     var headFootBG = selectedPage === "modify" ? "bg-[url(/images/content-bg.jpg)] text-red-950" : 
                                                  "bg-[url(/images/header-bg.jpg)] bg-cover text-ptlbrown-100";
@@ -122,7 +68,9 @@ function App() {
                  categories={categories} 
                  sortTypes={sortTypes} 
                  setTasks={setTasks} 
-                 setCategories={setCategories} />
+                 setCategories={setCategories} 
+                 isAddModalOpen={isAddModalOpen} 
+                 setIsAddModalOpen={setIsAddModalOpen} />
         <Footer bgImage={headFootBG}/>
     </div>
   )

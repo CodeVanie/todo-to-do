@@ -57,6 +57,9 @@
   .page-home-list-item-propery {
     @apply flex items-center w-3/4 h-5 text-sm rounded-t-2xl bg-yellow-900/75 p-1 justify-around gap-x-1 border border-ptlbrown-100;
   }
+  .page-home-add-button {
+    @apply flex justify-center items-center bg-red-950/75 text-ptlbrown-100 font-bold rounded-4xl shadow-[2px_0_10px_#160403,-2px_0_10px_#160403];
+  }
   /* MODIFY */
   .page-modify {
     @apply flex flex-col bg-[url(/images/header-bg.jpg)] bg-cover bg-no-repeat bg-center bg-fixed;

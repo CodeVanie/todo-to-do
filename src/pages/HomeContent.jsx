@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from "react"
 import TaskItem from "../components/TaskItem";
 import { DataContext } from "../components/Content";
+import AddModal from "../components/AddModal";
 
 function HomeContent() {
-    const { tasks, categories, sortTypes } = useContext(DataContext);
+    const { tasks, categories, sortTypes, isAddModalOpen, setIsAddModalOpen } = useContext(DataContext);
     const [taskList, setTaskList] = useState(tasks);
-    const [newTask, setNewTask] = useState("");
     const [showControl, setShowControl] = useState(false);
 
     useEffect(() => {
@@ -13,16 +13,6 @@ function HomeContent() {
                       document.getElementById("controls").classList.remove("max-h-96");
     }, [showControl])
 
-    function handleInputChange(event) {
-        setNewTask(event.target.value)
-    }
-    function addTask() {
-
-        if (newTask.trim() !== "") {
-            setTasks(t => [...t, newTask])
-            setNewTask("")
-        }
-    }
     function moveTaskUp(index) {
         if (index > 0) {
             const updatedTasks = [...tasks];
@@ -108,11 +98,17 @@ function HomeContent() {
             </div>
             <div className="page-home-list">
                 <ol>
-                    {taskList.map((task, index) => 
+                    <button className={`page-home-add-button ${tasks.length ? "h-14 text-3xl" : 
+                                                                              "w-full h-full text-6xl"}`}
+                            onClick={() => setIsAddModalOpen(true)}>
+                        +
+                    </button> 
+                    {tasks.map((task, index) => 
                         <TaskItem key={index} task={task} />
                     )}
                 </ol>
             </div>
+            <AddModal type="add" isOpen={isAddModalOpen} onClose={() => setIsAddModalOpen(false)} />
         </div>
     )
 }
