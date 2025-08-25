@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { Header, Content, Footer } from "./components/body.js"
 
 function App() {
@@ -9,81 +9,104 @@ function App() {
   const [categories, setCategories] = useState([
           {
               id: "c_1",
-              text: "All"
+              label: "Food"
           }, 
           {
               id: "c_2",
-              text: "Daily"
+              label: "Morning"
           }, 
           {
               id: "c_3",
-              text: "Monthly"
+              label: "Dentist"
+          }, 
+          {
+              id: "c_4",
+              label: "Self"
+          }, 
+          {
+              id: "c_5",
+              label: "Friends"
+          }, 
+          {
+              id: "c_6",
+              label: "Cooking"
           }]);
   const sortTypes = [
           {
               id: "s_1",
-              text: "Deadline"
+              label: "Deadline"
           }, 
           {
               id: "s_2",
-              text: "Priority"
+              label: "Priority"
           }, 
           {
               id: "s_3",
-              text: "Letters"
+              label: "Letters"
           }];
+
   const now = new Date();
-  const shortDateTime = now.toLocaleString('en-US', { dateStyle: 'short', timeStyle: 'short' });
+  const sixMonthsFromNow = new Date(now);
+  sixMonthsFromNow.setMonth(sixMonthsFromNow.getMonth() + 6);
+  const shortDateTime = sixMonthsFromNow.toLocaleString('en-US', { dateStyle: 'short', timeStyle: 'short' });
+  
   // Stateful variable to track the list of tasks
   const [tasks, setTasks] = useState([
           {
               id: "t_1",
-              text: "Eat Breakfast",
-              prirty: "!!!",
-              category: categories[1].text,
-              duedate: shortDateTime
+              title: "Eat Breakfast",
+              priority: "!!!",
+              category: categories[0].label,
+              details: "",
+              deadline: "Daily"
           }, 
           {
               id: "t_2",
-              text: "Take a shower",
-              prirty: "!",
-              category: categories[2].text,
-              duedate: shortDateTime
+              title: "Take a shower",
+              priority: "!",
+              category: categories[1].label,
+              details: "",
+              deadline: "Daily"
           }, 
           {
               id: "t_3",
-              text: "Walk the dog",
-              prirty: "!!",
-              category: categories[1].text,
-              duedate: shortDateTime
+              title: "Walk the dog",
+              priority: "!!",
+              category: categories[1].label,
+              details: "",
+              deadline: "Weekly"
           }, 
           {
               id: "t_4",
-              text: "Brace Adjustment",
-              prirty: "!!",
-              category: categories[2].text,
-              duedate: shortDateTime
+              title: "Brace Adjustment",
+              priority: "!!",
+              category: categories[2].label,
+              details: "",
+              deadline: "Monthly"
           }, 
           {
               id: "t_5",
-              text: "Drink Vitamins",
-              prirty: "!",
-              category: categories[1].text,
-              duedate: shortDateTime
+              title: "Drink Vitamins",
+              priority: "!",
+              category: categories[0].label,
+              details: "",
+              deadline: "Daily"
           }, 
           {
               id: "t_6",
-              text: "Drink Vitamins",
-              prirty: "!",
-              category: categories[2].text,
-              duedate: shortDateTime
+              title: "Teeth Cleaning",
+              priority: "!",
+              category: categories[2].label,
+              details: "",
+              deadline: shortDateTime
           }, 
           {
               id: "t_7",
-              text: "Drink Vitamins",
-              prirty: "!",
-              category: categories[1].text,
-              duedate: shortDateTime
+              title: "Wash My Face",
+              priority: "!",
+              category: categories[1].label,
+              details: "",
+              deadline: "Daily"
           }]);
 
     var headFootBG = selectedPage === "modify" ? "bg-[url(/images/content-bg.jpg)] text-red-950" : 
@@ -95,11 +118,11 @@ function App() {
                 onNavBarClick={setSelectedPage} 
                 bgImage={headFootBG}/>
         <Content selectedPage={selectedPage} 
-                       tasks={tasks} 
-                       categories={categories} 
-                       sortTypes={sortTypes}
-                       onDeleteTask={setTasks}
-                       onDeleteCateg={setCategories}/>
+                 tasks={tasks} 
+                 categories={categories} 
+                 sortTypes={sortTypes} 
+                 setTasks={setTasks} 
+                 setCategories={setCategories} />
         <Footer bgImage={headFootBG}/>
     </div>
   )

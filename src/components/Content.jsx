@@ -3,20 +3,28 @@ import ModifyContent from "../pages/ModifyContent"
 import ProfileContent from "../pages/ProfileContent"
 import HomeContent from "../pages/HomeContent"
 import ProjectsContent from "../pages/ProjectsContent"
+import { createContext } from "react"
 
-function Content({ selectedPage, tasks, categories, sortTypes, onDeleteTask, onDeleteCateg }) {
+export const DataContext = createContext();
+
+function Content({ selectedPage, tasks, categories, sortTypes, setTasks, setCategories }) {
+
+    const contextData = { tasks, categories, sortTypes, setTasks, setCategories };
 
     return (
         <main className="flex-grow">
-            {selectedPage === "home" && <HomeContent tasks={tasks} 
-                                categories={categories} sortTypes={sortTypes}/>}
+            {selectedPage === "home" && (
+                <DataContext.Provider value={contextData}>
+                    <HomeContent />
+                </DataContext.Provider>
+            )}
             {selectedPage === "aboutme" && <AboutContent />}
             {selectedPage === "projects" && <ProjectsContent />}
-            {selectedPage === "modify" && <ModifyContent tasks={tasks} 
-                                categories={categories} 
-                                sortTypes={sortTypes} 
-                                onDeleteTask={onDeleteTask}
-                                onDeleteCateg={onDeleteCateg}/>}
+            {selectedPage === "modify" && (
+                <DataContext.Provider value={contextData}>
+                    <ModifyContent />
+                </DataContext.Provider>
+            )}
             {selectedPage === "profile" && <ProfileContent />}
         </main>
     )

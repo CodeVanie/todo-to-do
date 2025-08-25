@@ -1,11 +1,17 @@
 import { addlogo, editlogo, deletelogo, cancellogo } from '../assets/images/nav-logos.js'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useContext } from 'react'
+import AddModal from '../components/AddModal.jsx';
+import { DataContext } from '../components/Content.jsx';
 
-function ModifyContent({ tasks, categories, sortTypes, onDeleteTask, onDeleteCateg }) {
+function ModifyContent() {
 
+    const { tasks, categories, sortTypes, setTasks, setCategories } = useContext(DataContext);
     const [selectedItems, setSelectedItems] = useState(new Set());
-    const scrollRef = useRef(null);
-    const selectedSheet = useRef('');
+    const [selectedType, setSelectedType] = useState(null);
+    const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [showError, setShowError] = useState(false);
+    const scrollRef = useRef(null); 
 
     useEffect(() => {
         if (scrollRef.current) {
@@ -13,23 +19,35 @@ function ModifyContent({ tasks, categories, sortTypes, onDeleteTask, onDeleteCat
         }
     },[]);
 
-    function handleSelectedItems(index) {
-        let newSelectedItems = new Set();
-        selectedSheet.current === index.charAt(0) ? (newSelectedItems = new Set(selectedItems)) : 
-                                                    (selectedSheet.current = index.charAt(0))
+    function handleSelectedItems(item, type) {
+        setSelectedItems(prev => {
+            let newSelectedItems = new Set();
 
-        newSelectedItems.has(index) ? newSelectedItems.delete(index) : 
-                                      newSelectedItems.add(index)
+            type !== selectedType ? setSelectedType(type) : 
+                                    newSelectedItems = new Set(prev);
 
-        setSelectedItems(newSelectedItems);
+            newSelectedItems.has(item) ? newSelectedItems.delete(item) : 
+                                         newSelectedItems.add(item);
+
+            return newSelectedItems;
+        })
     }
-    function handleDeleteChange(selectedItems, list) {
+    function handleEditButton() {
+        selectedItems.size > 0 ? setShowError(true) :
+                                 setIsEditModalOpen(true);
+    }
+    function handleDeleteButton(type) {
+        let list = type === "task" ? tasks : categories;
         var newList = [];
         list.forEach(item => {
-            !(selectedItems.has(item.id)) && newList.push(item)
+            !(selectedItems.has(item)) && newList.push(item)
         });
-        setSelectedItems(new Set())
-        return newList;
+        setSelectedItems(new Set());
+        setSelectedType(null);
+        if (type === "task")
+            setTasks(newList);
+        if (type === "category")
+            setCategories(newList);
     }
     function unselectAll() {
         setSelectedItems(new Set());
@@ -38,18 +56,20 @@ function ModifyContent({ tasks, categories, sortTypes, onDeleteTask, onDeleteCat
     return (
         <div className="page-modify">
             <div className="flex justify-center gap-x-6 m-2">
-                <div className='page-modify-action-button'>
+                <div className='page-modify-action-button' 
+                        onClick={() => setIsAddModalOpen(true)}>
                     <img src={addlogo} alt="addimg" className='w-full'/>
                 </div>
-                <div className='page-modify-action-button'>
+                <div className='page-modify-action-button' 
+                        onClick={() => handleEditButton()}>
                     <img src={editlogo} alt="editimg" className='w-full'/>
                 </div>
                 <div className='page-modify-action-button' 
-                        onClick={() => onDeleteTask(handleDeleteChange(selectedItems, tasks))}>
+                        onClick={() => handleDeleteButton(selectedType)}>
                     <img src={deletelogo} alt="deleteimg" className='w-full'/>
                 </div>
                 <div className='page-modify-action-button' 
-                        onClick={() => unselectAll()}>
+                        onClick={unselectAll}>
                     <img src={cancellogo} alt="cancelimg" className='w-full'/>
                 </div>
             </div>
@@ -59,10 +79,10 @@ function ModifyContent({ tasks, categories, sortTypes, onDeleteTask, onDeleteCat
                     <div className="page-modify-sheet-list">
                         <ol>
                             {categories.map((category, index) => 
-                                <li key={index} onClick={() => handleSelectedItems(category.id)}
-                                    className={selectedItems.has(category.id) ? 'bg-orange-200' : 'bg-ptlbrown-100'}
+                                <li key={index} onClick={() => handleSelectedItems(category, "category")}
+                                    className={selectedItems.has(category) ? 'bg-orange-200' : 'bg-ptlbrown-100'}
                                 >
-                                    <div>{category.text}</div>
+                                    <div>{category.label}</div>
                                 </li>)}
                         </ol>
                     </div>
@@ -72,13 +92,13 @@ function ModifyContent({ tasks, categories, sortTypes, onDeleteTask, onDeleteCat
                     <div className="page-modify-sheet-list">
                         <ol>
                             {tasks.map((task, index) => 
-                                <li key={index} onClick={() => handleSelectedItems(task.id)}
-                                    className={selectedItems.has(task.id) ? 'bg-orange-200' : 'bg-ptlbrown-100'}>
-                                        <h2>{task.text}</h2>
+                                <li key={index} onClick={() => handleSelectedItems(task, "task")}
+                                    className={selectedItems.has(task) ? 'bg-orange-200' : 'bg-ptlbrown-100'}>
+                                        <h2>{task.title}</h2>
                                         <div className="flex text-sm justify-center items-center gap-x-4 w-full text-yellow-900">
-                                            <div>{task.prirty}</div>
+                                            <div>{task.priority}</div>
                                             <div>{task.category}</div>
-                                            <div>{task.duedate}</div>
+                                            <div>{task.deadline}</div>
                                         </div>
                                 </li>)}
                         </ol>
@@ -89,15 +109,18 @@ function ModifyContent({ tasks, categories, sortTypes, onDeleteTask, onDeleteCat
                     <div className="page-modify-sheet-list">
                         <ol>
                             {sortTypes.map((sort, index) => 
-                                <li key={index} onClick={() => handleSelectedItems(sort.id)}
-                                    className={selectedItems.has(sort.id) ? 'bg-orange-200' : 'bg-ptlbrown-100'}>
-                                    <div>{sort.text}</div>
+                                <li key={index} onClick={() => handleSelectedItems(sort, "sort")}
+                                    className={selectedItems.has(sort) ? 'bg-orange-200' : 'bg-ptlbrown-100'}>
+                                    <div>{sort.label}</div>
                                 </li>)}
                         </ol>
                     </div>
                 </div>
             </div>
+            <AddModal type="add" isOpen={isAddModalOpen} onClose={() => setIsAddModalOpen(false)} />
+            {/* <AddModal type="edit" isOpen={isEd} onClose={() => setIsAddModalOpen(false)} currentValues={[...selectedItems][0]}/> */}
         </div>
+        
     )
 }
 

@@ -1,10 +1,17 @@
-import React, { useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import TaskItem from "../components/TaskItem";
+import { DataContext } from "../components/Content";
 
-function HomeContent({ tasks, categories, sortTypes }) {
-
+function HomeContent() {
+    const { tasks, categories, sortTypes } = useContext(DataContext);
     const [taskList, setTaskList] = useState(tasks);
     const [newTask, setNewTask] = useState("");
+    const [showControl, setShowControl] = useState(false);
+
+    useEffect(() => {
+        showControl ? document.getElementById("controls").classList.add("max-h-96") : 
+                      document.getElementById("controls").classList.remove("max-h-96");
+    }, [showControl])
 
     function handleInputChange(event) {
         setNewTask(event.target.value)
@@ -34,11 +41,13 @@ function HomeContent({ tasks, categories, sortTypes }) {
     }
     function handleFiltering(category) {
         let filteredList = tasks;
-        if (category.text != "All")
-            filteredList = tasks.filter((task,_) => task.category == category.text);
+        if (category !== "All")
+            filteredList = tasks.filter((task,_) => task.category == category.label);
         setTaskList(filteredList);
     }
-
+    function toggleControls() {
+        setShowControl(!showControl);
+    }
                 // <div className="page-home-controls">
                 //     <input 
                 //         type="text"
@@ -68,23 +77,31 @@ function HomeContent({ tasks, categories, sortTypes }) {
                 // </button>
     return (
         <div className="flex flex-col p-3 gap-y-2">
-            <div className="page-home-controls">
-                <div className="page-home-control">
-                    <h3 className="self-center font-bold">Sort By</h3>
-                    <ol>
+            <div id="controls" className="page-home-controls">
+                <div className="text-lg text-center font-bold m-1" 
+                    onClick={() => toggleControls()}>Controls</div>
+                <hr />
+                <div className="flex flex-col pb-2">
+                    <h3 className="font-bold self-center">Sort By</h3>
+                    <ol className="grid grid-cols-3 gap-2">
                         {sortTypes.map((sort, index) => 
                             <li key={index} className="grid">
-                                <button className="page-home-control-buttons">{sort.text}</button> 
+                                <button className="page-home-control-buttons">{sort.label}</button> 
                             </li>)}
                     </ol>
                 </div>
-                <div className="page-home-control">
-                    <h3 className="self-center font-bold">Filter By</h3>
-                    <ol>
+                <hr />
+                <div className="flex flex-col pb-2">
+                    <h3 className="font-bold self-center">Filter By</h3>
+                    <ol className="grid grid-cols-3 gap-2">
+                        <li className="grid">
+                            <button className="page-home-control-buttons" 
+                                        onClick={() => handleFiltering("All")}>All</button> 
+                        </li>
                         {categories.map((category, index) => 
                             <li key={index} className="grid">
                                 <button className="page-home-control-buttons" 
-                                        onClick={() => handleFiltering(category)}>{category.text}</button> 
+                                        onClick={() => handleFiltering(category)}>{category.label}</button> 
                             </li>)}
                     </ol>
                 </div>

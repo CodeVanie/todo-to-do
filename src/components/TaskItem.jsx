@@ -2,11 +2,11 @@
 function TaskItem({ task }) {
     return (
         <li>
-            <span>{task.text}</span>
+            <span>{task.title}</span>
             <div className="page-home-list-item-propery">
-                <div>{task.prirty}</div>
+                <div>{task.priority}</div>
                 <div>{task.category}</div>
-                <div>{task.duedate}</div>
+                <div>{task.deadline}</div>
             </div>
         </li>
     )
