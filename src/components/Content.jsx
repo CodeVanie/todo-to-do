@@ -7,9 +7,9 @@ import { createContext } from "react"
 
 export const DataContext = createContext();
 
-function Content({ selectedPage, tasks, categories, sortTypes, setTasks, setCategories, isAddModalOpen, setIsAddModalOpen }) {
+function Content({ selectedPage, tasks, categories, sortTypes, setTasks, setCategories, isAddModalOpen, setIsAddModalOpen, filteredCategory, setFilteredCategory }) {
 
-    const contextData = { tasks, categories, sortTypes, setTasks, setCategories, isAddModalOpen, setIsAddModalOpen };
+    const contextData = { tasks, categories, sortTypes, setTasks, setCategories, isAddModalOpen, setIsAddModalOpen, filteredCategory, setFilteredCategory };
 
     return (
         <main className="flex-grow">

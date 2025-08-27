@@ -1,6 +1,6 @@
 import { aboutme, projects, home, modify, profile, aboutmed, projectsd, homed, modifyd, profiled } from '../assets/images/nav-logos.js'
 import header from '../assets/images/todotodologo.png'
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect } from 'react'
 
 function Header({ currentPage, onNavBarClick, bgImage }) {
 
@@ -29,10 +29,10 @@ function Header({ currentPage, onNavBarClick, bgImage }) {
         <header className={`main-header ${bgImage}`}>
             <nav className='flex flex-col justify-around'>
                 <div className='flex items-center justify-between mb-1'>
-                    <div className='flex w-auto items-center'>
+                    <a href='/' className='flex w-auto items-center'>
                         <img src={header} alt="header" className='w-8 h-auto'/>
                         <h1 className='text-lg leading-tight font-bold'>To-Do-TODO</h1>
-                    </div>
+                    </a>
                     <a href="" className='underline text-end leading-tight font-bold'>
                         ← Portfolio
                     </a>

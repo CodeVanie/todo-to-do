@@ -1,5 +1,4 @@
 /* IMPORTS */
-
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
 @import "tailwindcss";
 @theme {
@@ -7,6 +6,8 @@
   --color-ptlbrown-100: #e7b574;
   --color-ptlbrown-200: #d7a460;
   --color-ptlbrown-300: #c48f4a;
+  --color-correct: #00b303;
+  --color-wrong: #d10000;
 }
 @plugin "tailwind-scrollbar-hide";
 
@@ -14,6 +15,10 @@
 @layer base {
   body {
     @apply bg-[url(/images/content-bg.jpg)] bg-center bg-no-repeat bg-cover bg-fixed font-quicks min-w-[360px] transition duration-300 ease-in;
+  }
+  input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px #e7b574 inset !important;
+    -webkit-text-fill-color: var(--color-red-950) !important;
   }
 }
 /* COMPONENTS */
@@ -40,7 +45,7 @@
     @apply place-items-center py-2 rounded-3xl cursor-pointer text-red-950 font-bold bg-ptlbrown-100 hover:bg-ptlbrown-200 ;
   }
   .page-home-controls {
-    @apply flex flex-col max-h-10 border-2 box-border border-ptlbrown-100 
+    @apply flex flex-col border-2 box-border border-ptlbrown-100 
            w-full px-2 pb-1 bg-[url(/images/header-bg.jpg)] bg-cover bg-center 
            rounded-2xl opacity-75 overflow-hidden transition-[max-height] duration-300 
            ease-in overflow-y-auto scrollbar-hide;
@@ -58,7 +63,7 @@
     @apply flex items-center w-3/4 h-5 text-sm rounded-t-2xl bg-yellow-900/75 p-1 justify-around gap-x-1 border border-ptlbrown-100;
   }
   .page-home-add-button {
-    @apply flex justify-center items-center bg-red-950/75 text-ptlbrown-100 font-bold rounded-4xl shadow-[2px_0_10px_#160403,-2px_0_10px_#160403];
+    @apply flex justify-center items-center shrink-0 bg-red-950/75 text-ptlbrown-100 font-bold mb-2 rounded-4xl shadow-[2px_0_8px_#160403,-2px_0_8px_#160403];
   }
   /* MODIFY */
   .page-modify {
@@ -89,7 +94,7 @@
     @apply fixed inset-0 bg-[url(/images/header-bg.jpg)] bg-center bg-cover p-3;
   }
   .modal-form {
-    @apply flex flex-col w-full h-full relative p-3 items-center bg-ptlbrown-100 border-2 border-red-950 rounded-3xl overflow-y-auto;
+    @apply flex flex-col w-full h-full relative p-3 items-center bg-ptlbrown-100 border-2 border-red-950 rounded-3xl;
   }
   .modal-form-fields {
     @apply flex flex-col mt-3 gap-y-3 w-full;
@@ -116,13 +121,16 @@
     @apply border-2 p-2 border-red-950 rounded-lg text-lg outline-0 basis-full text-red-950 caret-red-950 min-h-10 resize-none overflow-hidden;
   }
   .deadline-header {
-    @apply flex w-full justify-around items-center px-2;
+    @apply flex w-full justify-between items-center px-2;
   }
   #deadline-time {
     @apply font-semibold border-2 border-yellow-700 rounded-lg p-1 outline-0 text-center 
-           w-24 tracking-[2px] focus:border-red-950 placeholder:text-yellow-700/50
-           valid:border-red-950;
+           w-24 tracking-[2px] focus:valid:border-green-500 focus:valid:bg-green-100 placeholder:text-yellow-800/50
+           invalid:border-red-700 invalid:bg-red-200/50 valid:border-red-950;
   }
+  /* .deadline-header img {
+    @apply w-5 h-5;
+  } */
   .deadline-section {
     @apply flex flex-col w-full border-2 p-1 rounded-2xl;
   }
@@ -132,11 +140,14 @@
   .deadline-month {
     @apply flex justify-center items-center shrink-0 p-1 rounded-sm w-8 h-8;
   }
+  .deadline-statement {
+    @apply text-[10px] w-70 h-8 text-center font-semibold;
+  }
   .modal-close-button {
     @apply absolute top-2 right-2 w-10 h-10 active:scale-110;
   }
   #submit-button {
-    @apply bg-red-950 w-30 self-center text-white py-2 rounded-2xl text-xl font-bold tracking-widest mt-5;
+    @apply bg-red-950 w-30 self-center text-white py-2 rounded-2xl text-xl font-bold tracking-widest mt-1 disabled:bg-red-950/45 disabled:text-white/45;
   }
   /* FOOTER */
   .main-footer {

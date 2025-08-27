@@ -97,7 +97,7 @@ function ModifyContent() {
                                         <div className="flex text-sm justify-center items-center gap-x-4 w-full text-yellow-900">
                                             <div>{task.priority}</div>
                                             <div>{task.category}</div>
-                                            <div>{task.deadline}</div>
+                                            <div>{task.deadline.label}</div>
                                         </div>
                                 </li>)}
                         </ol>
