@@ -1,0 +1,8 @@
+
+function FormTitle({children}) {
+    return (
+        <h1 className="font-bold text-4xl font-quicks">{children}</h1>
+    )
+}
+
+export default FormTitle
