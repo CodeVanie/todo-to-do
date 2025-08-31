@@ -1,6 +1,6 @@
 # CodeVANIE Portfolio
 
-A personal portfolio website built with **React 19**, **Vite**, and **Tailwind CSS**, showcasing my projects, skills, and experience as a backend-focused developer. Designed with a **mobile-first, responsive layout** and a clean UI.
+A personal portfolio website built with **React 19**, **Vite**, and **Tailwind CSS**, showcasing my projects, skills, and experience as a frontend developer. Designed with a **mobile-first, responsive layout** and a clean UI.
 
 ---
 
@@ -16,17 +16,7 @@ A personal portfolio website built with **React 19**, **Vite**, and **Tailwind C
 ## 🛠️ Tech Stack
 - **React 19**
 - **Vite**
-- **Tailwind CSS v3/v4**
-
----
-
-## 📂 Project Structure
-src/
-┣ assets/ # Images, logos, fonts
-┣ components/ # Reusable React components
-┣ pages/ # Page-level components (About, Projects, etc.)
-┣ App.jsx # Main app entry
-┗ main.jsx # React root
+- **Tailwind CSS v4**
 
 ---
 
@@ -51,7 +41,7 @@ src/
     npm run build
    
    ```
-
+5. Open the page in 360x640 dimension. (I'm still not done with mobile devices version since I do mobile-first approach.)
 
 📬 Contact
 
