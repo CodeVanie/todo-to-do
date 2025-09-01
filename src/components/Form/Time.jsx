@@ -2,6 +2,7 @@ import correct from '../../assets/images/correct-logo.svg'
 import wrong from '../../assets/images/wrong-logo.svg'
 
 function Time({ value, onChange, error }) {
+    console.log(value);
     return(
         <div className='flex items-center gap-x-1'>
             <input className={`font-semibold border-2 rounded-lg p-1 outline-0 text-center w-24 tracking-[2px] placeholder:text-yellow-800/50 

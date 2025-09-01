@@ -7,8 +7,8 @@ function Details({ register }) {
             className="border-2 p-2 border-red-950 rounded-lg text-lg outline-0 basis-full text-red-950 caret-red-950 min-h-10 resize-none overflow-hidden" 
             {...register("details", {
                 maxLength: {
-                    value: 100,
-                    message: "Details cannot exceed 100 characters"
+                    value: 500,
+                    message: "Details cannot exceed 500 characters"
                 }
             })} 
             ref={(el) => {

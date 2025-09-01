@@ -1,5 +1,6 @@
 
 function AboutContent() {
+    console.log("AboutContent rendered");
     return (
         <article className="flex flex-col p-3 gap-y-2">
             <h1 className="text-3xl self-center font-bold text-red-950">ABOUT ME</h1>

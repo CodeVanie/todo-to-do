@@ -19,115 +19,172 @@ import Statement from "../Form/Statement";
 import DeadlinePicker from "../Form/DeadlinePicker";
 
 export const FormContext = createContext();
-const defaultFormValues = {
+
+function FormModal({ type, isOpen, onClose, modifyValues }) {
+  console.log(type);
+  const { tasks, setTasks } = useContext(DataContext);
+  const [deadlineStatement, setDeadlineStatement] = useState(
+    "This task should be completed before the end of the day"
+  );
+  const defaultFormValues = {
     id: "",
     label: "",
     priority: "!",
     category: "",
     details: "",
     deadline: {
-        type: "timeonly",
-        label: "",
-        due: [],
-        time: "00:00",
+      type: "timeonly",
+      label: "",
+      due: [],
+      time: "00:00",
     },
-};
+    favorite: false,
+  };
+  const {
+    register,
+    control,
+    watch,
+    handleSubmit,
+    setValue,
+    getValues,
+    setError,
+    reset,
+    formState: { errors, isSubmitting, isValid },
+  } = useForm({
+    defaultValues: { ...defaultFormValues },
+    mode: "onChange",
+  });
 
-function FormModal({ type = "add", isOpen = false, onClose }) {
-    const { tasks, setTasks } = useContext(DataContext);
-    const [deadlineStatement, setDeadlineStatement] = useState("This task should be completed before the end of the day");
-    const { register, control, watch, handleSubmit,
-            setValue, getValues, setError, reset,
-        formState: { errors, isSubmitting, isValid },
-    } = useForm({
-        defaultValues: { ...defaultFormValues },
-        mode: "onChange"
-    });
-    
-    async function onSubmit(data) {
-        try {
-            await new Promise((resolve) => setTimeout(resolve, 1000));
-            console.log(data);
-            setTasks(prev => [...prev, data]);
-            onClose();
-            reset();
-        } catch (error) {
-            setError("root", {message: "Error submitting form."});
-            console.error("Error submitting form:", error);
-        }
+  async function onSubmit(data) {
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      console.log(data);
+      
+      type === "add" ? 
+        setTasks((prev) => [...prev, data]) : 
+        setTasks((prev) => 
+            prev.map((task) => 
+                (task.id === data.id ? data : task)));
+
+      onClose();
+      reset();
+    } catch (error) {
+      setError("root", { message: "Error submitting form." });
+      console.error("Error submitting form:", error);
     }
+  }
 
-    useEffect(() => {
-        if (getValues("deadline.type")) {
-            if (getValues("deadline.type") === "timeonly") {
-                setDeadlineStatement(
-                    `Complete Before: [ Time: ${getValues("deadline.time")} ] [ Day: Today ]`)
-            } else if (getValues("deadline.type") === "day") {
-                setDeadlineStatement(
-                    `Complete Before: [ Time: ${getValues("deadline.time")} ] [ ${getValues("deadline.label")} ]`
-                )
-            } else if (getValues("deadline.type") === "month") {
-                let warnNoDate = `\n (If that date doesn’t exist in a month, 
-                your deadline will move to the last day of that month.)`
-                setDeadlineStatement(
-                    `Complete Before: [ Time: ${getValues("deadline.time")} ] [ ${getValues("deadline.label")} ] ${getValues("deadline.due")[0] > 28 ? warnNoDate : ""}` 
-                )
-            }
-        }
-    }, [watch("deadline")])
+  useEffect(() => {
+    if (getValues("deadline.type")) {
+      if (getValues("deadline.type") === "timeonly") {
+        setDeadlineStatement(
+          `Complete Before: [ Time: ${getValues(
+            "deadline.time"
+          )} ] [ Day: Today ]`
+        );
+      } else if (getValues("deadline.type") === "day") {
+        setDeadlineStatement(
+          `Complete Before: [ Time: ${getValues(
+            "deadline.time"
+          )} ] [ ${getValues("deadline.label")} ]`
+        );
+      } else if (getValues("deadline.type") === "month") {
+        let warnNoDate = `\n (If that date doesn’t exist in a month, 
+                your deadline will move to the last day of that month.)`;
+        setDeadlineStatement(
+          `Complete Before: [ Time: ${getValues(
+            "deadline.time"
+          )} ] [ ${getValues("deadline.label")} ] ${
+            getValues("deadline.due")[0] > 28 ? warnNoDate : ""
+          }`
+        );
+      }
+    }
+  }, [watch("deadline")]);
 
-    useEffect(() => {
-        isOpen
-            ? (document.body.style.overflow = "hidden")
-            : (document.body.style.overflow = "auto");
-        return () => {
-            document.body.style.overflow = "auto";
-        };
-    }, [isOpen]);
+  useEffect(() => {
+    isOpen
+      ? (document.body.style.overflow = "hidden")
+      : (document.body.style.overflow = "auto");
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isOpen]);
+  useEffect(() => {
+    if (type === "edit" && modifyValues) {
+        console.log("in: ", modifyValues);
+        reset(modifyValues);
+    } else {
+        reset(defaultFormValues);
+    }
+  }, [type, modifyValues, reset])
 
   return createPortal(
-    <>{!isOpen ? null : (
+    <>
+      {!isOpen ? null : (
         <ModalBackground>
-            <FormModalWrapper>
-                <CloseButton onClose={onClose} />
-                <FormTitle>Add Task</FormTitle>
-                <Form onSubmit={handleSubmit(onSubmit)}>
-                    <Title register={register} />
-                    <Controller name="priority" control={control} render={({ field }) => (
-                        <Priority value={field.value} onChange={field.onChange} />)}/>
-                    <Controller name="category" control={control} render={({ field }) => (
-                        <Category value={field.value} onChange={field.onChange} />)}/>
-                    <Details register={register} errors={errors} />
-                    <Controller name="deadline" control={control} rules={
-                    {
-                        validate: (value) => {
-                            if (!value.time) {
-                                return "Time is required.";
-                            }
-                            if (!/^([01]\d|2[0-3]):([0-5]\d)$/.test(value.time)) {
-                                return "Invalid time format. Please use HH:MM.";
-                            }
-                            return true;
+          <FormModalWrapper>
+            <CloseButton onClose={onClose} />
+            <FormTitle>{type === "add" ? "Add Task" : "Edit Task"}</FormTitle>
+            <Form onSubmit={handleSubmit(onSubmit)}>
+              <Title register={register} />
+              <Controller
+                name="priority"
+                control={control}
+                render={({ field }) => (
+                  <Priority value={field.value} onChange={field.onChange} />
+                )}
+              />
+              <Controller
+                name="category"
+                control={control}
+                render={({ field }) => (
+                  <Category value={field.value} onChange={field.onChange} />
+                )}
+              />
+              <Details register={register} errors={errors} />
+              <Controller
+                name="deadline"
+                control={control}
+                rules={{
+                  validate: (value) => {
+                    if (!value.time) {
+                      return "Time is required.";
+                    }
+                    if (!/^([01]\d|2[0-3]):([0-5]\d)$/.test(value.time)) {
+                      return "Invalid time format. Please use HH:MM.";
+                    }
+                    return true;
+                  },
+                }}
+                render={({ field, fieldState }) => (
+                  <Deadline>
+                    <DeadlineHeader>
+                      <Time
+                        value={field.value.time}
+                        onChange={(time) =>
+                          field.onChange({ ...field.value, time })
                         }
-                    }}
-                    render={({ field, fieldState }) => (
-                        <Deadline>
-                            <DeadlineHeader>
-                                <Time 
-                                    value={field.value.time} 
-                                    onChange={(time) => field.onChange({ ...field.value, time })} 
-                                    error={fieldState.error?.message} />
-                            </DeadlineHeader>
-                            <DeadlinePicker value={field.value} onChange={field.onChange} />
-                        </Deadline>
-                    )}/>
-                    <Statement errors={errors} statement={deadlineStatement}/>
-                    <SubmitButton 
-                        isSubmitting={isSubmitting} 
-                        isValid={isValid} 
-                        onSave={() => setValue("id", `t_${tasks.length}`)} />
-                </Form>
-            </FormModalWrapper>
+                        error={fieldState.error?.message}
+                      />
+                    </DeadlineHeader>
+                    <DeadlinePicker
+                      value={field.value}
+                      onChange={field.onChange}
+                    />
+                  </Deadline>
+                )}
+              />
+              <Statement errors={errors} statement={deadlineStatement} />
+              <SubmitButton
+                isSubmitting={isSubmitting}
+                isValid={isValid}
+                onSave={() => {
+                    (type === "add") && setValue("id", `t_${tasks.length}`);
+                }}
+              />
+            </Form>
+          </FormModalWrapper>
         </ModalBackground>
       )}
     </>,

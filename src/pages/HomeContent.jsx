@@ -7,9 +7,12 @@ import AddButtonList from "../components/Buttons/AddButtonList";
 import ControlSection from "../components/Controls/ControlSection";
 
 function HomeContent() {
-    const { tasks, isAddModalOpen, setIsAddModalOpen, categories, sortTypes } = useContext(DataContext);
+    console.log("HomeContent rendered");
+    const { tasks, modal, setModal, categories, sortTypes } = useContext(DataContext);
     const [filteredCategory, setFilteredCategory] = useState("All");
     const [selectedSort, setSelectedSort] = useState("");
+    const openAddModal = () => setModal({ type: "add", data: null });
+    const closeModal = () => setModal({ type: null, data: null });
     const categoriesWithAll = useMemo(() => 
         [{id: "c_0", label: "All"}, ...categories]
     ,[categories]);
@@ -47,7 +50,14 @@ function HomeContent() {
             <TodoList todoList={controlledList}>
                 <AddButtonList />
             </TodoList>
-            <FormModal type="add" isOpen={isAddModalOpen} onClose={() => setIsAddModalOpen(false)} />
+            {modal.type && (
+                <FormModal 
+                    type={modal.type} 
+                    isOpen={true} 
+                    onClose={closeModal} 
+                    modifyValues={modal.data}
+                />
+            )}
         </div>
     )
 }

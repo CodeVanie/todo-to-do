@@ -6,14 +6,14 @@ const initialTodos = [
         {
             id: "t_0",
             label: "I Task Number Zero",
-            priority: "!",
+            priority: "!!!",
             category: "Food",
             details: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sunt ipsa placeat earum modi laboriosam et alias quo expedita quas possimus. Nobis magnam qui aspernatur dolorum iusto ducimus nam expedita suscipit.", 
             deadline: {
                 type: "month",
-                label: "Deadline",
-                values: [1],
-                time: "00:00"
+                label: "Day 31 of the Month",
+                due: [31],
+                time: "12:00"
             },
             favorite: false
         },
@@ -26,7 +26,7 @@ const initialTodos = [
             deadline: {
                 type: "day",
                 label: "Deadline",
-                values: [3],
+                due: [3],
                 time: "00:00"
             },
             favorite: false
@@ -40,7 +40,7 @@ const initialTodos = [
             deadline: {
                 type: "month",
                 label: "Deadline",
-                values: [6],
+                due: [6],
                 time: "00:00"
             },
             favorite: false
@@ -54,7 +54,7 @@ const initialTodos = [
             deadline: {
                 type: "day",
                 label: "Deadline",
-                values: [5],
+                due: [5],
                 time: "00:00"
             },
             favorite: false
@@ -68,7 +68,7 @@ const initialTodos = [
             deadline: {
                 type: "day",
                 label: "Deadline",
-                values: [4],
+                due: [4],
                 time: "00:00"
             },
             favorite: false
@@ -82,7 +82,7 @@ const initialTodos = [
             deadline: {
                 type: "month",
                 label: "Deadline",
-                values: [5],
+                due: [5],
                 time: "00:00"
             },
             favorite: false
@@ -96,7 +96,7 @@ const initialTodos = [
             deadline: {
                 type: "month",
                 label: "Deadline",
-                values: [0],
+                due: [0],
                 time: "00:00"
             },
             favorite: false
@@ -110,7 +110,7 @@ const initialTodos = [
             deadline: {
                 type: "day",
                 label: "Deadline",
-                values: [3],
+                due: [3],
                 time: "00:00"
             },
             favorite: false
@@ -124,7 +124,7 @@ const initialTodos = [
             deadline: {
                 type: "day",
                 label: "Deadline",
-                values: [2],
+                due: [2],
                 time: "00:00"
             },
             favorite: false
@@ -171,10 +171,13 @@ const sortTypes = [
 export const DataContext = createContext();
 
 function App() {
-    const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+    const [modal, setModal] = useState({
+        type: null,
+        data: null
+    })
     const [categories, setCategories] = useState(initialCategories);
     const [tasks, setTasks] = useState(initialTodos);
-    const dataContext = { tasks, setTasks, categories, setCategories, isAddModalOpen, setIsAddModalOpen, sortTypes };
+    const dataContext = { tasks, setTasks, categories, setCategories, modal, setModal, sortTypes };
     
     // const now = new Date();
     // const sixMonthsFromNow = new Date(now);

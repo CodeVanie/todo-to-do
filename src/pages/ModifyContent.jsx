@@ -9,18 +9,21 @@ import ActionButton from '../components/Buttons/ActionButton.jsx';
 export const SheetContext = createContext();
 
 function ModifyContent() {
-    console.log("Modify Content Rendered");
-    const { tasks, categories, sortTypes, setTasks, setCategories, isAddModalOpen, setIsAddModalOpen } = useContext(DataContext);
+    console.log("ModifyContent Rendered");
+    const { tasks, categories, sortTypes, setTasks, setCategories, modal, setModal } = useContext(DataContext);
     const [selectedItems, setSelectedItems] = useState(new Set());
     const [selectedType, setSelectedType] = useState(null);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [showError, setShowError] = useState(false);
     const scrollRef = useRef(null); 
 
+    const openAddModal = () => setModal({ type: "add", data: null });
+    const openEditModal = (item) => setModal({ type: "edit", data: item });
+    const closeModal = () => setModal({ type: null, data: null });
+
     useEffect(() => {
-        if (scrollRef.current) {
-            scrollRef.current.scrollLeft = scrollRef.current.scrollWidth / 2 - scrollRef.current.clientWidth / 2;
-        }
+        scrollRef.current && (scrollRef.current.scrollLeft = 
+            scrollRef.current.scrollWidth / 2 - scrollRef.current.clientWidth / 2);
     },[]);
 
 function handleSelectedItems(item, type) {
@@ -35,10 +38,6 @@ function handleSelectedItems(item, type) {
 
         return newSelectedItems;
     })
-}
-function handleEditButton() {
-    selectedItems.size > 0 ? setShowError(true) :
-                                setIsEditModalOpen(true);
 }
 function handleDeleteButton(type) {
     let list = type === "task" ? tasks : categories;
@@ -60,8 +59,8 @@ function unselectAll() {
     return (
         <div className="flex flex-col bg-[url(/images/header-bg.jpg)] bg-cover bg-no-repeat bg-center">
             <div className="flex justify-center gap-x-6 m-2">
-                <ActionButton logo={addlogo} alt="addimg" onClick={() => setIsAddModalOpen(true)}/>
-                <ActionButton logo={editlogo} alt="editimg" onClick={() => handleEditButton()}/>
+                <ActionButton logo={addlogo} alt="addimg" onClick={openAddModal}/>
+                <ActionButton logo={editlogo} alt="editimg" onClick={() => openEditModal([...selectedItems][0])}/>
                 <ActionButton logo={deletelogo} alt="deleteimg" onClick={() => handleDeleteButton(selectedType)}/>
                 <ActionButton logo={cancellogo} alt="cancelimg" onClick={unselectAll}/>
             </div>
@@ -78,8 +77,14 @@ function unselectAll() {
                     </Sheet>
                 </SheetContext.Provider>
             </div>
-            <FormModal type="add" isOpen={isAddModalOpen} onClose={() => setIsAddModalOpen(false)} />
-            {/* <AddModal type="edit" isOpen={isEd} onClose={() => setIsAddModalOpen(false)} currentValues={[...selectedItems][0]}/> */}
+            {modal.type && (
+                <FormModal 
+                    type={modal.type} 
+                    isOpen={true} 
+                    onClose={closeModal} 
+                    modifyValues={modal.data}
+                />
+            )}
         </div>
         
     )
