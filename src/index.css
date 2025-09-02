@@ -8,13 +8,17 @@
   --color-ptlbrown-300: #c48f4a;
   --color-correct: #00b303;
   --color-wrong: #d10000;
+  --animate-modalentry: modalEntry 0.5s ease-in-out forwards;
+  --animate-modalexit: modalExit 0.5s ease-in-out forwards;
+  --animate-bgmodalfadein: bgModalFadeIn 0.5s ease-in-out forwards;
+  --animate-bgmodalfadeout: bgModalFadeOut 0.5s ease-in-out forwards;
 }
 @plugin "tailwind-scrollbar-hide";
 
 /* LAYERS */
 @layer base {
   body {
-    @apply bg-[url(/images/content-bg.jpg)] bg-center bg-no-repeat bg-cover bg-fixed font-quicks min-w-[360px] transition duration-300 ease-in;
+    @apply font-quicks min-w-[360px] overflow-scroll;
   }
   input:-webkit-autofill {
     -webkit-box-shadow: 0 0 0px 1000px #e7b574 inset !important;
@@ -28,9 +32,6 @@
     @apply text-red-950 text-justify indent-7 font-bold;
   }
   /* MODIFY */
-  .page-modify-sheets {
-    @apply flex gap-x-4 w-full overflow-x-auto snap-x snap-mandatory px-10 pb-3;
-  }
   .modal-form-field {
     @apply flex gap-x-1 items-center;
   }
@@ -50,5 +51,44 @@
   }
   .bg-smooth-brown {
     @apply bg-[url(/images/header-bg.jpg)];
+  }
+  .hover-icon-bigger {
+    @apply transition-all duration-200;
+  }
+  .hover-icon-bigger:hover {
+    width: calc(6% + 0.25em);
+    height: calc(6% + 0.25em);
+  }
+  @keyframes modalEntry {
+    from {
+      bottom: -100%;
+    }
+    to {
+      bottom: 0;
+    }
+  }
+  @keyframes modalExit {
+    from {
+      bottom: 0;
+    }
+    to {
+      bottom: -100%;
+    }
+  }
+  @keyframes bgModalFadeIn {
+    from {
+      background-color: rgba(0, 0, 0, 0);
+    }
+    to {
+      background-color: rgba(0, 0, 0, 0.25);
+    }
+  }
+    @keyframes bgModalFadeOut {
+    from {
+      background-color: rgba(0, 0, 0, 0.25);
+    }
+    to {
+      background-color: rgba(0, 0, 0, 0);
+    }
   }
 }

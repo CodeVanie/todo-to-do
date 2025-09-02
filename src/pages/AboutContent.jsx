@@ -2,7 +2,7 @@
 function AboutContent() {
     console.log("AboutContent rendered");
     return (
-        <article className="flex flex-col p-3 gap-y-2">
+        <article className="flex flex-col p-3 gap-y-2 max-w-6xl">
             <h1 className="text-3xl self-center font-bold text-red-950">ABOUT ME</h1>
             <p className="about-parag">
                 I’m <span className="font-bold">CodeVANIE</span> — a 24-year-old developer who thrives on solving complex challenges and building efficient, user-focused solutions. For the past two years, I’ve worked at Oracle NetSuite, starting in General Operations where I handled 4–6 SuiteCloud-related cases daily, mentored new hires, and earned recognition as Top Employee of the Month. I later joined the SWAT Enterprise team, working with the top 200 enterprise clients to tackle high-impact cases under pressure, combining deep technical troubleshooting with clear communication and collaboration.
