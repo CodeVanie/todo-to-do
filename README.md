@@ -23,18 +23,22 @@ A personal portfolio website built with **React 19**, **Vite**, and **Tailwind C
 ## 📦 Installation & Setup
 1. Clone the repository:
    ```
-   git clone https://github.com/CodeVanie/vanie-portfolio.git
-   cd codevanie-portfolio
+   git clone https://github.com/CodeVanie/to-do-todo.git
+   cd to-do-todo
    ```
 
 2. Install dependencies:
    ```
    npm install
+   npm install tailwindcss @tailwindcss/vite
+   npm install react-router-dom
+   npm install react-hook-form
+   npm install tailwind-scrollbar-hide
    ```
 3. Start the development server:
    ```
    npm run build
-   
+  
    ```
 4. Build for production:
    ```
