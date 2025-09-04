@@ -12,6 +12,7 @@
   --animate-modalexit: modalExit 0.5s ease-in-out forwards;
   --animate-bgmodalfadein: bgModalFadeIn 0.5s ease-in-out forwards;
   --animate-bgmodalfadeout: bgModalFadeOut 0.5s ease-in-out forwards;
+  --breakpoint-xs: 32rem; /* 512px */
 }
 @plugin "tailwind-scrollbar-hide";
 
@@ -26,6 +27,12 @@
   }
   label {
     @apply items-center tracking-widest text-red-950;
+  }
+  dt {
+    @apply font-bold text-lg xs:text-xl my-2;
+  }
+  dd {
+    @apply italic xs:text-lg mb-2 font-semibold;
   }
 }
 /* COMPONENTS */

@@ -1,7 +1,7 @@
 
 function ModalTitle({children}) {
     return (
-        <h1 className="font-bold text-4xl font-quicks">{children}</h1>
+        <h1 className="font-bold text-4xl font-quicks text-red-950">{children}</h1>
     )
 }
 

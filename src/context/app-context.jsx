@@ -8,10 +8,10 @@ const initialTodos = [
             label: "I Task Number Zero",
             priority: "!!!",
             category: "Food",
-            details: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sunt ipsa placeat earum modi laboriosam et alias quo expedita quas possimus. Nobis magnam qui aspernatur dolorum iusto ducimus nam expedita suscipit.", 
+            details: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ut provident reprehenderit dolores et optio eum labore cum aspernatur perferendis, impedit eius quisquam neque temporibus earum consequuntur facilis omnis rem fuga!", 
             deadline: {
                 type: "month",
-                label: "Day 31 of the Month",
+                label: "Month(31)",
                 due: [31],
                 time: "12:00"
             },
@@ -22,7 +22,7 @@ const initialTodos = [
             label: "V Task Number One",
             priority: "!!",
             category: "Morning",
-            details: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sunt ipsa placeat earum modi laboriosam et alias quo expedita quas possimus. Nobis magnam qui aspernatur dolorum iusto ducimus nam expedita suscipit.", 
+            details: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.", 
             deadline: {
                 type: "day",
                 label: "Deadline",
@@ -36,7 +36,7 @@ const initialTodos = [
             label: "Z Task Number Two",
             priority: "!!!",
             category: "Dentist",
-            details: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sunt ipsa placeat earum modi laboriosam et alias quo expedita quas possimus. Nobis magnam qui aspernatur dolorum iusto ducimus nam expedita suscipit.", 
+            details: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.", 
             deadline: {
                 type: "month",
                 label: "Deadline",
@@ -50,7 +50,7 @@ const initialTodos = [
             label: "R Task Number Three",
             priority: "!",
             category: "Self",
-            details: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sunt ipsa placeat earum modi laboriosam et alias quo expedita quas possimus. Nobis magnam qui aspernatur dolorum iusto ducimus nam expedita suscipit.", 
+            details: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.", 
             deadline: {
                 type: "day",
                 label: "Deadline",
@@ -64,7 +64,7 @@ const initialTodos = [
             label: "G Task Number Four",
             priority: "!!",
             category: "Friends",
-            details: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sunt ipsa placeat earum modi laboriosam et alias quo expedita quas possimus. Nobis magnam qui aspernatur dolorum iusto ducimus nam expedita suscipit.", 
+            details: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.", 
             deadline: {
                 type: "day",
                 label: "Deadline",
@@ -78,7 +78,7 @@ const initialTodos = [
             label: "S Task Number Five",
             priority: "!!!",
             category: "Cooking",
-            details: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sunt ipsa placeat earum modi laboriosam et alias quo expedita quas possimus. Nobis magnam qui aspernatur dolorum iusto ducimus nam expedita suscipit.", 
+            details: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.", 
             deadline: {
                 type: "month",
                 label: "Deadline",
@@ -92,7 +92,7 @@ const initialTodos = [
             label: "L Task Number Six",
             priority: "!",
             category: "Friends",
-            details: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sunt ipsa placeat earum modi laboriosam et alias quo expedita quas possimus. Nobis magnam qui aspernatur dolorum iusto ducimus nam expedita suscipit.", 
+            details: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.", 
             deadline: {
                 type: "month",
                 label: "Deadline",
@@ -106,7 +106,7 @@ const initialTodos = [
             label: "A Task Number Seven",
             priority: "!!",
             category: "Food",
-            details: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sunt ipsa placeat earum modi laboriosam et alias quo expedita quas possimus. Nobis magnam qui aspernatur dolorum iusto ducimus nam expedita suscipit.", 
+            details: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.", 
             deadline: {
                 type: "day",
                 label: "Deadline",
@@ -120,7 +120,7 @@ const initialTodos = [
             label: "E Task Number Eight",
             priority: "!!!",
             category: "Morning",
-            details: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sunt ipsa placeat earum modi laboriosam et alias quo expedita quas possimus. Nobis magnam qui aspernatur dolorum iusto ducimus nam expedita suscipit.", 
+            details: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.", 
             deadline: {
                 type: "day",
                 label: "Deadline",
@@ -172,8 +172,10 @@ const sortTypes = [
 function AppContextProvider({ children }) {
     const [todoFormModal, setTodoFormModal] = useState({type: null, data: null, status: false});
     const [categories, setCategories] = useState(initialCategories);
+    const [filteredCategory, setFilteredCategory] = useState("All");
+    const [selectedSort, setSelectedSort] = useState("Priority");
     const [tasks, setTasks] = useState(initialTodos);
-    const appContext = { tasks, setTasks, categories, setCategories, todoFormModal, setTodoFormModal, sortTypes };
+    const appContext = { tasks, setTasks, categories, setCategories, todoFormModal, setTodoFormModal, sortTypes, filteredCategory, setFilteredCategory, selectedSort, setSelectedSort };
     return (
         <AppContext.Provider value={appContext}>
             {children}

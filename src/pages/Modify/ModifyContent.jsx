@@ -11,16 +11,14 @@ export const SheetContext = createContext();
 
 function ModifyContent() {
     console.log("ModifyContent Rendered");
-    const { tasks, categories, sortTypes, setTasks, setCategories, todoFormModal, setTodoFormModal } = useContext(AppContext);
+    const { tasks, categories, sortTypes, setTasks, setCategories, todoFormModal } = useContext(AppContext);
+    const { openAddTodoModal, openEditTodoModal, closeTodoModal } = useFormModalControl();
     const [isAddOptionOpen, setIsAddOptionOpen] = useState(false);
     const [isCategFormOpen, setIsCategFormOpen] = useState(false);
     const [selectedItems, setSelectedItems] = useState(new Set());
     const [selectedType, setSelectedType] = useState(null);
     const [showError, setShowError] = useState(false);
     const scrollRef = useRef(null);
-    const openAddModal = () => setTodoFormModal({ type: "add", data: null, status: true });
-    const openEditModal = (item) => setTodoFormModal({ type: "edit", data: item, status: true });
-    const closeModal = () => setTodoFormModal({ type: null, data: null, status: false });
 
     useEffect(() => {
         scrollRef.current && (scrollRef.current.scrollLeft = 
@@ -40,6 +38,15 @@ function handleSelectedItems(item, type) {
         return newSelectedItems;
     })
 }
+function handleEditButton() {
+    if (selectedItems.size === 1) {
+        if (selectedType === "category") {
+            setIsCategFormOpen(true);
+        } else if (selectedType === "task") {
+            openEditTodoModal([...selectedItems][0]);
+        }
+    }
+}
 function handleDeleteButton(type) {
     let list = type === "task" ? tasks : categories;
     var newList = [];
@@ -58,14 +65,14 @@ function unselectAll() {
 }
 
     return (
-        <div className="flex w-full flex-col bg-cover bg-no-repeat bg-center">
-            <section className="flex justify-center gap-x-6 m-2 z-10 relative">
+        <div className="flex w-full flex-col items-center bg-cover bg-no-repeat bg-center">
+            <section className="flex justify-center gap-x-6 m-2 z-5 relative">
                 <ActionButton name="addrow" onClick={() => setIsAddOptionOpen(true)}/>
-                <ActionButton name="editrow" onClick={() => openEditModal([...selectedItems][0])}/>
+                <ActionButton name="editrow" onClick={handleEditButton}/>
                 <ActionButton name="deleterow" onClick={() => handleDeleteButton(selectedType)}/>
                 <ActionButton name="reset" onClick={unselectAll}/>
             </section>
-            <section ref={scrollRef} className="flex justify-center gap-x-4 w-full overflow-x-auto snap-x snap-mandatory px-6 pb-3 relative z-10">
+            <section ref={scrollRef} className="flex gap-x-4 w-full overflow-x-auto snap-x snap-mandatory px-6 pb-3 relative z-5 xl:justify-center scrollbar-hide">
                 <SheetContext.Provider value={{selectedItems, handleSelectedItems}}>
                     <Sheet title="Edit Category List">
                         <SheetList type="category" itemList={categories} />
@@ -81,14 +88,13 @@ function unselectAll() {
             <TodoFormModal
                 type={todoFormModal.type} 
                 isOpen={todoFormModal.status} 
-                onClose={closeModal} 
+                onClose={closeTodoModal} 
                 modifyValues={todoFormModal.data}
             />
-            <CategoryFormModal isOpen={isCategFormOpen} onClose={() => setIsCategFormOpen(false)}/>
+            <CategoryFormModal type={selectedItems.size === 1 ? "edit" : "add"} isOpen={isCategFormOpen} onClose={() => setIsCategFormOpen(false)} modifyValues={[...selectedItems][0]}/>
             <ChooseAddModal isOpen={isAddOptionOpen} onClose={() => setIsAddOptionOpen(false)} 
-                            addTaskModal={openAddModal} addCategoryModal={() => setIsCategFormOpen(true)} />
+                            addTaskModal={openAddTodoModal} addCategoryModal={() => setIsCategFormOpen(true)} />
         </div>
-        
     )
 }
 

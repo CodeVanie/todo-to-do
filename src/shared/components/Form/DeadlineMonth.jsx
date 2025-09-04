@@ -16,7 +16,7 @@ function DeadlineMonth ({ value, handleUpdate }) {
         }
         handleUpdate("month", {
             type: "month",
-            label: `Day ${newDue[0]} of the Month`,
+            label: `Month(${newDue[0]})`,
             due: newDue,
         });
     }
@@ -30,7 +30,7 @@ function DeadlineMonth ({ value, handleUpdate }) {
                     <li key={index} data-value={num} onClick={onDeadlineClick} 
                     className={`grid place-items-center rounded-sm w-9 h-8 cursor-pointer select-none shrink-0 hover:scale-110 
                         ${(value.due.includes(num) && value.type === "month") ? 
-                            "border-2 scale-110 border-red-950 scale-110" : 
+                            "border-2 scale-110 border-red-950" : 
                             "border border-yellow-700"}`}>
                         {num}
                     </li>

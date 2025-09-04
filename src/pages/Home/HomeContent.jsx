@@ -1,39 +1,29 @@
 import React, { useContext, useMemo, useState } from "react";
-import TodoFormModal from "../../shared/components/Modal/TodoFormModal.jsx";
+import { TodoFormModal, ViewTodoModal } from "../../shared/components/Modal/modals.js"
 import Controls from "./Controls/Controls.jsx"
 import TodoList from "./TodoList";
+import TodoItem from "./TodoItem";
 import { ListAddButton } from "../../shared/components/Button/buttons.js";
 import ControlSection from "./Controls/ControlSection.jsx";
 import { AppContext } from "../../context/app-context";
+import useControlledList, { useFormModalControl } from "../../hooks.js";
+import HomeContentWrapper from "../../layouts/HomeContentWrapper.jsx";
 
 function HomeContent() {
     console.log("HomeContent rendered");
-    const { tasks, todoFormModal, setTodoFormModal, categories, sortTypes } = useContext(AppContext);
-    const [filteredCategory, setFilteredCategory] = useState("All");
-    const [selectedSort, setSelectedSort] = useState("Priority");
-    const openAddModal = () => setTodoFormModal({ type: "add", data: null, status: true });
-    const closeModal = () => setTodoFormModal({ type: null, data: null, status: false });
+    const { todoFormModal, categories, sortTypes, setFilteredCategory, setSelectedSort } = useContext(AppContext);
+    const { openAddTodoModal, openEditTodoModal, closeTodoModal } = useFormModalControl();
+    const { controlledList, selectedSort, filteredCategory } = useControlledList();
+    const [viewTodo, setViewTodo] = useState({
+        data: {},
+        status: false
+    });
     const categoriesWithAll = useMemo(() => 
         [{id: "c_0", label: "All"}, ...categories]
     ,[categories]);
-    const controlledList = useMemo(() => {
-        let list = [...tasks];
-
-        if (filteredCategory !== "All") {
-            return tasks.filter((t,_) => t.category === filteredCategory)
-        }
-
-        if (selectedSort === "Priority") {
-            return [...tasks].sort((a, b) => b.priority.length - a.priority.length);
-        } else if (selectedSort === "Letters") {
-            return [...tasks].sort((a, b) => a.label.localeCompare(b.label));
-        }
-
-        return list;
-    },[tasks, filteredCategory, selectedSort]);
 
     return (
-        <div className="flex w-full flex-col p-3 gap-y-2 max-w-4xl relative h-[80vh]">
+        <HomeContentWrapper>
             <Controls>
                 <ControlSection 
                     title="Sort By" 
@@ -47,16 +37,25 @@ function HomeContent() {
                     onControlClick={setFilteredCategory} 
                     control={filteredCategory} />
             </Controls>
-            <TodoList todoList={controlledList}>
-                <ListAddButton openModal={openAddModal} />
+            <TodoList>
+                <ListAddButton openModal={openAddTodoModal} />
+                <ol className="flex flex-col w-full overflow-y-auto p-2 pb-25 gap-y-1 scrollbar-hide">
+                {controlledList.map((todo, index) => 
+                    <TodoItem key={index} todo={todo} onView={setViewTodo}/>
+                )}
+                </ol>
             </TodoList>
             <TodoFormModal  
                 type={todoFormModal.type} 
                 isOpen={todoFormModal.status} 
-                onClose={closeModal} 
+                onClose={closeTodoModal} 
                 modifyValues={todoFormModal.data}
             />
-        </div>
+            <ViewTodoModal 
+                isOpen={viewTodo.status} 
+                onClose={() => setViewTodo({data: {},status: false})} 
+                todo={viewTodo.data} />
+        </HomeContentWrapper>
     )
 }
 

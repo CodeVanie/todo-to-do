@@ -33,9 +33,9 @@ function DeadlineDay ({ value, handleUpdate }) {
     }
 
     return (
-        <div className={`flex flex-col justify-center border-2 p-1 rounded-2xl sm:relative w-full max-w-lg 
+        <div className={`flex flex-col justify-center border-2 p-1 rounded-2xl sm:relative w-full max-w-md 
             ${value.type === "day" ? "border-red-950" : "border-yellow-700"}`}>
-            <h3 className='text-left sm:absolute tracking-widest'>DAYS</h3>
+            <h3 className='text-left xs:absolute tracking-widest'>DAYS</h3>
             <ol className='flex gap-x-1 justify-center'>
                 {days.map((day, index) => 
                     <li key={index} data-value={day.id} 
