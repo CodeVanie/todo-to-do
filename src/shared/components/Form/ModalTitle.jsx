@@ -1,8 +1,8 @@
 
-function FormTitle({children}) {
+function ModalTitle({children}) {
     return (
         <h1 className="font-bold text-4xl font-quicks">{children}</h1>
     )
 }
 
-export default FormTitle
+export default ModalTitle

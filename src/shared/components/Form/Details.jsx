@@ -2,9 +2,9 @@ function Details({ register }) {
 
     return (
         <div className='modal-form-field'>
-            <label htmlFor="modal-form-details" className='items-center'>Details: </label>
+            <label htmlFor="modal-form-details">DETAILS</label>
             <textarea id='modal-form-details' placeholder='Add task details...' 
-            className="border-2 p-2 border-red-950 rounded-lg text-lg outline-0 basis-full text-red-950 caret-red-950 min-h-10 resize-none overflow-hidden" 
+            className="w-full border-2 p-2 border-yellow-700 rounded-lg text-lg outline-0 basis-full text-red-950 caret-red-950 min-h-10 resize-none overflow-hidden hover:border-red-950" 
             {...register("details", {
                 maxLength: {
                     value: 500,

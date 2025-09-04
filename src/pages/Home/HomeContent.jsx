@@ -1,5 +1,5 @@
 import React, { useContext, useMemo, useState } from "react";
-import FormModal from "../../shared/components/Modal/FormModal.jsx";
+import TodoFormModal from "../../shared/components/Modal/TodoFormModal.jsx";
 import Controls from "./Controls/Controls.jsx"
 import TodoList from "./TodoList";
 import { ListAddButton } from "../../shared/components/Button/buttons.js";
@@ -8,11 +8,11 @@ import { AppContext } from "../../context/app-context";
 
 function HomeContent() {
     console.log("HomeContent rendered");
-    const { tasks, formModal, setFormModal, categories, sortTypes } = useContext(AppContext);
+    const { tasks, todoFormModal, setTodoFormModal, categories, sortTypes } = useContext(AppContext);
     const [filteredCategory, setFilteredCategory] = useState("All");
     const [selectedSort, setSelectedSort] = useState("Priority");
-    const openAddModal = () => setFormModal({ type: "add", data: null, status: true });
-    const closeModal = () => setFormModal({ type: null, data: null, status: false });
+    const openAddModal = () => setTodoFormModal({ type: "add", data: null, status: true });
+    const closeModal = () => setTodoFormModal({ type: null, data: null, status: false });
     const categoriesWithAll = useMemo(() => 
         [{id: "c_0", label: "All"}, ...categories]
     ,[categories]);
@@ -33,7 +33,7 @@ function HomeContent() {
     },[tasks, filteredCategory, selectedSort]);
 
     return (
-        <div className="flex w-full flex-col p-3 gap-y-2 max-w-3xl">
+        <div className="flex w-full flex-col p-3 gap-y-2 max-w-4xl relative h-[80vh]">
             <Controls>
                 <ControlSection 
                     title="Sort By" 
@@ -50,11 +50,11 @@ function HomeContent() {
             <TodoList todoList={controlledList}>
                 <ListAddButton openModal={openAddModal} />
             </TodoList>
-            <FormModal  
-                type={formModal.type} 
-                isOpen={formModal.status} 
+            <TodoFormModal  
+                type={todoFormModal.type} 
+                isOpen={todoFormModal.status} 
                 onClose={closeModal} 
-                modifyValues={formModal.data}
+                modifyValues={todoFormModal.data}
             />
         </div>
     )

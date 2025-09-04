@@ -8,7 +8,7 @@ function Priority({ value, onChange }) {
                                                 "border-yellow-700 text-yellow-700"}`
     return (
         <div className='modal-form-field'>
-            <label className='items-center'>Priority: </label>
+            <label>PRIORITY</label>
             <div className='modal-form-priority'>
                 <h3 className={lowPriorityClass} onClick={() => onChange("!")}>!</h3>
                 <h3 className={midPriorityClass} onClick={() => onChange("!!")}>!!</h3>

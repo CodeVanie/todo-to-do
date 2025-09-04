@@ -14,8 +14,8 @@ function handleCategorySelect(e) {
             {categories.map((c, index) => 
                 <li key={index} data-value={c.label}
                     onClick={handleCategorySelect} 
-                    className="px-4 py-2 hover:bg-purple-100 cursor-pointer">
-                    {c.label}
+                    className="flex px-4 py-2 hover:bg-ptlbrown-200 cursor-pointer justify-center">
+                    {c.label.toUpperCase()}
                 </li>
             )}
         </ul>

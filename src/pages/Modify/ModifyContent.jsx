@@ -1,24 +1,26 @@
-import { addlogo, editlogo, deletelogo, cancellogo } from '../../assets/images/logos.js'
 import { useEffect, useRef, useState, useContext, createContext } from 'react'
 import Sheet from './Sheets/Sheet.jsx';
 import SheetList from './Sheets/SheetList.jsx';
 import { ActionButton } from '../../shared/components/Button/buttons.js';
 import { AppContext } from '../../context/app-context.jsx';
-import FormModal from '../../shared/components/Modal/FormModal.jsx';
+import ChooseAddModal from '../../shared/components/Modal/ChooseAddModal.jsx';
+import TodoFormModal from '../../shared/components/Modal/TodoFormModal.jsx';
+import CategoryFormModal from '../../shared/components/Modal/CategoryFormModal.jsx';
 
 export const SheetContext = createContext();
 
 function ModifyContent() {
     console.log("ModifyContent Rendered");
-    const { tasks, categories, sortTypes, setTasks, setCategories, formModal, setFormModal } = useContext(AppContext);
+    const { tasks, categories, sortTypes, setTasks, setCategories, todoFormModal, setTodoFormModal } = useContext(AppContext);
+    const [isAddOptionOpen, setIsAddOptionOpen] = useState(false);
+    const [isCategFormOpen, setIsCategFormOpen] = useState(false);
     const [selectedItems, setSelectedItems] = useState(new Set());
     const [selectedType, setSelectedType] = useState(null);
     const [showError, setShowError] = useState(false);
-    const scrollRef = useRef(null); 
-    console.log(formModal.status);
-    const openAddModal = () => setFormModal({ type: "add", data: null, status: true });
-    const openEditModal = (item) => setFormModal({ type: "edit", data: item, status: true });
-    const closeModal = () => setFormModal({ type: null, data: null, status: false });
+    const scrollRef = useRef(null);
+    const openAddModal = () => setTodoFormModal({ type: "add", data: null, status: true });
+    const openEditModal = (item) => setTodoFormModal({ type: "edit", data: item, status: true });
+    const closeModal = () => setTodoFormModal({ type: null, data: null, status: false });
 
     useEffect(() => {
         scrollRef.current && (scrollRef.current.scrollLeft = 
@@ -57,13 +59,13 @@ function unselectAll() {
 
     return (
         <div className="flex w-full flex-col bg-cover bg-no-repeat bg-center">
-            <section className="flex justify-center gap-x-6 m-2">
-                <ActionButton logo={addlogo} alt="addimg" onClick={openAddModal}/>
-                <ActionButton logo={editlogo} alt="editimg" onClick={() => openEditModal([...selectedItems][0])}/>
-                <ActionButton logo={deletelogo} alt="deleteimg" onClick={() => handleDeleteButton(selectedType)}/>
-                <ActionButton logo={cancellogo} alt="cancelimg" onClick={unselectAll}/>
+            <section className="flex justify-center gap-x-6 m-2 z-10 relative">
+                <ActionButton name="addrow" onClick={() => setIsAddOptionOpen(true)}/>
+                <ActionButton name="editrow" onClick={() => openEditModal([...selectedItems][0])}/>
+                <ActionButton name="deleterow" onClick={() => handleDeleteButton(selectedType)}/>
+                <ActionButton name="reset" onClick={unselectAll}/>
             </section>
-            <section ref={scrollRef} className="flex justify-center gap-x-4 w-full overflow-x-auto snap-x snap-mandatory px-6 pb-3">
+            <section ref={scrollRef} className="flex justify-center gap-x-4 w-full overflow-x-auto snap-x snap-mandatory px-6 pb-3 relative z-10">
                 <SheetContext.Provider value={{selectedItems, handleSelectedItems}}>
                     <Sheet title="Edit Category List">
                         <SheetList type="category" itemList={categories} />
@@ -76,12 +78,15 @@ function unselectAll() {
                     </Sheet>
                 </SheetContext.Provider>
             </section>
-            <FormModal 
-                type={formModal.type} 
-                isOpen={formModal.status} 
+            <TodoFormModal
+                type={todoFormModal.type} 
+                isOpen={todoFormModal.status} 
                 onClose={closeModal} 
-                modifyValues={formModal.data}
+                modifyValues={todoFormModal.data}
             />
+            <CategoryFormModal isOpen={isCategFormOpen} onClose={() => setIsCategFormOpen(false)}/>
+            <ChooseAddModal isOpen={isAddOptionOpen} onClose={() => setIsAddOptionOpen(false)} 
+                            addTaskModal={openAddModal} addCategoryModal={() => setIsCategFormOpen(true)} />
         </div>
         
     )

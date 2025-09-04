@@ -17,10 +17,12 @@ function DeadlinePicker({ value, onChange }) {
         setDeadlineType(type);
         onChange(newValue);
     }
-    return (<>
-        <DeadlineDay value={value} handleUpdate={handleUpdate} deadlineType={deadlineType}/>
-        <DeadlineMonth value={value} handleUpdate={handleUpdate} deadlineType={deadlineType}/>
-    </>)
+    return (
+        <div className="flex items-center w-full flex-col gap-y-3">
+            <DeadlineDay value={value} handleUpdate={handleUpdate} deadlineType={deadlineType}/>
+            <DeadlineMonth value={value} handleUpdate={handleUpdate} deadlineType={deadlineType}/>
+        </div>
+    )
 }
 
 export default DeadlinePicker

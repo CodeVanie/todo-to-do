@@ -22,15 +22,15 @@ function DeadlineMonth ({ value, handleUpdate }) {
     }
 
     return (
-        <div className={`flex flex-col w-full border-2 px-1 pt-1 rounded-2xl  
+        <div className={`flex flex-col border-2 px-1 pt-1 rounded-2xl w-full 
             ${value.type === "month" ? "border-red-950" : "border-yellow-700"}`}>
-            <h3 className='text-left'>Day of the Month ( 1 ~ 31 )</h3>
-            <ol className='grid grid-flow-col gap-x-1 w-full p-1 overflow-x-auto scrollbar-hide'>
+            <h3 className='text-left'>DAY OF THE MONTH ( 1 ~ 31 )</h3>
+            <ol className='flex sm:justify-center gap-1 p-1 max-sm:overflow-x-auto scrollbar-hide sm:flex-wrap'>
                 {dateNum.map((num, index) => 
                     <li key={index} data-value={num} onClick={onDeadlineClick} 
-                    className={`grid place-items-center rounded-sm w-9 h-8 cursor-pointer select-none 
+                    className={`grid place-items-center rounded-sm w-9 h-8 cursor-pointer select-none shrink-0 hover:scale-110 
                         ${(value.due.includes(num) && value.type === "month") ? 
-                            "border-2 border-red-950 scale-110" : 
+                            "border-2 scale-110 border-red-950 scale-110" : 
                             "border border-yellow-700"}`}>
                         {num}
                     </li>

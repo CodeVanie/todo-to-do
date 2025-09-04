@@ -170,10 +170,10 @@ const sortTypes = [
             }];
 
 function AppContextProvider({ children }) {
-    const [formModal, setFormModal] = useState({type: null, data: null, status: false});
+    const [todoFormModal, setTodoFormModal] = useState({type: null, data: null, status: false});
     const [categories, setCategories] = useState(initialCategories);
     const [tasks, setTasks] = useState(initialTodos);
-    const appContext = { tasks, setTasks, categories, setCategories, formModal, setFormModal, sortTypes };
+    const appContext = { tasks, setTasks, categories, setCategories, todoFormModal, setTodoFormModal, sortTypes };
     return (
         <AppContext.Provider value={appContext}>
             {children}

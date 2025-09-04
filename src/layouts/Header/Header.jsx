@@ -1,19 +1,18 @@
-import { aboutme, projects, home, modify, profile, aboutmed, projectsd, homed, modifyd, profiled } from '../../assets/images/logos.js'
 import NavItem from './NavItem.jsx';
 import NavBar from './NavBar.jsx';
 import Logo from './Logo.jsx';
-import BackToPortfolio from './BackToPortfolio.jsx';
+import Portfolio from './Portfolio.jsx';
 import { useLocation } from 'react-router-dom';
 import HeaderWrapper from '../HeaderWrapper.jsx';
 
 function Header() {
     const { pathname } = useLocation();
     const navItems = [
-        { page: "aboutme", label: "App Guide", icon: aboutme, darkicon: aboutmed },
-        { page: "projects", label: "Projects", icon: projects, darkicon: projectsd },
-        { page: "home", label: "Home", icon: home, darkicon: homed },
-        { page: "modify", label: "List Manager", icon: modify, darkicon: modifyd },
-        { page: "profile", label: "Profile", icon: profile, darkicon: profiled },
+        { page: "aboutapp", label: "App Guide"},
+        { page: "projects", label: "Projects" },
+        { page: "home", label: "Home" },
+        { page: "modify", label: "List Manager" },
+        { page: "profile", label: "Profile"},
     ];
 
     return (
@@ -24,7 +23,7 @@ function Header() {
                     <NavItem key={item.page} {...item} currentPage={pathname} />
                 ))}
             </NavBar>
-            <BackToPortfolio currentPage={pathname}/>
+            <Portfolio currentPage={pathname}/>
         </HeaderWrapper>
     );
 }

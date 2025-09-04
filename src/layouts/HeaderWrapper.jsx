@@ -1,7 +1,7 @@
 
 function HeaderWrapper({ children, currentPage }) {
 
-    const headerClass = `bg-center flex justify-center h-14
+    const headerClass = `bg-center flex justify-center h-14 sticky top-0 z-20
         ${currentPage === "/modify" ?
             "bg-rough-brown text-red-950" : 
             "bg-smooth-brown bg-cover text-ptlbrown-100"}`;

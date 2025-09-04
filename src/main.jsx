@@ -13,7 +13,7 @@ const router = createBrowserRouter([
     children: [
       {index: true, element: <Navigate to="/home" replace />},
       {path: 'home', Component: HomeContent},
-      {path: 'aboutme', Component: AboutContent},
+      {path: 'aboutapp', Component: AboutContent},
       {path: 'projects', Component: ProjectsContent},
       {path: 'modify', Component: ModifyContent},
       {path: 'profile', Component: ProfileContent},

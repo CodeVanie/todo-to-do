@@ -1,10 +1,11 @@
+import { ActionButtonIcon } from "../../icons/IconCollection"
 
-function ActionButton({ logo, alt, onClick }) {
+function ActionButton({ name, onClick }) {
     return (
-        <div className='bg-ptlbrown-100 rounded-full border-2 border-red-950 w-14 p-2 cursor-pointer hover:scale-110' 
+        <button className='bg-ptlbrown-100 rounded-full border-2 border-red-950 w-14 p-2 cursor-pointer hover:scale-110 transition duration-100 ease-in' 
              onClick={onClick}>
-            <img src={logo} alt={alt} className='w-full'/>
-        </div>
+            <ActionButtonIcon name={name} className="text-red-950"/>
+        </button>
     )    
 }
 
