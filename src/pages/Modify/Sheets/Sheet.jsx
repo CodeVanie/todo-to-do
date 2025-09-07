@@ -1,9 +1,12 @@
 
-function Sheet({ title, children }) {
+function Sheet({ title, onSelect, isSelected, children }) {
     return (
-        <div className="flex flex-col shrink-0 w-full h-[73vh] rounded-3xl snap-center max-w-xl">
-            <h1 className="flex text-center rounded-t-3xl h-10 justify-center items-center font-bold flex-shrink-0 text-ptlbrown-100 relative bg-red-700/25 border-dashed border-2 border-ptlbrown-100/50">{title}</h1>
-            <div className="flex w-full h-full rounded-b-3xl bg-ptlbrown-100/75 justify-center overflow-hidden">
+        <div className={`shrink-0 basis-full rounded-3xl snap-center max-w-xl border-5 border-dotted overflow-hidden 
+             ${isSelected ? "border-yellow-600" : "border-amber-50/0"}`}>
+            <h1 className="py-2 text-center rounded-t-3xl font-bold text-ptlbrown-100 bg-red-700/25 cursor-pointer" onClick={onSelect}>
+                {title}
+            </h1>
+            <div className="max-h-[70vh] bg-ptlbrown-100/75 overflow-y-auto scrollbar-hide">
                 {children}
             </div>
         </div>

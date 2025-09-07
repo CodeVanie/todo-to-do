@@ -1,15 +1,14 @@
 
 function HeaderWrapper({ children, currentPage }) {
-
-    const headerClass = `bg-center flex justify-center h-14 sticky top-0 z-20
-        ${currentPage === "/modify" ?
-            "bg-rough-brown text-red-950" : 
-            "bg-smooth-brown bg-cover text-ptlbrown-100"}`;
     return (
-        <header className={headerClass}>
-            <div className='flex items-center w-full h-full max-w-6xl px-3'>
+        <header className={`h-14 sticky top-0 z-20 bg-center 
+            ${currentPage === "/modify" ? 
+                "bg-rough-brown text-red-950" : 
+                "bg-smooth-brown bg-cover text-ptlbrown-100"}`}>
+
+            <div className='h-full max-w-6xl flex px-3 mx-auto'>
                 {children}
-            </div> 
+            </div>
         </header>
     )
 }

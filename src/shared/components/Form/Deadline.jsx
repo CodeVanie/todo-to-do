@@ -5,7 +5,7 @@ function Deadline({ children }) {
     // sixMonthsFromNow.setMonth(sixMonthsFromNow.getMonth() + 6);
     // const shortDateTime = sixMonthsFromNow.toLocaleString('en-US', { dateStyle: 'short', timeStyle: 'short' });
     return (
-        <div className='flex flex-col gap-y-1 sm:gap-y-3 items-center'>
+        <div className='md:relative space-y-1 sm:space-y-3'>
             {children}
         </div>
     )

@@ -12,9 +12,7 @@ function handleCategorySelect(e) {
     return (
         <ul id="select-category-options" className={showOptions ? "max-h-36" : "max-h-0"}>
             {categories.map((c, index) => 
-                <li key={index} data-value={c.label}
-                    onClick={handleCategorySelect} 
-                    className="flex px-4 py-2 hover:bg-ptlbrown-200 cursor-pointer justify-center">
+                <li key={index} data-value={c.label} onClick={handleCategorySelect}>
                     {c.label.toUpperCase()}
                 </li>
             )}

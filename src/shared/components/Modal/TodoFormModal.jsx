@@ -2,15 +2,15 @@ import { useContext, useEffect, useMemo, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { createPortal } from "react-dom";
 import { AppContext } from "../../../context/app-context.jsx";
-import { ModalTitle, TodoForm, Title, Priority, Category, Details, Deadline, Time, DeadlineHeader, DeadlinePicker, Statement } from '../Form/form.js'
-import { CloseButton, SubmitButton, EraseButton } from '../Button/buttons.js'
+import { Form, Title, Priority, Category, Details, Deadline, Time, DeadlineHeader, DeadlinePicker, Statement } from '../Form/form.js'
+import { SubmitButton, EraseButton } from '../Button/buttons.js'
 import ModalBackground from "./ModalBackground.jsx";
 import TodoFormModalWrapper from "../../../layouts/TodoFormModalWrapper.jsx";
 
-export default function TodoFormModal({ type = "add", isOpen, onClose, modifyValues }) {
+export default function TodoFormModal({ action = "add", isOpen, onClose, modifyValues }) {
     const { tasks, setTasks } = useContext(AppContext);
     const [isShowing, setIsShowing] = useState(isOpen);
-    const [formType, setFormType] = useState(type)
+    const [formType, setFormType] = useState(action)
     const defaultFormValues = {
         id: "",
         label: "",
@@ -55,7 +55,7 @@ export default function TodoFormModal({ type = "add", isOpen, onClose, modifyVal
     useEffect(() => {
         if (isOpen) {
             setIsShowing(true);
-            setFormType(type);
+            setFormType(action);
             document.body.style.overflow = "hidden";
         } else {
             document.body.style.overflow = "auto";
@@ -63,20 +63,20 @@ export default function TodoFormModal({ type = "add", isOpen, onClose, modifyVal
         return () => {
             document.body.style.overflow = "auto";
         };
-    }, [isOpen, type]);
+    }, [isOpen, action]);
     useEffect(() => {
-        if (type === "edit" && modifyValues) {
+        if (action === "edit" && modifyValues) {
             reset(modifyValues);
         } else {
             reset(defaultFormValues);
         }
-    }, [type, modifyValues, reset]);
+    }, [action, modifyValues, reset]);
 
 async function onSubmit(data) {
 	try {
 		await new Promise((resolve) => setTimeout(resolve, 1000));
 		
-		type === "add" ? 
+		action === "add" ? 
 			setTasks((prev) => [...prev, data]) : 
 			setTasks((prev) => 
 				prev.map((task) => 
@@ -96,57 +96,51 @@ function onAnimationEnd() {
 
     return isShowing ? createPortal(
 		<ModalBackground isOpen={isOpen} onAnimationEnd={onAnimationEnd}>
-			<TodoFormModalWrapper isOpen={isOpen}>
+			<TodoFormModalWrapper isOpen={isOpen} onClose={onClose} 
+				title={formType === "add" ? "Add Task" : "Edit Task"} >
 				<EraseButton onErase={() => reset()} />
-				<CloseButton onClose={onClose} />
-				<ModalTitle>{formType === "add" ? "Add Task" : "Edit Task"}</ModalTitle>
-				<TodoForm onSubmit={handleSubmit(onSubmit)}>
-				<Title register={register} />
-				<div className="flex max-sm:flex-col max-sm:gap-y-3 sm:gap-x-3 sm:justify-around">
-					<Controller name="priority" control={control} render={({ field }) => (
-					<Priority value={field.value} onChange={field.onChange} />)}/>
-					<Controller name="category" control={control} render={({ field }) => (
-					<Category value={field.value} onChange={field.onChange} />)}/>
-				</div>
-				<Details register={register} errors={errors} />
-				<Controller name="deadline" control={control}
-					rules={{
-					validate: (value) => {
-						if (!value.time) {
-						return "Time is required.";
-						}
-						if (!/^([01]\d|2[0-3]):([0-5]\d)$/.test(value.time)) {
-						return "Invalid time format. Please use HH:MM.";
-						}
-						return true;
-					},
-					}}
-					render={({ field, fieldState }) => (
-					<Deadline>
-						<DeadlineHeader>
-						<Time
-							value={field.value.time}
-							onChange={(time) =>
-							field.onChange({ ...field.value, time })
+				<Form onSubmit={handleSubmit(onSubmit)}>
+					<Title register={register} />
+					<div className="flex max-sm:flex-col max-sm:gap-y-3 sm:gap-x-3 sm:justify-around">
+						<Controller name="priority" control={control} render={({ field }) => (
+						<Priority value={field.value} onChange={field.onChange} />)}/>
+						<Controller name="category" control={control} render={({ field }) => (
+						<Category value={field.value} onChange={field.onChange} />)}/>
+					</div>
+					<Details register={register} errors={errors} />
+					<Controller name="deadline" control={control}
+						rules={{
+						validate: (value) => {
+							if (!value.time) {
+							return "Time is required.";
 							}
-							error={fieldState.error?.message}
-						/>
-						</DeadlineHeader>
-						<DeadlinePicker
-						value={field.value}
-						onChange={field.onChange}/>
-					</Deadline>
-					)}
-				/>
-				<Statement errors={errors} statement={deadlineStatement} />
-				<SubmitButton
-					isSubmitting={isSubmitting}
-					isValid={isValid}
-					onSave={() => {
-						(type === "add") && setValue("id", `t_${tasks.length}`);
-					}}
-				/>
-				</TodoForm>
+							if (!/^([01]\d|2[0-3]):([0-5]\d)$/.test(value.time)) {
+							return "Invalid time format. Please use HH:MM.";
+							}
+							return true;
+						},
+						}}
+						render={({ field, fieldState }) => (
+						<Deadline>
+							<DeadlineHeader>
+							<Time
+								value={field.value.time}
+								onChange={(time) => field.onChange({ ...field.value, time })}
+								error={fieldState.error?.message}/>
+							</DeadlineHeader>
+							<DeadlinePicker value={field.value} onChange={field.onChange}/>
+						</Deadline>
+						)}
+					/>
+					<Statement errors={errors} statement={deadlineStatement} />
+					<SubmitButton
+						isSubmitting={isSubmitting}
+						isValid={isValid}
+						onSave={() => {
+							(action === "add") && setValue("id", `t_${tasks.length}`);
+						}}
+					/>
+				</Form>
 			</TodoFormModalWrapper>
 		</ModalBackground>,
       	document.body

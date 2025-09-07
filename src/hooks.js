@@ -11,18 +11,18 @@ export function useAutosizeTextArea(textAreaRef, value) {
 }
 
 export function useFormModalControl() {
-	const { setTodoFormModal } = useContext(AppContext);
+	const { setFormModal } = useContext(AppContext);
 
-function openAddTodoModal() {
-	setTodoFormModal({ type: "add", data: null, status: true });
+function openAddModal() {
+	setFormModal({action: "add", data: null, status: true });
 }
-function openEditTodoModal(todo) {
-	setTodoFormModal({ type: "edit", data: todo, status: true });
+function openEditModal(item) {
+	setFormModal({action: "edit", data: item, status: true });
 }
-function closeTodoModal() {
-	setTodoFormModal({ type: null, data: null, status: false });
+function closeModal() {
+	setFormModal({action: null, data: null, status: false });
 }
-	return {openAddTodoModal, openEditTodoModal, closeTodoModal}
+	return { openAddModal, openEditModal, closeModal }
 }
 
 export default function useControlledList() {

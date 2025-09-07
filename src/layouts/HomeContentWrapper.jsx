@@ -1,7 +1,7 @@
 
 export default function HomeContentWrapper({ children }) {
     return (
-        <div className="flex w-full flex-col p-3 gap-y-2 max-w-4xl relative h-[80vh]">
+        <div className="max-w-4xl p-3 pb-10 mx-auto lg:relative">
             {children}
         </div>
     )

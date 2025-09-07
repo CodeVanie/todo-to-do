@@ -11,8 +11,8 @@ import HomeContentWrapper from "../../layouts/HomeContentWrapper.jsx";
 
 function HomeContent() {
     console.log("HomeContent rendered");
-    const { todoFormModal, categories, sortTypes, setFilteredCategory, setSelectedSort } = useContext(AppContext);
-    const { openAddTodoModal, openEditTodoModal, closeTodoModal } = useFormModalControl();
+    const { formModal, categories, sortTypes, setFilteredCategory, setSelectedSort } = useContext(AppContext);
+    const { openAddModal, openEditModal, closeModal } = useFormModalControl();
     const { controlledList, selectedSort, filteredCategory } = useControlledList();
     const [viewTodo, setViewTodo] = useState({
         data: {},
@@ -25,31 +25,25 @@ function HomeContent() {
     return (
         <HomeContentWrapper>
             <Controls>
-                <ControlSection 
-                    title="Sort By" 
-                    items={sortTypes} 
-                    onControlClick={setSelectedSort} 
-                    control={selectedSort}/>
+                <ControlSection title="Sort By" items={sortTypes} 
+                    onControlClick={setSelectedSort} control={selectedSort}/>
                 <hr />
-                <ControlSection 
-                    title="Filter By" 
-                    items={categoriesWithAll} 
-                    onControlClick={setFilteredCategory} 
-                    control={filteredCategory} />
+                <ControlSection title="Filter By" items={categoriesWithAll} 
+                    onControlClick={setFilteredCategory} control={filteredCategory}/>
             </Controls>
             <TodoList>
-                <ListAddButton openModal={openAddTodoModal} />
-                <ol className="flex flex-col w-full overflow-y-auto p-2 pb-25 gap-y-1 scrollbar-hide">
+                <ListAddButton openModal={openAddModal} />
+                <ol className="p-2 space-y-1">
                 {controlledList.map((todo, index) => 
                     <TodoItem key={index} todo={todo} onView={setViewTodo}/>
                 )}
                 </ol>
             </TodoList>
             <TodoFormModal  
-                type={todoFormModal.type} 
-                isOpen={todoFormModal.status} 
-                onClose={closeTodoModal} 
-                modifyValues={todoFormModal.data}
+                type={formModal.type} 
+                isOpen={formModal.status} 
+                onClose={closeModal} 
+                modifyValues={formModal.data}
             />
             <ViewTodoModal 
                 isOpen={viewTodo.status} 

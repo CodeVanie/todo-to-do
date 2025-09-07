@@ -1,6 +1,9 @@
 /* IMPORTS */
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
 @import "tailwindcss";
+@plugin "tailwind-scrollbar-hide";
+@plugin "tailwind-scrollbar";
+
 @theme {
   --font-quicks: "Quicksand", sans-serif;
   --color-ptlbrown-100: #e7b574;
@@ -12,9 +15,10 @@
   --animate-modalexit: modalExit 0.5s ease-in-out forwards;
   --animate-bgmodalfadein: bgModalFadeIn 0.5s ease-in-out forwards;
   --animate-bgmodalfadeout: bgModalFadeOut 0.5s ease-in-out forwards;
+  --breakpoint-xm: 56rem; /* 896px */
   --breakpoint-xs: 32rem; /* 512px */
+  --breakpoint-xxs: 24rem; /* 384px */
 }
-@plugin "tailwind-scrollbar-hide";
 
 /* BASE */
 @layer base {
@@ -37,22 +41,15 @@
 }
 /* COMPONENTS */
 @layer components {
-  /* ABOUT */
-  .about-parag {
-    @apply text-justify indent-7 font-bold;
-  }
-  /* MODIFY */
-  .modal-form-field {
-    @apply flex flex-col flex-1 gap-y-1 items-center;
-  }
-  .modal-form-priority {
-    @apply flex w-full font-bold text-xl gap-x-5 ml-2 justify-center;
-  }
-  .modal-form-priority > * {
-    @apply grid h-12 flex-1 place-items-center text-center tracking-widest rounded-full border-3 box-border select-none cursor-pointer hover:scale-110 transition duration-200;
+  /* ADD TODO FORM FIELDS*/
+  .select-category-button {
+    @apply flex w-full text-base bg-ptlbrown-100 border-2 text-red-950 px-4 py-2 rounded  cursor-pointer hover:text-lg transition-[font-size] duration-200 tracking-widest text-center justify-between;
   }
   #select-category-options {
     @apply absolute w-full border border-yellow-700 text-red-950 bg-ptlbrown-100 select-none rounded shadow mt-1 z-10 transition-[max-height] duration-500 ease-in-out overflow-y-auto scrollbar-hide;
+  }
+  #select-category-options li {
+    @apply px-4 py-2 hover:bg-ptlbrown-200 cursor-pointer text-center;
   }
 }
 /* UTILITIES */
@@ -63,12 +60,11 @@
   .bg-smooth-brown {
     @apply bg-[url(/images/header-bg.jpg)];
   }
-  .hover-icon-bigger {
-    @apply transition-all duration-200;
+  .transition-out-200 {
+    @apply transition duration-200 ease-out;
   }
-  .hover-icon-bigger:hover {
-    width: calc(6% + 0.25em);
-    height: calc(6% + 0.25em);
+  .transition-allin-300 {
+    @apply transition-all duration-300 ease-in;
   }
   @keyframes modalEntry {
     from {

@@ -18,10 +18,10 @@ function DeadlinePicker({ value, onChange }) {
         onChange(newValue);
     }
     return (
-        <div className="flex items-center w-full flex-col gap-y-3">
+        <>
             <DeadlineDay value={value} handleUpdate={handleUpdate} deadlineType={deadlineType}/>
             <DeadlineMonth value={value} handleUpdate={handleUpdate} deadlineType={deadlineType}/>
-        </div>
+        </>
     )
 }
 

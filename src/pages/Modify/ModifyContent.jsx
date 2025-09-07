@@ -3,21 +3,22 @@ import Sheet from './Sheets/Sheet.jsx';
 import SheetList from './Sheets/SheetList.jsx';
 import { ActionButton } from '../../shared/components/Button/buttons.js';
 import { AppContext } from '../../context/app-context.jsx';
-import ChooseAddModal from '../../shared/components/Modal/ChooseAddModal.jsx';
 import TodoFormModal from '../../shared/components/Modal/TodoFormModal.jsx';
 import CategoryFormModal from '../../shared/components/Modal/CategoryFormModal.jsx';
+import { useFormModalControl } from "../../hooks.js";
+import AlertModal from '../../shared/components/Modal/AlertModal.jsx';
+import ModifyContentWrapper from '../../layouts/ModifyContentWrapper.jsx';
+import ActionButtonWrapper from '../../layouts/ActionButtonWrapper.jsx';
 
 export const SheetContext = createContext();
 
 function ModifyContent() {
     console.log("ModifyContent Rendered");
-    const { tasks, categories, sortTypes, setTasks, setCategories, todoFormModal } = useContext(AppContext);
-    const { openAddTodoModal, openEditTodoModal, closeTodoModal } = useFormModalControl();
-    const [isAddOptionOpen, setIsAddOptionOpen] = useState(false);
-    const [isCategFormOpen, setIsCategFormOpen] = useState(false);
+    const { tasks, categories, sortTypes, setTasks, setCategories, formModal } = useContext(AppContext);
+    const { openAddModal, openEditModal, closeModal } = useFormModalControl();
     const [selectedItems, setSelectedItems] = useState(new Set());
-    const [selectedType, setSelectedType] = useState(null);
-    const [showError, setShowError] = useState(false);
+    const [selectedType, setSelectedType] = useState("");
+    const [showAlert, setShowAlert] = useState({ status: false, message: " "});
     const scrollRef = useRef(null);
 
     useEffect(() => {
@@ -34,17 +35,33 @@ function handleSelectedItems(item, type) {
 
         newSelectedItems.has(item) ? newSelectedItems.delete(item) : 
                                      newSelectedItems.add(item);
-
         return newSelectedItems;
     })
 }
+function handleAddButton() {
+    selectedType ? 
+        openAddModal() : 
+        setShowAlert(prev => ({
+            ...prev,
+            status: true,
+            message: "Please select a list first."
+        }));
+}
 function handleEditButton() {
     if (selectedItems.size === 1) {
-        if (selectedType === "category") {
-            setIsCategFormOpen(true);
-        } else if (selectedType === "task") {
-            openEditTodoModal([...selectedItems][0]);
-        }
+        openEditModal([...selectedItems][0]);
+    } else if (selectedItems.size === 0) {
+        setShowAlert(prev => ({
+            ...prev,
+            status: true,
+            message: "Please select an item to edit."
+        }));
+    } else {
+        setShowAlert(prev => ({
+            ...prev,
+            status: true,
+            message: "You cannot edit multiple items at the same time.\nPlease select 1 item only."
+        }));
     }
 }
 function handleDeleteButton(type) {
@@ -65,36 +82,46 @@ function unselectAll() {
 }
 
     return (
-        <div className="flex w-full flex-col items-center bg-cover bg-no-repeat bg-center">
-            <section className="flex justify-center gap-x-6 m-2 z-5 relative">
-                <ActionButton name="addrow" onClick={() => setIsAddOptionOpen(true)}/>
+        <ModifyContentWrapper>
+            <ActionButtonWrapper>
+                <ActionButton name="addrow" onClick={handleAddButton}/>
                 <ActionButton name="editrow" onClick={handleEditButton}/>
                 <ActionButton name="deleterow" onClick={() => handleDeleteButton(selectedType)}/>
                 <ActionButton name="reset" onClick={unselectAll}/>
-            </section>
-            <section ref={scrollRef} className="flex gap-x-4 w-full overflow-x-auto snap-x snap-mandatory px-6 pb-3 relative z-5 xl:justify-center scrollbar-hide">
+            </ActionButtonWrapper>
+            <section ref={scrollRef} 
+                className="relative flex xl:justify-center items-start gap-x-2 px-5 snap-x snap-mandatory z-5 scrollbar-hide overflow-x-auto">
                 <SheetContext.Provider value={{selectedItems, handleSelectedItems}}>
-                    <Sheet title="Edit Category List">
+                    <Sheet title="Edit Category List" 
+                        onSelect={() => setSelectedType("category")} 
+                        isSelected={selectedType === "category"}>
                         <SheetList type="category" itemList={categories} />
                     </Sheet>
-                    <Sheet title="Edit To-Do List">
-                        <SheetList type="task" itemList={tasks} />
+                    <Sheet title="Edit To-Do List" 
+                        onSelect={() => setSelectedType("todo")} 
+                        isSelected={selectedType === "todo"}>
+                        <SheetList type="todo" itemList={tasks} />
                     </Sheet>
-                    <Sheet title="Edit Sort List">
+                    <Sheet title="Edit Sort List" 
+                        onSelect={() => setSelectedType("sort")} 
+                        isSelected={selectedType === "sort"}>
                         <SheetList type="sort" itemList={sortTypes} />
                     </Sheet>
                 </SheetContext.Provider>
             </section>
             <TodoFormModal
-                type={todoFormModal.type} 
-                isOpen={todoFormModal.status} 
-                onClose={closeTodoModal} 
-                modifyValues={todoFormModal.data}
+                action={formModal.action} 
+                isOpen={selectedType === "todo" && formModal.status} 
+                onClose={closeModal} 
+                modifyValues={formModal.data}
             />
-            <CategoryFormModal type={selectedItems.size === 1 ? "edit" : "add"} isOpen={isCategFormOpen} onClose={() => setIsCategFormOpen(false)} modifyValues={[...selectedItems][0]}/>
-            <ChooseAddModal isOpen={isAddOptionOpen} onClose={() => setIsAddOptionOpen(false)} 
-                            addTaskModal={openAddTodoModal} addCategoryModal={() => setIsCategFormOpen(true)} />
-        </div>
+            <CategoryFormModal 
+                action={formModal.action} 
+                isOpen={selectedType === "category" && formModal.status} 
+                onClose={closeModal} 
+                modifyValues={formModal.data}/>
+            <AlertModal isOpen={showAlert.status} onClose={() => setShowAlert(false)} message={showAlert.message} />
+        </ModifyContentWrapper>
     )
 }
 

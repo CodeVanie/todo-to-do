@@ -15,7 +15,7 @@ const initialTodos = [
                 due: [31],
                 time: "12:00"
             },
-            favorite: false
+            favorite: true
         },
         {
             id: "t_1",
@@ -57,7 +57,7 @@ const initialTodos = [
                 due: [5],
                 time: "00:00"
             },
-            favorite: false
+            favorite: true
         },
         {
             id: "t_4",
@@ -85,7 +85,7 @@ const initialTodos = [
                 due: [5],
                 time: "00:00"
             },
-            favorite: false
+            favorite: true
         },
         {
             id: "t_6",
@@ -128,6 +128,48 @@ const initialTodos = [
                 time: "00:00"
             },
             favorite: false
+        },
+        {
+            id: "t_9",
+            label: "Y Task Number Nine",
+            priority: "!!",
+            category: "Self",
+            details: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.", 
+            deadline: {
+                type: "",
+                label: "",
+                due: [],
+                time: "00:00"
+            },
+            favorite: true
+        },
+        {
+            id: "t_10",
+            label: "L Task Number Ten",
+            priority: "!",
+            category: "Morning",
+            details: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.", 
+            deadline: {
+                type: "day",
+                label: "Deadline",
+                due: [7],
+                time: "12:45"
+            },
+            favorite: false
+        },
+        {
+            id: "t_11",
+            label: "B Task Number Eleven",
+            priority: "!",
+            category: "Cooking",
+            details: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.", 
+            deadline: {
+                type: "month",
+                label: "Month(21)",
+                due: [21],
+                time: "12:00"
+            },
+            favorite: true
         }
     ];
 const initialCategories = [
@@ -170,12 +212,12 @@ const sortTypes = [
             }];
 
 function AppContextProvider({ children }) {
-    const [todoFormModal, setTodoFormModal] = useState({type: null, data: null, status: false});
+    const [formModal, setFormModal] = useState({action: null, data: null, status: false});
     const [categories, setCategories] = useState(initialCategories);
     const [filteredCategory, setFilteredCategory] = useState("All");
     const [selectedSort, setSelectedSort] = useState("Priority");
     const [tasks, setTasks] = useState(initialTodos);
-    const appContext = { tasks, setTasks, categories, setCategories, todoFormModal, setTodoFormModal, sortTypes, filteredCategory, setFilteredCategory, selectedSort, setSelectedSort };
+    const appContext = { tasks, setTasks, categories, setCategories, formModal, setFormModal, sortTypes, filteredCategory, setFilteredCategory, selectedSort, setSelectedSort };
     return (
         <AppContext.Provider value={appContext}>
             {children}

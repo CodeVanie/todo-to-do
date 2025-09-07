@@ -33,14 +33,14 @@ function DeadlineDay ({ value, handleUpdate }) {
     }
 
     return (
-        <div className={`flex flex-col justify-center border-2 p-1 rounded-2xl sm:relative w-full max-w-md 
+        <div className={`flex border-2 items-center p-1 rounded-2xl mx-auto max-xs:pt-7 max-xs:relative max-w-md
             ${value.type === "day" ? "border-red-950" : "border-yellow-700"}`}>
-            <h3 className='text-left xs:absolute tracking-widest'>DAYS</h3>
-            <ol className='flex gap-x-1 justify-center'>
+            <h3 className='text-left tracking-widest max-xs:absolute max-xs:top-1'>DAYS</h3>
+            <ol className='flex gap-x-1 w-full justify-end'>
                 {days.map((day, index) => 
                     <li key={index} data-value={day.id} 
                         onClick={onDeadlineClick} 
-                        className={`grid rounded-full p-1 w-10 h-9 place-items-center cursor-pointer select-none text-xs hover:scale-110 
+                        className={`max-w-13 grid aspect-square rounded-full flex-1 place-items-center cursor-pointer text-sm hover:scale-110 
                         ${(value.due.includes(day.id) && value.type === "day") ? 
                         "border-2 scale-110 border-red-950" : 
                         "border border-yellow-700"}`}>
