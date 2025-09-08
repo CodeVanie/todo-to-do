@@ -6,7 +6,7 @@ import DeadlineHeader from './DeadlineHeader.jsx';
 import DeadlineMonth from './DeadlineMonth.jsx';
 import DeadlinePicker from './DeadlinePicker.jsx';
 import Details from './Details.jsx';
-import Form from './Form.jsx';
+import FormWrapper from './FormWrapper.jsx';
 import ModalTitle from '../Modal/ModalTitle.jsx';
 import Priority from './Priority.jsx';
 import Statement from './Statement.jsx';
@@ -22,7 +22,7 @@ export {
     DeadlineMonth,
     DeadlinePicker,
     Details,
-    Form,
+    FormWrapper,
     ModalTitle,
     Priority,
     Statement,

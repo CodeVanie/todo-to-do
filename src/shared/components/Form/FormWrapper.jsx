@@ -1,5 +1,5 @@
 
-function Form({ children, onSubmit }) {
+function FormWrapper({ children, onSubmit }) {
     return (
         <form className="flex flex-col mt-3 gap-y-3 text-center" onSubmit={onSubmit}>
             {children}
@@ -7,4 +7,4 @@ function Form({ children, onSubmit }) {
     )
 }
 
-export default Form
+export default FormWrapper

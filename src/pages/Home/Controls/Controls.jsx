@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function Controls({ children }) {
+export default function Controls({ children }) {
     const [showControl, setShowControl] = useState(false);
     
     return (
@@ -26,5 +26,3 @@ function Controls({ children }) {
         </div>
     )
 }
-
-export default Controls

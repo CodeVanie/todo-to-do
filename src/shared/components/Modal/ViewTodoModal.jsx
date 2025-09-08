@@ -9,7 +9,6 @@ export default function ViewTodoModal({ isOpen, onClose, todo }) {
     const { setTasks } = useContext(AppContext);
     const [isShowing, setIsShowing] = useState(isOpen);
     const [viewData, setViewData] = useState(todo);
-    const [newTodo, setNewTodo] = useState(todo);
     useEffect(() => {
         if (isOpen) {
             setIsShowing(true);

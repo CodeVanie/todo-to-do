@@ -1,5 +1,5 @@
 
-function ControlItem({ itemLabel, onClick, isActive }) {
+export default function ControlItem({ itemLabel, onClick, isActive }) {
     return (
         <li className="grid">
             <button className={`py-2 rounded-3xl cursor-pointer font-bold border-2
@@ -9,5 +9,3 @@ function ControlItem({ itemLabel, onClick, isActive }) {
         </li>
     )
 }
-
-export default ControlItem

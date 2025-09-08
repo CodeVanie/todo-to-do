@@ -2,13 +2,14 @@ import { useContext, useEffect, useMemo, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { createPortal } from "react-dom";
 import { AppContext } from "../../../context/app-context.jsx";
-import { Form, Title, Priority, Category, Details, Deadline, Time, DeadlineHeader, DeadlinePicker, Statement } from '../Form/form.js'
+import { FormWrapper, Title, Priority, Category, Details, Deadline, Time, DeadlineHeader, DeadlinePicker, Statement } from '../Form/form.js'
 import { SubmitButton, EraseButton } from '../Button/buttons.js'
 import ModalBackground from "./ModalBackground.jsx";
 import TodoFormModalWrapper from "../../../layouts/TodoFormModalWrapper.jsx";
 
 export default function TodoFormModal({ action = "add", isOpen, onClose, modifyValues }) {
-    const { tasks, setTasks } = useContext(AppContext);
+    // console.log("TodoFormModal Rendered");
+    const { todos, setTodos } = useContext(AppContext);
     const [isShowing, setIsShowing] = useState(isOpen);
     const [formType, setFormType] = useState(action)
     const defaultFormValues = {
@@ -56,6 +57,7 @@ export default function TodoFormModal({ action = "add", isOpen, onClose, modifyV
         if (isOpen) {
             setIsShowing(true);
             setFormType(action);
+            action === "add" ? setValue("id", `t_${todos.length}`) : reset(modifyValues);
             document.body.style.overflow = "hidden";
         } else {
             document.body.style.overflow = "auto";
@@ -64,23 +66,16 @@ export default function TodoFormModal({ action = "add", isOpen, onClose, modifyV
             document.body.style.overflow = "auto";
         };
     }, [isOpen, action]);
-    useEffect(() => {
-        if (action === "edit" && modifyValues) {
-            reset(modifyValues);
-        } else {
-            reset(defaultFormValues);
-        }
-    }, [action, modifyValues, reset]);
 
-async function onSubmit(data) {
+async function onSave(data) {
 	try {
 		await new Promise((resolve) => setTimeout(resolve, 1000));
 		
 		action === "add" ? 
-			setTasks((prev) => [...prev, data]) : 
-			setTasks((prev) => 
-				prev.map((task) => 
-					(task.id === data.id ? data : task)));
+			setTodos((prev) => [...prev, data]) : 
+			setTodos((prev) => 
+				prev.map((todo) => 
+					(todo.id === data.id ? data : todo)));
 
 		onClose();
 		reset();
@@ -97,9 +92,9 @@ function onAnimationEnd() {
     return isShowing ? createPortal(
 		<ModalBackground isOpen={isOpen} onAnimationEnd={onAnimationEnd}>
 			<TodoFormModalWrapper isOpen={isOpen} onClose={onClose} 
-				title={formType === "add" ? "Add Task" : "Edit Task"} >
+				title={formType === "add" ? "Add Todo" : "Edit Todo"} >
 				<EraseButton onErase={() => reset()} />
-				<Form onSubmit={handleSubmit(onSubmit)}>
+				<FormWrapper onSubmit={handleSubmit(onSave)}>
 					<Title register={register} />
 					<div className="flex max-sm:flex-col max-sm:gap-y-3 sm:gap-x-3 sm:justify-around">
 						<Controller name="priority" control={control} render={({ field }) => (
@@ -136,13 +131,10 @@ function onAnimationEnd() {
 					<SubmitButton
 						isSubmitting={isSubmitting}
 						isValid={isValid}
-						onSave={() => {
-							(action === "add") && setValue("id", `t_${tasks.length}`);
-						}}
 					/>
-				</Form>
+				</FormWrapper>
 			</TodoFormModalWrapper>
 		</ModalBackground>,
       	document.body
     ) : null;
-}
+};

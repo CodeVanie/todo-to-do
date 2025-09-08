@@ -35,7 +35,7 @@ const initialTodos = [
             id: "t_2",
             label: "Z Task Number Two",
             priority: "!!!",
-            category: "Dentist",
+            category: "",
             details: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.", 
             deadline: {
                 type: "month",
@@ -174,55 +174,72 @@ const initialTodos = [
     ];
 const initialCategories = [
             {
-                id: "c_1",
-                label: "Food"
-            }, 
-            {
                 id: "c_2",
-                label: "Morning"
+                label: "Food",
+                active: true
             }, 
             {
                 id: "c_3",
-                label: "Dentist"
+                label: "Morning",
+                active: true
             }, 
             {
                 id: "c_4",
-                label: "Self"
+                label: "Dentist",
+                active: false
             }, 
             {
                 id: "c_5",
-                label: "Friends"
+                label: "Self",
+                active: true
             }, 
             {
                 id: "c_6",
-                label: "Cooking"
+                label: "Friends",
+                active: true
+            }, 
+            {
+                id: "c_7",
+                label: "Cooking",
+                active: true
             }];
 const sortTypes = [
             {
                 id: "s_1",
-                label: "Priority"
+                label: "Newest",
+                active: true
             }, 
             {
                 id: "s_2",
-                label: "Deadline"
-            }, 
+                label: "Priority",
+                active: true
+            },
             {
                 id: "s_3",
-                label: "Letters"
+                label: "Deadline",
+                active: true
+            },
+            {
+                id: "s_4",
+                label: "Letters",
+                active: false
             }];
 
-function AppContextProvider({ children }) {
+export default function AppContextProvider({ children }) {
     const [formModal, setFormModal] = useState({action: null, data: null, status: false});
     const [categories, setCategories] = useState(initialCategories);
     const [filteredCategory, setFilteredCategory] = useState("All");
-    const [selectedSort, setSelectedSort] = useState("Priority");
-    const [tasks, setTasks] = useState(initialTodos);
-    const appContext = { tasks, setTasks, categories, setCategories, formModal, setFormModal, sortTypes, filteredCategory, setFilteredCategory, selectedSort, setSelectedSort };
+    const [selectedSort, setSelectedSort] = useState("Newest");
+    const [todos, setTodos] = useState(initialTodos);
+    const listData = [
+        {id: "list_c", label: "Category", type: "category", list: categories},
+        {id: "list_t", label: "To-Do", type: "todo", list: todos},
+        {id: "list_s", label: "Sort", type: "sort", list: sortTypes}
+    ];
+    const appContext = { listData, todos, setTodos, categories, setCategories, formModal, setFormModal, sortTypes, filteredCategory, setFilteredCategory, selectedSort, setSelectedSort };
     return (
         <AppContext.Provider value={appContext}>
             {children}
         </AppContext.Provider>
     )
 }
-
-export default AppContextProvider

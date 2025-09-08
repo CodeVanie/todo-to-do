@@ -1,6 +1,6 @@
 import ControlItem from "./ControlItem";
 
-function ControlSection({ title, items, onControlClick, control }) {
+export default function ControlSection({ title, items, onControlClick, control }) {
     return (
         <section>
             <h3 className="font-bold text-center">
@@ -17,5 +17,3 @@ function ControlSection({ title, items, onControlClick, control }) {
         </section>
     )
 }
-
-export default ControlSection

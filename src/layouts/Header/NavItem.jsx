@@ -1,16 +1,16 @@
 import { NavLink } from "react-router-dom"
 import { NavIcon } from "../../shared/icons/IconCollection";
 
-function NavItem({ page, label, currentPage }) {
+function NavItem({ page, label }) {
     return (
-        <li id={page} className={`${currentPage === "/modify" ? "text-red-950" : "text-ptlbrown-100"} flex-1 pt-2`}>
-            <NavLink key={page} to={`/${page}`} className={({ isActive }) => `${isActive ? (page === "modify") ? 
-                "border-red-950" : "border-ptlbrown-100 opacity-100" : "border-yellow-700/0 opacity-85"} 
-                 sm:border-b-2 hover:scale-110 transition-out-200 hover:opacity block h-full max-lg:pt-2`}>
+        <li id={page} className="flex-1 z-1 rounded-xl hover:bg-ptlbrown-100/20">
+            <NavLink key={page} to={`/${page}`} className={({ isActive }) => 
+                `${!isActive ? "opacity-80 border-ptlbrown-100/0" : "max-sm:bg-ptlbrown-100/20"}  
+                 flex flex-col h-full items-center lg:justify-end justify-center sm:border-b-2 gap-y-1 hover:opacity-100 
+                 transition-allout-500`}>
 
-                <NavIcon name={page} className={`w-7 h-7  mx-auto 
-                ${currentPage === "/modify" ? "text-red-950" : "text-ptlbrown-100"}`}/>
-                <h6 className="font-bold text-sm max-lg:hidden text-center">{label}</h6>
+                <NavIcon name={page} className="w-6 xs:scale-115"/>
+                <h6 className="font-bold text-xs max-lg:hidden">{label}</h6>
             </NavLink>
         </li>
     )

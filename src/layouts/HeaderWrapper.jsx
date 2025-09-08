@@ -1,14 +1,13 @@
 
 function HeaderWrapper({ children, currentPage }) {
     return (
-        <header className={`h-14 sticky top-0 z-20 bg-center 
-            ${currentPage === "/modify" ? 
-                "bg-rough-brown text-red-950" : 
-                "bg-smooth-brown bg-cover text-ptlbrown-100"}`}>
+        <header className={`sticky top-0 z-20 min-h-14 transition-allout-500 bg-rough-brown bg-cover border-b
+            ${currentPage === "/modify" ? "text-red-950" : 
+            "bg-center before:absolute before:inset-0 before:bg-black/35 text-ptlbrown-100"}`}>
 
-            <div className='h-full max-w-6xl flex px-3 mx-auto'>
+            <nav className='h-full max-w-6xl flex mx-auto'>
                 {children}
-            </div>
+            </nav>
         </header>
     )
 }

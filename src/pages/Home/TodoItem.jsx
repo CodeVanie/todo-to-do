@@ -1,6 +1,6 @@
 import HeartIcon from "../../shared/icons/IconCollection"
 
-function TodoItem({ todo, onView }) {
+export default function TodoItem({ todo, onView }) {
 
     return (
         <li className="block shrink-0 border-2 border-red-950/50 hover:border-ptlbrown-100 h-14 bg-yellow-950 rounded-4xl cursor-pointer text-ptlbrown-200 transition-out-200 relative" 
@@ -16,5 +16,3 @@ function TodoItem({ todo, onView }) {
         </li>
     )
 }
-
-export default TodoItem

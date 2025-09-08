@@ -20,10 +20,10 @@ function Header() {
             <Logo />
             <NavBar>
                 {navItems.map(item => (
-                    <NavItem key={item.page} {...item} currentPage={pathname} />
+                    <NavItem key={item.page} {...item} />
                 ))}
             </NavBar>
-            <Portfolio currentPage={pathname}/>
+            <Portfolio />
         </HeaderWrapper>
     );
 }
