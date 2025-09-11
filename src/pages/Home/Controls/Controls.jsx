@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { createContext, useState } from "react";
+
+export const ControlContext = createContext();
 
 export default function Controls({ children }) {
     const [showControl, setShowControl] = useState(false);
     
     return (
-        <div className={`border-2 border-ptlbrown-100 border-dashed
+        <section id="control" className={`border-2 border-ptlbrown-100 border-dashed
            px-2 pb-1 bg-yellow-900/75 absolute z-10 top-3 left-3 right-3
            rounded-3xl overflow-hidden transition-allin-300 cursor-pointer text-ptlbrown-100 
            ${showControl ? "max-h-96 opacity-100" : "max-h-10 opacity-75"}`} 
@@ -22,7 +24,9 @@ export default function Controls({ children }) {
                 Controls
             </div>
             <hr />
-            {children}
-        </div>
+            <ControlContext.Provider value={{setShowControl}}>
+                {children}
+            </ControlContext.Provider>
+        </section>
     )
 }

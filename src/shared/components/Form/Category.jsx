@@ -1,7 +1,7 @@
 import { useState } from "react";
 import CategoryOptions from "./CategoryOptions";
 
-function Category({ value, onChange }) {
+export default function Category({ value, onChange }) {
     const [showOptions, setShowOptions] = useState(false);
 
     return (
@@ -21,5 +21,3 @@ function Category({ value, onChange }) {
         </div>
     )
 }
-
-export default Category

@@ -6,12 +6,19 @@ import { FormWrapper, Title, Priority, Category, Details, Deadline, Time, Deadli
 import { SubmitButton, EraseButton } from '../Button/buttons.js'
 import ModalBackground from "./ModalBackground.jsx";
 import TodoFormModalWrapper from "../../../layouts/TodoFormModalWrapper.jsx";
+import { getDateToday, getDefaultDueDate, toLocaleDate } from "../../../utils.js";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
-export default function TodoFormModal({ action = "add", isOpen, onClose, modifyValues }) {
-    // console.log("TodoFormModal Rendered");
-    const { todos, setTodos } = useContext(AppContext);
+export default function TodoFormModal() {
+	const { pathname } = useLocation();
+	const { action, todoid } = useParams();
+    const navigate = useNavigate();
+    const { listData, setTodos } = useContext(AppContext);
+	const [isOpen, setIsOpen] = useState(true);
     const [isShowing, setIsShowing] = useState(isOpen);
-    const [formType, setFormType] = useState(action)
+    const [formType, setFormType] = useState(action);
+	const editTodoData = action === "edit" ? listData[1].list.find(t => t.id === todoid) : null;
+
     const defaultFormValues = {
         id: "",
         label: "",
@@ -20,11 +27,12 @@ export default function TodoFormModal({ action = "add", isOpen, onClose, modifyV
         details: "",
         deadline: {
           type: "timeonly",
-          label: "",
-          due: [],
-          time: "00:00",
+		  dueDate: getDefaultDueDate(),
+          datenums: [],
+		  time: "23:59"
         },
         favorite: false,
+		completed: false
     };
     const {
       register,
@@ -41,23 +49,19 @@ export default function TodoFormModal({ action = "add", isOpen, onClose, modifyV
       mode: "onChange",
     });
     const deadlineStatement = useMemo(() => {
-        if (getValues("deadline.type")) {
-            if (getValues("deadline.type") === "timeonly") {
-                return `Complete Before: [ Time: ${getValues("deadline.time")} ] [ Day: Today ]`
-            } else if (getValues("deadline.type") === "day") {
-                return `Complete Before: [ Time: ${getValues("deadline.time")} ] [ ${getValues("deadline.label")} ]`
-            } else if (getValues("deadline.type") === "month") {
-                let warnNoDate = `\n (If that date doesn’t exist in a month, your deadline will move to the last day of that month.)`;
-                return `Complete Before: [ Time: ${getValues("deadline.time")} ] [ ${getValues("deadline.label")} ] ${getValues("deadline.due")[0] > 28 ? warnNoDate : ""}`
-            }
-        }
+		if (getValues("deadline.type") !== "month") {
+			return `Complete Before: [ ${toLocaleDate(getValues("deadline.dueDate"))} ]`;
+		} else {
+			let warnNoDate = `\n (If that date doesn’t exist in a month, your deadline will move to the last day of that month.)`; 
+			return `Complete Before: [ ${toLocaleDate(getValues("deadline.dueDate"))} ] ${getValues("deadline.dueDate").getDate() > 28 ? warnNoDate : ""}`
+		}
     },[watch("deadline")])
 
     useEffect(() => {
         if (isOpen) {
             setIsShowing(true);
             setFormType(action);
-            action === "add" ? setValue("id", `t_${todos.length}`) : reset(modifyValues);
+            action === "add" ? setValue("id", `t_${listData[1].list.length}`) : reset(editTodoData);
             document.body.style.overflow = "hidden";
         } else {
             document.body.style.overflow = "auto";
@@ -70,29 +74,35 @@ export default function TodoFormModal({ action = "add", isOpen, onClose, modifyV
 async function onSave(data) {
 	try {
 		await new Promise((resolve) => setTimeout(resolve, 1000));
-		
+
 		action === "add" ? 
 			setTodos((prev) => [...prev, data]) : 
 			setTodos((prev) => 
 				prev.map((todo) => 
 					(todo.id === data.id ? data : todo)));
 
-		onClose();
+		handleClose();
 		reset();
 	} catch (error) {
 		setError("root", { message: "Error submitting form." });
 		console.error("Error submitting form:", error);
 	}
 }
-
+function handleClose() {
+    setIsOpen(false);
+}
 function onAnimationEnd() {
-	if (!isOpen) setIsShowing(false);
-};
+    if (!isOpen) {
+        setIsShowing(false);
+        navigate(`/${pathname.split("/")[1]}`);
+    }
+}
 
     return isShowing ? createPortal(
 		<ModalBackground isOpen={isOpen} onAnimationEnd={onAnimationEnd}>
-			<TodoFormModalWrapper isOpen={isOpen} onClose={onClose} 
+			<TodoFormModalWrapper isOpen={isOpen} onClose={handleClose} 
 				title={formType === "add" ? "Add Todo" : "Edit Todo"} >
+				<p className="text-xs text-center">{getDateToday()}</p>
 				<EraseButton onErase={() => reset()} />
 				<FormWrapper onSubmit={handleSubmit(onSave)}>
 					<Title register={register} />
@@ -119,15 +129,15 @@ function onAnimationEnd() {
 						<Deadline>
 							<DeadlineHeader>
 							<Time
-								value={field.value.time}
-								onChange={(time) => field.onChange({ ...field.value, time })}
+								value={field.value}
+								onChange={field.onChange}
 								error={fieldState.error?.message}/>
 							</DeadlineHeader>
 							<DeadlinePicker value={field.value} onChange={field.onChange}/>
+							<Statement errors={errors} statement={deadlineStatement} />
 						</Deadline>
 						)}
 					/>
-					<Statement errors={errors} statement={deadlineStatement} />
 					<SubmitButton
 						isSubmitting={isSubmitting}
 						isValid={isValid}

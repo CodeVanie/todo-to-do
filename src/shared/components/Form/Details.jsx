@@ -1,9 +1,9 @@
-function Details({ register }) {
+export default function Details({ register }) {
 
     return (
         <div className='space-y-1'>
             <label>DETAILS</label>
-            <textarea placeholder='Add task details...' 
+            <textarea placeholder='Add todo details...' 
             className="w-full border-2 p-2 border-yellow-700 rounded-lg text-lg outline-0 basis-full text-red-950 caret-red-950 min-h-10 resize-none overflow-hidden hover:border-red-950" 
             {...register("details", {
                 maxLength: {
@@ -25,5 +25,3 @@ function Details({ register }) {
         </div>
     )
 }
-
-export default Details

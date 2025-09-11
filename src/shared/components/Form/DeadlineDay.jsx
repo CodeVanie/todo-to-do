@@ -1,3 +1,5 @@
+import { getDeadline, getDefaultDeadline, getSafeDate, setDateToday } from "../../../utils";
+
 const days = [
     {id: 0, name: "Su"},
     {id: 1, name: "Mo"},
@@ -7,33 +9,39 @@ const days = [
     {id: 5, name: "Fr"},
     {id: 6, name: "Sa"},
 ];
-function DeadlineDay ({ value, handleUpdate }) {
-    function onDeadlineClick(e) {
-        const id = Number(e.target.dataset.value);
-        let newDue = value.type === "day" ? [...value.due] : [];
-        if (newDue.includes(id)) {
-            newDue = newDue.filter((dayId) => dayId !== id);
-            if (newDue.length === 0) {
-                handleUpdate("timeonly", { 
-                    type: "timeonly", 
-                    due: [], 
-                    label: `Time: ${value.time}` });
-                return;
-            }
-        } else {
-            newDue.push(id);
-        }
-        handleUpdate("day", {
-            type: "day",
-            label: `Day/s(${
-                [...newDue].map(d => 
-                    (days.find(day => day.id === d).name)).join(",")})`,
-            due: newDue,
-        });
+const deadlineType = "day";
+
+export default function DeadlineDay ({ value, handleUpdate }) {
+
+function onDeadlineClick(e) {
+    const id = Number(e.target.dataset.value);
+    let newDues = value.type === deadlineType ? [...value.datenums] : [];
+    if (newDues.includes(id)) {
+        newDues = newDues.filter((dayId) => dayId !== id);
+        if (newDues.length === 0)
+            return handleUpdate({
+                type: "timeonly", 
+                dueDate: setDateToday(value.dueDate), 
+                datenums: []
+            });
+    } else {
+        newDues.push(id);
+        newDues.sort();
     }
 
+    handleUpdate({
+        type: deadlineType,
+        dueDate: getDeadline({
+                    type: deadlineType, 
+                    dueDate: getSafeDate(setDateToday(value.dueDate), new Date().getDate()), 
+                    datenums: newDues
+                }),
+        datenums: newDues
+    });
+}
+
     return (
-        <div className={`flex border-2 items-center p-1 rounded-2xl mx-auto max-xs:pt-7 max-xs:relative max-w-md
+        <div className={`flex border-2 items-center p-1 rounded-2xl mx-auto max-xs:pt-7 relative max-w-md z-1
             ${value.type === "day" ? "border-red-950" : "border-yellow-700"}`}>
             <h3 className='text-left tracking-widest max-xs:absolute max-xs:top-1'>DAYS</h3>
             <ol className='flex gap-x-1 w-full justify-end'>
@@ -41,7 +49,7 @@ function DeadlineDay ({ value, handleUpdate }) {
                     <li key={index} data-value={day.id} 
                         onClick={onDeadlineClick} 
                         className={`max-w-13 grid aspect-square rounded-full flex-1 place-items-center cursor-pointer text-sm hover:scale-110 
-                        ${(value.due.includes(day.id) && value.type === "day") ? 
+                        ${(value.datenums.includes(day.id) && value.type === "day") ? 
                         "border-2 scale-110 border-red-950" : 
                         "border border-yellow-700"}`}>
                         {day.name}
@@ -51,6 +59,3 @@ function DeadlineDay ({ value, handleUpdate }) {
         </div>
     )
 }
-
-
-export default DeadlineDay

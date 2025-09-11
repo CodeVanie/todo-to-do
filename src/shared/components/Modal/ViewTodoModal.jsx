@@ -4,15 +4,22 @@ import { createPortal } from "react-dom";
 import TodoFormModalWrapper from "../../../layouts/TodoFormModalWrapper";
 import FavoriteButton from "../Button/FavoriteButton";
 import { AppContext } from "../../../context/app-context";
+import { toLocaleDate } from "../../../utils";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
-export default function ViewTodoModal({ isOpen, onClose, todo }) {
-    const { setTasks } = useContext(AppContext);
+export default function ViewTodoModal() {
+    const { pathname } = useLocation();
+    const { todoid } = useParams();
+    const navigate = useNavigate();
+    const { listData, setTodos } = useContext(AppContext);
+    const viewedTodo = listData[1].list.find(t => t.id === todoid);
+    const [viewData, setViewData] = useState(viewedTodo);
+    const [isOpen, setIsOpen] = useState(true);
     const [isShowing, setIsShowing] = useState(isOpen);
-    const [viewData, setViewData] = useState(todo);
+    
     useEffect(() => {
         if (isOpen) {
             setIsShowing(true);
-            setViewData(todo);
             document.body.style.overflow = "hidden"
         } else {
             document.body.style.overflow = "auto"
@@ -20,19 +27,24 @@ export default function ViewTodoModal({ isOpen, onClose, todo }) {
         return () => {
             document.body.style.overflow = "auto";
         };
-    }, [isOpen, todo]);
+    }, [isOpen]);
 
 function handleFavoriteButton(newTodo) {
-    console.log(newTodo);
     setViewData(newTodo);
-    setTasks((prev) => prev.map((task) => (task.id === todo.id ? newTodo : task)));
+    setTodos((prev) => prev.map((todo) => (todo.id === viewedTodo.id ? newTodo : todo)));
+}
+function handleClose() {
+    setIsOpen(false);
 }
 function onAnimationEnd() {
-    if (!isOpen) setIsShowing(false);
+    if (!isOpen) {
+        setIsShowing(false);
+        navigate(`/${pathname.split("/")[1]}`);
+    }
 }
     return isShowing ? createPortal(
         <ModalBackground isOpen={isOpen} onAnimationEnd={onAnimationEnd}>
-            <TodoFormModalWrapper title="To-Do Info" isOpen={isOpen} onClose={onClose}>
+            <TodoFormModalWrapper title="To-Do Info" isOpen={isOpen} onClose={handleClose}>
                 <dl className="relative rounded-2xl bg-red-950/75 p-3 text-ptlbrown-100 tracking-widest">
                     <FavoriteButton todo={viewData} onClick={() => handleFavoriteButton({...viewData, favorite: !viewData.favorite})}/>
                     <dt className="text-start italic text-lg xs:absolute xs:text-red-950 -top-10">
@@ -63,7 +75,7 @@ function onAnimationEnd() {
                     </>
                     )}
                     <dt>DEADLINE</dt>
-                    <dd>{viewData.deadline.label} {viewData.deadline.time}</dd>
+                    <dd>{toLocaleDate(viewData.deadline.dueDate)}</dd>
                     <hr />
                 </dl>
             </TodoFormModalWrapper>

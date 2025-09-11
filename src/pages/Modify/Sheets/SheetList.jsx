@@ -1,13 +1,10 @@
-import SheetItem from "./SheetItem"
 
-function SheetList({ children }) {
+export default function SheetList({ children }) {
     return (
-        <div className="max-h-[70vh] bg-ptlbrown-100/75 overflow-y-auto scrollbar-hide">
+        <div className="max-h-[70vh] overflow-y-auto scrollbar-hide bg-red-950/30">
             <ol>
                 {children}
             </ol>
         </div>
     )
 }
-
-export default SheetList

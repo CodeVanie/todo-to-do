@@ -1,53 +1,44 @@
-import { useRef, useState, useContext, createContext, useCallback, useEffect } from 'react'
+import { useContext } from 'react'
 import Sheet from './Sheets/Sheet.jsx';
 import SheetList from './Sheets/SheetList.jsx';
 import { ActionButton } from '../../shared/components/Button/buttons.js';
 import { AppContext } from '../../context/app-context.jsx';
-import TodoFormModal from '../../shared/components/Modal/TodoFormModal.jsx';
-import CategoryFormModal from '../../shared/components/Modal/CategoryFormModal.jsx';
-import { useFormModalControl, useSelect } from "../../hooks.js";
-import AlertModal from '../../shared/components/Modal/AlertModal.jsx';
+import { useSelect } from "../../hooks.js";
 import ModifyContentWrapper from '../../layouts/ModifyContentWrapper.jsx';
 import ActionButtonWrapper from '../../layouts/ActionButtonWrapper.jsx';
 import SheetsSection from './Sheets/SheetsSection.jsx';
 import SheetItem from './Sheets/SheetItem.jsx';
-
-export const SheetContext = createContext();
+import { Outlet, useNavigate } from 'react-router-dom';
+import AlertContextProvider from '../../context/alert-context.jsx';
 
 export default function ModifyContent() {
-    console.log("ModifyContent Rendered");
-    const { selectedItems, setSelectedItems, selectedType, setSelectedType, handleSelectedItems, unselectAll } = useSelect();
-    const { listData, setTodos, setCategories, formModal } = useContext(AppContext);
-    const { openAddModal, openEditModal, closeModal } = useFormModalControl();
-    const [showAlert, setShowAlert] = useState({ status: false, message: ""});
+    // console.log("ModifyContent Rendered");
+    const navigate = useNavigate();
+    const { 
+        selectedItems, 
+        setSelectedItems, 
+        selectedType, 
+        setSelectedType, 
+        handleSelectedItems, 
+        unselectAll 
+    } = useSelect();
+    const { listData, setTodos, setCategories } = useContext(AppContext);
 
-    
 function handleAddButton() {
-    selectedType ? 
-        openAddModal() : 
-        setShowAlert(prev => ({
-            ...prev,
-            status: true,
-            message: "Please select a list first."
-        }));
+    selectedType === "todo" ? navigate(`add/todo`) : 
+    selectedType === "category" ? navigate(`add/category`) : 
+    navigate(`alert/a_0`);
 }
 function handleEditButton() {
     if (selectedItems.size === 1) {
         const id = [...selectedItems][0];
         const item = listData[1].list.find(t => t.id === id) || listData[0].list.find(c => c.id === id);
-        openEditModal(item);
+        selectedType === "todo" && navigate(`edit/todo/${item.id}`);
+        selectedType === "category" && navigate(`edit/category/${item.id}`);
     } else if (selectedItems.size === 0) {
-        setShowAlert(prev => ({
-            ...prev,
-            status: true,
-            message: "Please select an item to edit."
-        }));
+        navigate(`alert/a_1`);
     } else {
-        setShowAlert(prev => ({
-            ...prev,
-            status: true,
-            message: "You cannot edit multiple items at the same time.\nPlease select 1 item only."
-        }));
+        navigate(`alert/a_2`);
     }
 }
 function handleDeleteButton(type) {
@@ -73,29 +64,19 @@ function handleDeleteButton(type) {
                 <ActionButton name="reset" onClick={unselectAll}/>
             </ActionButtonWrapper>
             <SheetsSection>
-            {listData.map((list) => 
-                <Sheet key={list.type} title={`Edit ${list.label} List`} 
-                onSelect={() => setSelectedType(list.type)} 
-                isSelected={selectedType === list.type}>
-                    <SheetList>
-                    {list.list.map((item) => <SheetItem key={item.id} item={item} onSelect={
-                    () => handleSelectedItems(item.id, list.type)} selected={selectedItems} />)}
+            {listData.map((data) => 
+                <Sheet key={data.type} title={`Edit ${data.label} List`} 
+                onSelect={() => setSelectedType(data.type)} 
+                isSelected={selectedType === data.type}>
+                    <SheetList>{data.list.map((item) => <SheetItem key={item.id} item={item} onSelect={() => 
+                    handleSelectedItems(item.id, data.type)} selected={selectedItems} isTodo={data.type === "todo"}/>)}
                     </SheetList>
                 </Sheet>
             )}
             </SheetsSection>
-            <TodoFormModal
-                action={formModal.action} 
-                isOpen={selectedType === "todo" && formModal.status} 
-                onClose={closeModal} 
-                modifyValues={formModal.data}
-            />
-            <CategoryFormModal 
-                action={formModal.action} 
-                isOpen={selectedType === "category" && formModal.status} 
-                onClose={closeModal} 
-                modifyValues={formModal.data}/>
-            <AlertModal isOpen={showAlert.status} onClose={() => setShowAlert(false)} message={showAlert.message} />
+            <AlertContextProvider>
+                <Outlet />
+            </AlertContextProvider>
         </ModifyContentWrapper>
     )
 }

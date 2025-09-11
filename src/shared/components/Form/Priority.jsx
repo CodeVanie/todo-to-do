@@ -1,5 +1,5 @@
 
-function Priority({ value, onChange }) {
+export default function Priority({ value, onChange }) {
     return (
         <fieldset className='space-y-1 flex-1'>
             <label>PRIORITY</label>
@@ -26,5 +26,3 @@ function Priority({ value, onChange }) {
         </fieldset>
     )
 }
-
-export default Priority

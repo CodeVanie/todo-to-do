@@ -1,5 +1,5 @@
 
-function Deadline({ children }) {
+export default function Deadline({ children }) {
     // const now = new Date();
     // const sixMonthsFromNow = new Date(now);
     // sixMonthsFromNow.setMonth(sixMonthsFromNow.getMonth() + 6);
@@ -10,5 +10,3 @@ function Deadline({ children }) {
         </div>
     )
 }
-
-export default Deadline

@@ -10,21 +10,6 @@ export function useAutosizeTextArea(textAreaRef, value) {
   }, [value]);
 }
 
-export function useFormModalControl() {
-	const { setFormModal } = useContext(AppContext);
-
-function openAddModal() {
-	setFormModal({action: "add", data: null, status: true });
-}
-function openEditModal(item) {
-	setFormModal({action: "edit", data: item, status: true });
-}
-function closeModal() {
-	setFormModal({action: null, data: null, status: false });
-}
-	return { openAddModal, openEditModal, closeModal }
-}
-
 export function useControlledList() {
   	const { listData, filteredCategory, selectedSort } = useContext(AppContext);
     const controlledList = useMemo(() => {
@@ -49,7 +34,7 @@ export function useControlledList() {
 
 	return { controlledList, selectedSort, filteredCategory }
 }
-2
+
 export function useSelect() {
 	const [selectedItems, setSelectedItems] = useState(new Set());
 	const [selectedType, setSelectedType] = useState("");
@@ -74,10 +59,11 @@ export function useSelect() {
         setSelectedType("");
     }, []);
 
-	return { selectedItems, setSelectedItems, selectedType, setSelectedType, handleSelectedItems, unselectAll }
+	return { selectedItems, setSelectedItems, selectedType, 
+        setSelectedType, handleSelectedItems, unselectAll }
 }
 
-export default function useControls() {
+export function useControls() {
     const { listData } = useContext(AppContext);
 
     const filterList = useMemo(() => {

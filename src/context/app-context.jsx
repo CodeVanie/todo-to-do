@@ -1,175 +1,55 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
+import { getDeadline, getTodosNearDeadline } from "../utils";
 
 export const AppContext = createContext();
+
+const todoStatuses = ["In Progress", "Completed", "Closed"];
 
 const initialTodos = [
         {
             id: "t_0",
-            label: "I Task Number Zero",
+            label: "Learn React JS",
             priority: "!!!",
-            category: "Food",
-            details: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ut provident reprehenderit dolores et optio eum labore cum aspernatur perferendis, impedit eius quisquam neque temporibus earum consequuntur facilis omnis rem fuga!", 
+            category: "Programming",
+            details: "Local Storage\nZustand\nRedux", 
             deadline: {
-                type: "month",
-                label: "Month(31)",
-                due: [31],
-                time: "12:00"
+                type: "day",
+                dueDate: new Date("2025-09-09T20:15:00+08:00"),
+                datenums: [2,4,0],
+                time: "20:15"
             },
-            favorite: true
+            favorite: true,
+            status: todoStatuses[0]
         },
         {
             id: "t_1",
-            label: "V Task Number One",
+            label: "Brace Adjustment",
             priority: "!!",
-            category: "Morning",
-            details: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.", 
+            category: "Dentist",
+            details: "Cleaning every 6 months\nFillings every other month", 
             deadline: {
-                type: "day",
-                label: "Deadline",
-                due: [3],
-                time: "00:00"
+                type: "month",
+                dueDate: new Date("2025-08-31T23:59:00+08:00"),
+                datenums: [31],
+                time: "23:59"
             },
-            favorite: false
+            favorite: false,
+            status: todoStatuses[0]
         },
         {
             id: "t_2",
-            label: "Z Task Number Two",
-            priority: "!!!",
-            category: "",
-            details: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.", 
-            deadline: {
-                type: "month",
-                label: "Deadline",
-                due: [6],
-                time: "00:00"
-            },
-            favorite: false
-        },
-        {
-            id: "t_3",
-            label: "R Task Number Three",
+            label: "Walk in the Morning",
             priority: "!",
-            category: "Self",
-            details: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.", 
+            category: "Fitness",
+            details: "Record walk via strava.\nTake a picture", 
             deadline: {
-                type: "day",
-                label: "Deadline",
-                due: [5],
-                time: "00:00"
+                type: "timeonly",
+                dueDate: new Date("2025-09-11T08:00:00+08:00"),
+                datenums: [],
+                time: "08:00"
             },
-            favorite: true
-        },
-        {
-            id: "t_4",
-            label: "G Task Number Four",
-            priority: "!!",
-            category: "Friends",
-            details: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.", 
-            deadline: {
-                type: "day",
-                label: "Deadline",
-                due: [4],
-                time: "00:00"
-            },
-            favorite: false
-        },
-        {
-            id: "t_5",
-            label: "S Task Number Five",
-            priority: "!!!",
-            category: "Cooking",
-            details: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.", 
-            deadline: {
-                type: "month",
-                label: "Deadline",
-                due: [5],
-                time: "00:00"
-            },
-            favorite: true
-        },
-        {
-            id: "t_6",
-            label: "L Task Number Six",
-            priority: "!",
-            category: "Friends",
-            details: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.", 
-            deadline: {
-                type: "month",
-                label: "Deadline",
-                due: [0],
-                time: "00:00"
-            },
-            favorite: false
-        },
-        {
-            id: "t_7",
-            label: "A Task Number Seven",
-            priority: "!!",
-            category: "Food",
-            details: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.", 
-            deadline: {
-                type: "day",
-                label: "Deadline",
-                due: [3],
-                time: "00:00"
-            },
-            favorite: false
-        },
-        {
-            id: "t_8",
-            label: "E Task Number Eight",
-            priority: "!!!",
-            category: "Morning",
-            details: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.", 
-            deadline: {
-                type: "day",
-                label: "Deadline",
-                due: [2],
-                time: "00:00"
-            },
-            favorite: false
-        },
-        {
-            id: "t_9",
-            label: "Y Task Number Nine",
-            priority: "!!",
-            category: "Self",
-            details: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.", 
-            deadline: {
-                type: "",
-                label: "",
-                due: [],
-                time: "00:00"
-            },
-            favorite: true
-        },
-        {
-            id: "t_10",
-            label: "L Task Number Ten",
-            priority: "!",
-            category: "Morning",
-            details: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.", 
-            deadline: {
-                type: "day",
-                label: "Deadline",
-                due: [7],
-                time: "12:45"
-            },
-            favorite: false
-        },
-        {
-            id: "t_11",
-            label: "B Task Number Eleven",
-            priority: "!",
-            category: "Cooking",
-            details: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.", 
-            deadline: {
-                type: "month",
-                label: "Month(21)",
-                due: [21],
-                time: "12:00"
-            },
-            favorite: true
+            favorite: false,
+            status: todoStatuses[0]
         }
     ];
 const initialCategories = [
@@ -180,22 +60,22 @@ const initialCategories = [
             }, 
             {
                 id: "c_3",
-                label: "Morning",
+                label: "Fitness",
                 active: true
             }, 
             {
                 id: "c_4",
-                label: "Dentist",
+                label: "Self",
                 active: false
             }, 
             {
                 id: "c_5",
-                label: "Self",
+                label: "Dentist",
                 active: true
             }, 
             {
                 id: "c_6",
-                label: "Friends",
+                label: "Programming",
                 active: true
             }, 
             {
@@ -224,19 +104,58 @@ const sortTypes = [
                 label: "Letters",
                 active: false
             }];
+const initialNotifs = [
+    {
+        id: "n_0",
+        title: "Welcome to TODO-To-Do!",
+        body: `Please check the "App Guide" section to learn more about the app.`,
+        clicked: false
+    },
+    {
+        id: "n_1",
+        title: "Welcome TODO User!",
+        body: `You can use this To-Do List application to list all your tasks.`,
+        clicked: false
+    },
+    {
+        id: "n_2",
+        title: "Wanna see more from CodeVANIE?",
+        body: `Check CodeVANIE's Portfolio!`,
+        clicked: false
+    }
+]
 
 export default function AppContextProvider({ children }) {
-    const [formModal, setFormModal] = useState({action: null, data: null, status: false});
     const [categories, setCategories] = useState(initialCategories);
     const [filteredCategory, setFilteredCategory] = useState("All");
     const [selectedSort, setSelectedSort] = useState("Newest");
     const [todos, setTodos] = useState(initialTodos);
+    const [notifs, setNotifs] = useState(initialNotifs);
+    const [hasNotif, setHasNotif] = useState(false);
+
+    useEffect(() => {
+        setTodos(prev =>
+            prev.map(todo => {
+                if (todo.status === todoStatuses[0]) {
+                    return {
+                        ...todo,
+                        deadline: {
+                            ...todo.deadline,
+                            dueDate: getDeadline(todo.deadline)
+                        }
+                    }
+                } else return todo
+            })
+        );
+    }, [])
     const listData = [
         {id: "list_c", label: "Category", type: "category", list: categories},
         {id: "list_t", label: "To-Do", type: "todo", list: todos},
         {id: "list_s", label: "Sort", type: "sort", list: sortTypes}
     ];
-    const appContext = { listData, todos, setTodos, categories, setCategories, formModal, setFormModal, sortTypes, filteredCategory, setFilteredCategory, selectedSort, setSelectedSort };
+
+    const appContext = { notifs, setNotifs, listData, setTodos, setCategories, filteredCategory, setFilteredCategory, selectedSort, setSelectedSort, hasNotif, setHasNotif };
+
     return (
         <AppContext.Provider value={appContext}>
             {children}

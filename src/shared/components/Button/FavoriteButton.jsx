@@ -1,4 +1,4 @@
-import HeartIcon from "../../icons/IconCollection";
+import { HeartIcon } from "../../icons/IconCollection";
 
 export default function FavoriteButton({ todo, onClick }) {
     return (

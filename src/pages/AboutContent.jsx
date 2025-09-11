@@ -1,5 +1,5 @@
 
-function AboutContent() {
+export default function AboutContent() {
     console.log("AboutContent rendered");
     return (
         <article className="flex flex-col text-justify p-3 gap-y-2 max-w-6xl font-bold relative z-10 text-ptlbrown-100 mx-auto">
@@ -16,5 +16,3 @@ function AboutContent() {
         </article>
     )
 }
-
-export default AboutContent

@@ -1,25 +1,30 @@
+import { getDeadline, getSafeDate, setDateToday } from "../../../utils";
 
 const dateNum = Array.from({ length: 31 }, (_,i) => i + 1);
+const deadlineType = "month";
 
-function DeadlineMonth ({ value, handleUpdate }) {
-    function onDeadlineClick(e) {
-        const num = Number(e.target.dataset.value);
-        let newDue = value.type === "month" ? [value.due[0]] : [];
-        if (newDue.includes(num)) {
-            newDue = newDue.filter((dayNum) => dayNum !== num);
-            if (newDue.length === 0) {
-                handleUpdate("timeonly", { type: "timeonly", due: [], label: "" });
-                return;
-            }
-        } else {
-            newDue = [num];
-        }
-        handleUpdate("month", {
-            type: "month",
-            label: `Month(${newDue[0]})`,
-            due: newDue,
+export default function DeadlineMonth ({ value, handleUpdate }) {
+
+function onDeadlineClick(e) {
+    const dayNumber = Number(e.target.dataset.value);
+    // Unselecting a number will go back to timeonly deadline type
+    if (value.datenums.includes(dayNumber))
+        return handleUpdate({
+            type: "timeonly", 
+            dueDate: setDateToday(value.dueDate), 
+            datenums: []
         });
-    }
+
+    handleUpdate({
+        type: deadlineType,
+        dueDate: getDeadline({
+                    type: deadlineType, 
+                    dueDate: getSafeDate(setDateToday(value.dueDate), dayNumber), 
+                    datenums: [dayNumber]
+                }),
+        datenums: [dayNumber]
+    });
+}
 
     return (
         <div className={`border-2 px-1 py-1 rounded-2xl 
@@ -29,7 +34,7 @@ function DeadlineMonth ({ value, handleUpdate }) {
                 {dateNum.map((num, index) => 
                     <li key={index} data-value={num} onClick={onDeadlineClick} 
                     className={`w-11 h-11 shrink-0 grid place-items-center rounded-sm cursor-pointer select-none hover:scale-110 
-                        ${(value.due.includes(num) && value.type === "month") ? 
+                        ${(value.datenums.includes(num) && value.type === "month") ? 
                             "border-2 scale-110 border-red-950" : 
                             "border border-yellow-700"}`}>
                         {num}
@@ -39,6 +44,3 @@ function DeadlineMonth ({ value, handleUpdate }) {
         </div>
     )
 }
-
-
-export default DeadlineMonth

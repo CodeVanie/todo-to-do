@@ -1,5 +1,5 @@
 
-export function NavIcon({ name, className = "w-6 h-6", fill = "currentColor"}) {
+export function NavIcon({ name, className = "w-6 h-6", fill = "currentColor", hasnotif = false}) {
     return (
     <>
         {name === "aboutapp" ? (
@@ -10,14 +10,18 @@ export function NavIcon({ name, className = "w-6 h-6", fill = "currentColor"}) {
             <svg className={className} viewBox="0 0 16 16" fill={fill} xmlns="http://www.w3.org/2000/svg"><path d="M1 6V15H6V11C6 9.89543 6.89543 9 8 9C9.10457 9 10 9.89543 10 11V15H15V6L8 0L1 6Z"/></svg>
         ) : name === "modify" ? (
             <svg className={className} fill={fill} version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 511.968 511.968" xmlSpace="preserve" stroke="#e7b574"><path d="M493.248,18.424c-24.171-24.171-66.325-24.171-90.496,0L198.571,222.605c-28.757,28.736-45.995,66.901-48.576,107.435 l-0.619,9.6c-0.384,5.888,1.707,11.648,5.717,15.979c4.032,4.288,9.685,6.72,15.573,6.72c44.608,0,86.549-17.365,118.101-48.917 l204.48-204.501C518.208,83.96,518.208,43.384,493.248,18.424z M463.083,78.755l-204.48,204.501 c-17.771,17.749-39.957,29.483-64.085,34.155c4.629-24.384,16.491-46.933,34.219-64.64L432.917,48.589 c4.032-4.053,9.387-6.251,15.083-6.251c5.696,0,11.051,2.197,15.083,6.251C471.403,56.909,471.403,70.435,463.083,78.755z"/> <path d="M170.667,405.005c-17.6,0-34.624-7.36-46.656-20.181c-12.075-12.928-18.325-30.357-17.216-47.893l0.619-9.621 c3.243-50.88,24.896-98.795,60.992-134.869L339.84,21.005H21.333C9.557,21.005,0,30.541,0,42.339v448 c0,11.797,9.557,21.333,21.333,21.333h448c11.776,0,21.333-9.536,21.333-21.333V171.832L318.933,343.587 C279.317,383.203,226.667,405.005,170.667,405.005z"/></svg>
-        ) : name === "profile" ? (
-            <svg className={className} fill={fill} version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 45.532 45.532" xmlSpace="preserve"><path d="M22.766,0.001C10.194,0.001,0,10.193,0,22.766s10.193,22.765,22.766,22.765c12.574,0,22.766-10.192,22.766-22.765 S35.34,0.001,22.766,0.001z M22.766,6.808c4.16,0,7.531,3.372,7.531,7.53c0,4.159-3.371,7.53-7.531,7.53 c-4.158,0-7.529-3.371-7.529-7.53C15.237,10.18,18.608,6.808,22.766,6.808z M22.761,39.579c-4.149,0-7.949-1.511-10.88-4.012 c-0.714-0.609-1.126-1.502-1.126-2.439c0-4.217,3.413-7.592,7.631-7.592h8.762c4.219,0,7.619,3.375,7.619,7.592 c0,0.938-0.41,1.829-1.125,2.438C30.712,38.068,26.911,39.579,22.761,39.579z"/></svg>
+        ) : name === "notif" ? (
+            hasnotif ? (
+                <svg className={className} fill={fill} viewBox="0 0 36 36" version="1.1" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink"><path className="clr-i-solid--badged clr-i-solid-path-1--badged" d="M18,34.28A2.67,2.67,0,0,0,20.58,32H15.32A2.67,2.67,0,0,0,18,34.28Z"/><path className="clr-i-solid--badged clr-i-solid-path-2--badged" d="M32.85,28.13l-.34-.3A14.37,14.37,0,0,1,30,24.9a12.63,12.63,0,0,1-1.35-4.81V15.15a10.92,10.92,0,0,0-.16-1.79A7.5,7.5,0,0,1,22.5,6c0-.21,0-.42,0-.63a10.57,10.57,0,0,0-3.32-1V3.11a1.33,1.33,0,1,0-2.67,0V4.42A10.81,10.81,0,0,0,7.21,15.15v4.94A12.63,12.63,0,0,1,5.86,24.9a14.4,14.4,0,0,1-2.47,2.93l-.34.3v2.82H32.85Z"/><circle className="clr-i-solid--badged clr-i-solid-path-3--badged clr-i-badge" cx="30" cy="6" r="5"/> <rect x="0" y="0" width="36" height="36" fillOpacity="0"/></svg>
+            ) : (
+                <svg className={className} fill={fill} viewBox="0 0 36 36" version="1.1" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink"><path className="clr-i-solid clr-i-solid-path-1" d="M32.85,28.13l-.34-.3A14.37,14.37,0,0,1,30,24.9a12.63,12.63,0,0,1-1.35-4.81V15.15A10.81,10.81,0,0,0,19.21,4.4V3.11a1.33,1.33,0,1,0-2.67,0V4.42A10.81,10.81,0,0,0,7.21,15.15v4.94A12.63,12.63,0,0,1,5.86,24.9a14.4,14.4,0,0,1-2.47,2.93l-.34.3v2.82H32.85Z"/><path className="clr-i-solid clr-i-solid-path-2" d="M15.32,32a2.65,2.65,0,0,0,5.25,0Z"/> <rect x="0" y="0" width="36" height="36" fillOpacity="0"/></svg>
+            )
         ) : null}
     </>
     )
 }
 
-export function CloseIcon({ className = "w-6 h-6", fill = "currentColor"}) {
+export function CloseIcon({ className = "w-6 h-6", fill = "currentColor" }) {
     return (
         <svg className={className} viewBox="0 0 24 24" fill={fill} xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" clipRule="evenodd" d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12ZM8.96963 8.96965C9.26252 8.67676 9.73739 8.67676 10.0303 8.96965L12 10.9393L13.9696 8.96967C14.2625 8.67678 14.7374 8.67678 15.0303 8.96967C15.3232 9.26256 15.3232 9.73744 15.0303 10.0303L13.0606 12L15.0303 13.9696C15.3232 14.2625 15.3232 14.7374 15.0303 15.0303C14.7374 15.3232 14.2625 15.3232 13.9696 15.0303L12 13.0607L10.0303 15.0303C9.73742 15.3232 9.26254 15.3232 8.96965 15.0303C8.67676 14.7374 8.67676 14.2625 8.96965 13.9697L10.9393 12L8.96963 10.0303C8.67673 9.73742 8.67673 9.26254 8.96963 8.96965Z"/></svg>
     )
@@ -59,13 +63,12 @@ export function CorrectIcon({ className = "w-6 h-6", fill = "currentColor"}) {
 
 export function WrongIcon({ className = "w-6 h-6", fill = "currentColor"}) {
     return (
-        <svg className={className} fill={fill} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" stroke="#d10000" stroke-width="0.00024000000000000003"><path d="M19.1 4.9C15.2 1 8.8 1 4.9 4.9S1 15.2 4.9 19.1s10.2 3.9 14.1 0 4-10.3.1-14.2zm-4.3 11.3L12 13.4l-2.8 2.8-1.4-1.4 2.8-2.8-2.8-2.8 1.4-1.4 2.8 2.8 2.8-2.8 1.4 1.4-2.8 2.8 2.8 2.8-1.4 1.4z"/></svg>
+        <svg className={className} fill={fill} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" stroke="#d10000" strokeWidth="0.00024000000000000003"><path d="M19.1 4.9C15.2 1 8.8 1 4.9 4.9S1 15.2 4.9 19.1s10.2 3.9 14.1 0 4-10.3.1-14.2zm-4.3 11.3L12 13.4l-2.8 2.8-1.4-1.4 2.8-2.8-2.8-2.8 1.4-1.4 2.8 2.8 2.8-2.8 1.4 1.4-2.8 2.8 2.8 2.8-1.4 1.4z"/></svg>
     )
 }
 
-export default function HeartIcon({ className = "w-6 h-6", fill = "currentColor", stroke = "#e7b574"}) {
+export function HeartIcon({ className = "w-6 h-6", fill = "currentColor", stroke = "#e7b574"}) {
     return (
-        <svg className={className} viewBox="-0.96 -0.96 17.92 17.92" fill={fill} xmlns="http://www.w3.org/2000/svg" stroke={stroke} strokeWidth="1.1039999999999999"><path d="M1.24264 8.24264L8 15L14.7574 8.24264C15.553 7.44699 16 6.36786 16 5.24264V5.05234C16 2.8143 14.1857 1 11.9477 1C10.7166 1 9.55233 1.55959 8.78331 2.52086L8 3.5L7.21669 2.52086C6.44767 1.55959 5.28338 1 4.05234 1C1.8143 1 0 2.8143 0 5.05234V5.24264C0 6.36786 0.44699 7.44699 1.24264 8.24264Z"/></svg>
+        <svg className={className} fill={fill} viewBox="-0.96 -0.96 17.92 17.92" xmlns="http://www.w3.org/2000/svg" stroke={stroke} strokeWidth="1.1039999999999999"><path d="M1.24264 8.24264L8 15L14.7574 8.24264C15.553 7.44699 16 6.36786 16 5.24264V5.05234C16 2.8143 14.1857 1 11.9477 1C10.7166 1 9.55233 1.55959 8.78331 2.52086L8 3.5L7.21669 2.52086C6.44767 1.55959 5.28338 1 4.05234 1C1.8143 1 0 2.8143 0 5.05234V5.24264C0 6.36786 0.44699 7.44699 1.24264 8.24264Z"/></svg>
     )
 }
-

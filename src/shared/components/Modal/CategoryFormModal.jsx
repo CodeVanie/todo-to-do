@@ -6,18 +6,24 @@ import { AppContext } from "../../../context/app-context";
 import FormWrapper from "../Form/FormWrapper.jsx";
 import EraseButton from "../Button/EraseButton";
 import SubmitButton from "../Button/SubmitButton.jsx";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
-export default function CategoryFormModal({ action = "add", isOpen, onClose, modifyValues }) {
+export default function CategoryFormModal() {
     // console.log("CategoryFormModal Rendered");
-    const { categories, setCategories } = useContext(AppContext);
+    const { pathname } = useLocation();
+	const { action, categid } = useParams();
+    const navigate = useNavigate();
+    const { listData, setCategories } = useContext(AppContext);
+    const [isOpen, setIsOpen] = useState(true);
     const [isShowing, setIsShowing] = useState(isOpen);
     const [submitting, setSubmitting] = useState(false);
-    const [newCategory, setNewCategory] = useState(null);
+    const [newCategory, setNewCategory] = useState({id: null, label: null, active: null});
+    const editCategData = action === "edit" ? listData[0].list.find(c => c.id === categid) : null;
     
     useEffect(() => {
         if (isOpen) {
             setIsShowing(true);
-            setNewCategory(action === "add" ? {id: `c_${categories.length+2}`, label: "", active: true} : modifyValues);
+            setNewCategory(action === "add" ? {id: `c_${listData[0].length+2}`, label: "", active: true} : editCategData);
             document.body.style.overflow = "hidden";
         } else {
             document.body.style.overflow = "auto";
@@ -36,23 +42,29 @@ function onSave(e) {
         setCategories((prev) => [...prev, newCategory]) : 
         setCategories((prev) => 
             prev.map((category) => 
-                (category.id === modifyValues.id ? newCategory : category)))
+                (category.id === editCategData.id ? newCategory : category)))
         setSubmitting(false);
         setNewCategory({});
-        onClose();
+        handleClose();
     }, 1000);
 }
 function handleInputChange(e) {
     const { value } = e.target;
     setNewCategory(prev =>  ({...prev, label: value}));
 }
+function handleClose() {
+    setIsOpen(false);
+}
 function onAnimationEnd() {
-    if (!isOpen) setIsShowing(false);
+    if (!isOpen) {
+        setIsShowing(false);
+        navigate(`/${pathname.split("/")[1]}`);
+    }
 }
 
     return isShowing ? createPortal(
         <ModalBackground isOpen={isOpen} onAnimationEnd={onAnimationEnd}>
-            <SmallModalWrapper title={`Add\nCategory`} isOpen={isOpen} onClose={onClose}>
+            <SmallModalWrapper title={`Add\nCategory`} isOpen={isOpen} onClose={handleClose}>
                 <EraseButton onErase={() => setNewCategory(prev =>  ({...prev, label: ""}))} />
                 <FormWrapper onSubmit={onSave}>
                     <label className="mt-3">CATEGORY NAME</label>

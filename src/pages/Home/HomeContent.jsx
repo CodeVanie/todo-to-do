@@ -1,22 +1,21 @@
-import React, { useContext, useState } from "react";
-import { TodoFormModal, ViewTodoModal } from "../../shared/components/Modal/modals.js"
+import React, { useContext } from "react";
 import Controls from "./Controls/Controls.jsx"
 import TodoList from "./TodoList";
 import TodoItem from "./TodoItem";
 import { ListAddButton } from "../../shared/components/Button/buttons.js";
 import ControlSection from "./Controls/ControlSection.jsx";
 import { AppContext } from "../../context/app-context";
-import useControls, { useControlledList, useFormModalControl } from "../../hooks.js";
+import { useControls, useControlledList } from "../../hooks.js";
 import HomeContentWrapper from "../../layouts/HomeContentWrapper.jsx";
+import { Outlet } from "react-router-dom";
+import { getTodosNearDeadline } from "../../utils.js";
 
 export default function HomeContent() {
-    console.log("HomeContent rendered");
-    const { formModal, setFilteredCategory, setSelectedSort } = useContext(AppContext);
+    // console.log("HomeContent rendered");
+    const { setFilteredCategory, setSelectedSort } = useContext(AppContext);
     const { controlledList, selectedSort, filteredCategory } = useControlledList();
-    const [viewTodo, setViewTodo] = useState({data: {},status: false});
-    const { openAddModal, closeModal } = useFormModalControl();
     const [filterList, sortList] = useControls();
-
+    getTodosNearDeadline(controlledList);
     return (
         <HomeContentWrapper>
             <Controls>
@@ -27,23 +26,14 @@ export default function HomeContent() {
                     onControlClick={setFilteredCategory} control={filteredCategory}/>
             </Controls>
             <TodoList>
-                <ListAddButton openModal={openAddModal} />
+                <ListAddButton />
                 <ol className="p-2 space-y-1">
                 {controlledList.map((todo, index) => 
-                    <TodoItem key={index} todo={todo} onView={setViewTodo}/>
+                    <TodoItem key={index} todo={todo} />
                 )}
                 </ol>
             </TodoList>
-            <TodoFormModal  
-                type={formModal.type} 
-                isOpen={formModal.status} 
-                onClose={closeModal} 
-                modifyValues={formModal.data}
-            />
-            <ViewTodoModal 
-                isOpen={viewTodo.status} 
-                onClose={() => setViewTodo({data: {},status: false})} 
-                todo={viewTodo.data} />
+            <Outlet />
         </HomeContentWrapper>
     )
 }
