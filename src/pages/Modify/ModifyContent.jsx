@@ -12,7 +12,7 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import AlertContextProvider from '../../context/alert-context.jsx';
 
 export default function ModifyContent() {
-    // console.log("ModifyContent Rendered");
+    console.log("ModifyContent Rendered");
     const navigate = useNavigate();
     const { 
         selectedItems, 
@@ -32,9 +32,12 @@ function handleAddButton() {
 function handleEditButton() {
     if (selectedItems.size === 1) {
         const id = [...selectedItems][0];
-        const item = listData[1].list.find(t => t.id === id) || listData[0].list.find(c => c.id === id);
+        const item = listData[0].list.find(c => c.id === id) || 
+                     listData[1].list.find(t => t.id === id) || 
+                     listData[2].list.find(s => s.id === id);
         selectedType === "todo" && navigate(`edit/todo/${item.id}`);
         selectedType === "category" && navigate(`edit/category/${item.id}`);
+        selectedType === "sort" && navigate(`edit/sort/${item.id}`);
     } else if (selectedItems.size === 0) {
         navigate(`alert/a_1`);
     } else {
@@ -58,9 +61,9 @@ function handleDeleteButton(type) {
     return (
         <ModifyContentWrapper>
             <ActionButtonWrapper>
-                <ActionButton name="addrow" onClick={handleAddButton}/>
+                <ActionButton isActive={selectedType !== "sort"} name="addrow" onClick={handleAddButton}/>
                 <ActionButton name="editrow" onClick={handleEditButton}/>
-                <ActionButton name="deleterow" onClick={() => handleDeleteButton(selectedType)}/>
+                <ActionButton isActive={selectedType !== "sort"} name="deleterow" onClick={() => handleDeleteButton(selectedType)}/>
                 <ActionButton name="reset" onClick={unselectAll}/>
             </ActionButtonWrapper>
             <SheetsSection>

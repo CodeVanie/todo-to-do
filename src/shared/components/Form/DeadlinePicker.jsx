@@ -1,7 +1,7 @@
 import DeadlineDay from "./DeadlineDay";
 import DeadlineMonth from "./DeadlineMonth";
 
-export default function DeadlinePicker({ value, onChange }) {
+export default function DeadlinePicker({ value, onChange, setError }) {
 
 function handleUpdate(updates) {
     let newValue;
@@ -10,7 +10,7 @@ function handleUpdate(updates) {
 }
     return (
         <>
-            <DeadlineDay value={value} handleUpdate={handleUpdate}/>
+            <DeadlineDay value={value} handleUpdate={handleUpdate} setError={setError}/>
             <DeadlineMonth value={value} handleUpdate={handleUpdate}/>
         </>
     )

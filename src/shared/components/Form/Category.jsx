@@ -6,7 +6,7 @@ export default function Category({ value, onChange }) {
 
     return (
         <div className='space-y-1 flex-1'>
-            <label>CATEGORY</label>
+            <legend>CATEGORY</legend>
             <div className="relative">
                 <button className={`select-category-button 
                 ${value ? "border-red-950" : "border-yellow-700"}`} type='button' 

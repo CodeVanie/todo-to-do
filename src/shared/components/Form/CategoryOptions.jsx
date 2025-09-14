@@ -3,6 +3,7 @@ import { AppContext } from "../../../context/app-context";
 
 export default function CategoryOptions({ onChange, showOptions, setShowOptions }) {
     const { listData } = useContext(AppContext);
+    const categoryList = listData[0].list.filter((c,_) => c.active);
 
 function handleCategorySelect(e) {
     document.getElementById("select-category-options").classList.add("hidden");
@@ -11,7 +12,7 @@ function handleCategorySelect(e) {
 }
     return (
         <ul id="select-category-options" className={showOptions ? "max-h-36" : "max-h-0"}>
-            {listData[0].list.map((c, index) => 
+            {categoryList.map((c, index) => 
                 <li key={index} data-value={c.label} onClick={handleCategorySelect}>
                     {c.label.toUpperCase()}
                 </li>

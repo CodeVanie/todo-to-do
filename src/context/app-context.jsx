@@ -1,13 +1,61 @@
 import { createContext, useEffect, useState } from "react";
-import { getDeadline, getTodosNearDeadline } from "../utils";
+import { updateTodoDeadline } from "../utils";
 
 export const AppContext = createContext();
 
-const todoStatuses = ["In Progress", "Completed", "Closed"];
+const todoStatuses = ["Pending", "Completed", "Inactive"];
 
+const now = new Date();
+now.setHours(23);
+now.setMinutes(59);
 const initialTodos = [
         {
             id: "t_0",
+            label: "Notifications Todo",
+            priority: "!!!",
+            category: "",
+            details: "This Todo is a sample TODO which will trigger a notification when the deadline is today.", 
+            deadline: {
+                type: "timeonly",
+                dueDate: now,
+                datenums: [],
+                time: "23:59"
+            },
+            favorite: true,
+            status: todoStatuses[0]
+        },
+        {
+            id: "t_1",
+            label: "Completed Todo",
+            priority: "!!",
+            category: "",
+            details: "This Todo is a sample TODO which will show what it would look like if a TODO is completed.", 
+            deadline: {
+                type: "timeonly",
+                dueDate: now,
+                datenums: [],
+                time: "23:59"
+            },
+            favorite: false,
+            status: todoStatuses[1]
+        },
+        {
+            id: "t_2",
+            label: "Inactive Todo",
+            priority: "!",
+            category: "",
+            details: "This Todo is a sample TODO which is in Inactive status and will not be displayed in Home page.", 
+            deadline: {
+                type: "timeonly",
+                dueDate: now,
+                datenums: [],
+                time: "23:59"
+            },
+            favorite: false,
+            status: todoStatuses[2]
+        },
+        {
+            id: "t_3",
             label: "Learn React JS",
             priority: "!!!",
             category: "Programming",
@@ -22,31 +70,31 @@ const initialTodos = [
             status: todoStatuses[0]
         },
         {
-            id: "t_1",
-            label: "Brace Adjustment",
-            priority: "!!",
-            category: "Dentist",
-            details: "Cleaning every 6 months\nFillings every other month", 
-            deadline: {
-                type: "month",
-                dueDate: new Date("2025-08-31T23:59:00+08:00"),
-                datenums: [31],
-                time: "23:59"
-            },
-            favorite: false,
-            status: todoStatuses[0]
-        },
-        {
-            id: "t_2",
+            id: "t_4",
             label: "Walk in the Morning",
             priority: "!",
             category: "Fitness",
             details: "Record walk via strava.\nTake a picture", 
             deadline: {
                 type: "timeonly",
-                dueDate: new Date("2025-09-11T08:00:00+08:00"),
+                dueDate: new Date("2025-09-12T23:00:00+08:00"),
                 datenums: [],
-                time: "08:00"
+                time: "23:00"
+            },
+            favorite: false,
+            status: todoStatuses[0]
+        },
+        {
+            id: "t_5",
+            label: "Brace Adjustment",
+            priority: "!!",
+            category: "Dentist",
+            details: "Cleaning every 6 months\nFillings every other month", 
+            deadline: {
+                type: "month",
+                dueDate: new Date("2025-09-14T02:59:00+08:00"),
+                datenums: [14],
+                time: "02:59"
             },
             favorite: false,
             status: todoStatuses[0]
@@ -83,65 +131,40 @@ const initialCategories = [
                 label: "Cooking",
                 active: true
             }];
-const sortTypes = [
+const initialSortTypes = [
             {
                 id: "s_1",
-                label: "Newest",
-                active: true
-            }, 
-            {
-                id: "s_2",
                 label: "Priority",
                 active: true
             },
             {
-                id: "s_3",
+                id: "s_2",
                 label: "Deadline",
                 active: true
             },
             {
-                id: "s_4",
+                id: "s_3",
                 label: "Letters",
                 active: false
             }];
-const initialNotifs = [
-    {
-        id: "n_0",
-        title: "Welcome to TODO-To-Do!",
-        body: `Please check the "App Guide" section to learn more about the app.`,
-        clicked: false
-    },
-    {
-        id: "n_1",
-        title: "Welcome TODO User!",
-        body: `You can use this To-Do List application to list all your tasks.`,
-        clicked: false
-    },
-    {
-        id: "n_2",
-        title: "Wanna see more from CodeVANIE?",
-        body: `Check CodeVANIE's Portfolio!`,
-        clicked: false
-    }
-]
 
 export default function AppContextProvider({ children }) {
     const [categories, setCategories] = useState(initialCategories);
-    const [filteredCategory, setFilteredCategory] = useState("All");
-    const [selectedSort, setSelectedSort] = useState("Newest");
+    const [sortTypes, setSortTypes] = useState(initialSortTypes);
+    const [filteredCategory, setFilteredCategory] = useState("c_0");
+    const [selectedSort, setSelectedSort] = useState("s_0");
     const [todos, setTodos] = useState(initialTodos);
-    const [notifs, setNotifs] = useState(initialNotifs);
-    const [hasNotif, setHasNotif] = useState(false);
 
     useEffect(() => {
         setTodos(prev =>
             prev.map(todo => {
                 if (todo.status === todoStatuses[0]) {
+                    const {type, dueDate, datenums} = todo.deadline;
                     return {
                         ...todo,
                         deadline: {
                             ...todo.deadline,
-                            dueDate: getDeadline(todo.deadline)
+                            dueDate: updateTodoDeadline(type, dueDate, datenums)
                         }
                     }
                 } else return todo
@@ -154,7 +177,7 @@ export default function AppContextProvider({ children }) {
         {id: "list_s", label: "Sort", type: "sort", list: sortTypes}
     ];
 
-    const appContext = { notifs, setNotifs, listData, setTodos, setCategories, filteredCategory, setFilteredCategory, selectedSort, setSelectedSort, hasNotif, setHasNotif };
+    const appContext = { listData, setTodos, setCategories, setSortTypes, filteredCategory, setFilteredCategory, selectedSort, setSelectedSort };
 
     return (
         <AppContext.Provider value={appContext}>

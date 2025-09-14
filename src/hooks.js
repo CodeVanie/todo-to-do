@@ -13,20 +13,22 @@ export function useAutosizeTextArea(textAreaRef, value) {
 export function useControlledList() {
   	const { listData, filteredCategory, selectedSort } = useContext(AppContext);
     const controlledList = useMemo(() => {
-        let list = [...listData[1].list];
+        let list = listData[1].list.filter((t,_) => t.status !== "Inactive");
 
-        if (filteredCategory === "Favorites") {
-          return listData[1].list.filter((t,_) => t.favorite);
-        } else if (filteredCategory !== "All") {
-            return listData[1].list.filter((t,_) => t.category === filteredCategory);
+
+        if (filteredCategory === "c_1") {
+          return list.filter((t,_) => t.favorite);
+        } else if (filteredCategory !== "c_0") {
+            return list.filter((t,_) => t.category === 
+            listData[0].list.find(c => c.id === filteredCategory).label);
         }
 
-        if (selectedSort === "Newest") {
-            return [...listData[1].list].sort((a, b) => b.id.localeCompare(a.id, undefined, { numeric: true }));
-        } else if (selectedSort === "Priority") {
-            return [...listData[1].list].sort((a, b) => b.priority.length - a.priority.length);
-        } else if (selectedSort === "Letters") {
-            return [...listData[1].list].sort((a, b) => a.label.localeCompare(b.label));
+        if (selectedSort === "s_0") {
+            return list.sort((a, b) => b.id.localeCompare(a.id, undefined, { numeric: true }));
+        } else if (selectedSort === "s_1") {
+            return list.sort((a, b) => b.priority.length - a.priority.length);
+        } else if (selectedSort === "s_3") {
+            return list.sort((a, b) => a.label.localeCompare(b.label));
         }
 
         return list;
@@ -37,7 +39,7 @@ export function useControlledList() {
 
 export function useSelect() {
 	const [selectedItems, setSelectedItems] = useState(new Set());
-	const [selectedType, setSelectedType] = useState("");
+	const [selectedType, setSelectedType] = useState("todo");
 
     const handleSelectedItems = useCallback((itemid, type) => {
         if (type !== selectedType) {
@@ -76,10 +78,12 @@ export function useControls() {
     },[listData[0].list]);
 
     const sortList = useMemo(() => {
-        let list = listData[2].list;
+        let list = [
+            {id: "s_0", label: "Newest", active: true},
+        ...listData[2].list];
 
         return list.filter((s,_) => s.active);
     },[listData[2].list]);
 
-    return [filterList, sortList];
+    return { filterList, sortList };
 }

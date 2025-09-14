@@ -1,4 +1,4 @@
-import { getDeadline, getSafeDate, setDateToday } from "../../../utils";
+import { createTodoDeadline, getDefaultDeadline, getDefaultDueDate } from "../../../utils";
 
 const dateNum = Array.from({ length: 31 }, (_,i) => i + 1);
 const deadlineType = "month";
@@ -8,20 +8,12 @@ export default function DeadlineMonth ({ value, handleUpdate }) {
 function onDeadlineClick(e) {
     const dayNumber = Number(e.target.dataset.value);
     // Unselecting a number will go back to timeonly deadline type
-    if (value.datenums.includes(dayNumber))
-        return handleUpdate({
-            type: "timeonly", 
-            dueDate: setDateToday(value.dueDate), 
-            datenums: []
-        });
+    if (value.datenums.includes(dayNumber)) 
+        return handleUpdate(getDefaultDeadline(getDefaultDueDate(value.time)));
 
     handleUpdate({
         type: deadlineType,
-        dueDate: getDeadline({
-                    type: deadlineType, 
-                    dueDate: getSafeDate(setDateToday(value.dueDate), dayNumber), 
-                    datenums: [dayNumber]
-                }),
+        dueDate: createTodoDeadline(deadlineType, value.time, [dayNumber]),
         datenums: [dayNumber]
     });
 }

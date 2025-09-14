@@ -4,15 +4,18 @@ import { Outlet } from "react-router-dom"
 import AppContextProvider from "./context/app-context.jsx"
 import AppWrapper from "./layouts/AppWrapper.jsx"
 import ContentWrapper from "./layouts/ContentWrapper.jsx"
+import NotifContextProvider from "./context/notif-context.jsx"
 
 function TodoApp() {
     return (
         <AppWrapper>
-            <Header />
             <AppContextProvider>
-                <ContentWrapper>
+            <NotifContextProvider>
+            <Header />
+                <ContentWrapper> 
                     <Outlet />
                 </ContentWrapper>
+            </NotifContextProvider>
             </AppContextProvider>
             <Footer />
         </AppWrapper>

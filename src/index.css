@@ -32,6 +32,9 @@
   label {
     @apply items-center tracking-widest text-red-950;
   }
+  legend {
+    @apply items-center tracking-widest text-red-950;
+  }
   dt {
     @apply font-bold text-lg xs:text-xl my-2;
   }
@@ -62,6 +65,9 @@
   }
   .transition-out-200 {
     @apply transition ease-out duration-200;
+  }
+  .transition-allout-200 {
+    @apply transition-all ease-out duration-200;
   }
   .transition-allin-300 {
     @apply transition-all ease-in  duration-300;

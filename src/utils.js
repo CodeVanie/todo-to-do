@@ -1,30 +1,21 @@
 
-export function getDefaultDeadline() {
-    return { type: "timeonly", datenums: [] };
-} 
+const { currHour } = getCurrentDateTime();
+const lateNight = currHour > 21;
 
-export function getDefaultDueDate() {
-    let defaultDate = new Date();
-    const now = new Date();
-    const hoursNow = now.getHours();
-    if (hoursNow > 18) {
-        defaultDate = new Date(
-            now.getFullYear(),
-            now.getMonth(),
-            now.getDate() + 1,
-            23,
-            59,
-            0
-        )
-    } else {
-        defaultDate = new Date(
-            now.getFullYear(),
-            now.getMonth(),
-            now.getDate(),
-            23,
-            59,
-            0
-        )
+export function getDefaultDeadline(date) {
+    return { type: "timeonly", dueDate: date, datenums: [] };
+}
+
+export function getDefaultDueDate(time) {
+    // DEFAULT DUE DATE OF A TODO IS TODAY 11:59 PM
+    // IF IT'S PAST 6 PM, DEFAULT IS TOMORROW 11:59 PM
+    const { currYear, currMonth, currDate } = getCurrentDateTime();
+    let defaultDate = new Date(currYear, currMonth, currDate, 23, 59, 0, 0 );
+    lateNight && defaultDate.setDate(currDate + 1);
+
+    if (time) {
+        const [hour, minute] = time.split(":");
+        defaultDate.setHours(hour, minute);
     }
 
     return defaultDate;
@@ -56,90 +47,158 @@ export function toLocaleDate(date) {
     return localeDateString
 }
 
-export function getDeadline({ type, dueDate, datenums }) {
-    // When creating a TODO, dueDate is the most nearest deadline date
-    // based on the user's chosen deadline days (datenums);
-    const now = new Date();
-    const oldDeadline = new Date(dueDate);
-    let newDeadline = new Date(dueDate);
-    const isPastDeadline = now > oldDeadline;
-    if (type === "month") {
-        const isPastDate = (now.getDate() > datenums[0]);
-        newDeadline = isPastDate && isPastDeadline ? 
-            getSafeDate(newDeadline, datenums[0], now.getMonth() + 1) : // Past deadline - push to next month
-            getSafeDate(newDeadline, datenums[0], now.getMonth()); // Not past deadline - stay in current Month.
-    } else if (type === "day") {
-        const nextDeadlineDay = 
-            (isPastDeadline ? datenums.find(num => num > now.getDay()) : 
-            datenums.find(num => num >= now.getDay())) ?? datenums[0];
+export function createTodoDeadline(type, time, days) {
+    const { currMonth, currDate, currHour, currDay } = getCurrentDateTime();
 
-        const daysUntilNext  = (nextDeadlineDay - now.getDay() + 7) % 7;
-        // If we are past the deadline and the next deadline is today, 
-        // the next deadline will be set to next week. else, we move to the next one
-        newDeadline.setDate(
-        daysUntilNext === 0 && isPastDeadline 
-            ? now.getDate() + 7 
-            : now.getDate() + daysUntilNext
-        );
-    } else if (type === "timeonly" && datenums.length === 0) {
-        isPastDeadline ? 
-            newDeadline.setDate(now.getDate() + 1) : 
-            newDeadline.setDate(now.getDate());
+    let newDeadline = newDateVar();
+    const [hour, minute] = time.split(":");
+    newDeadline.setHours(hour, minute, 0, 0);
+
+    const invalidTime = lateNight || hour <= currHour;
+
+    switch (type) {
+        case "timeonly":
+            invalidTime && newDeadline.setDate(currDate + 1);
+        break;
+        case "day":
+            const nextDeadlineDay = (
+                invalidTime 
+                ? days.find(num => num > currDay)
+                : days.find(num => num >= currDay)
+            ) ?? days[0];
+            const daysUntilNext = (nextDeadlineDay - currDay + 7) % 7;
+            const addDays = daysUntilNext === 0 && invalidTime ? 7 : daysUntilNext;
+
+            newDeadline.setDate(currDate + addDays);
+        break;
+        case "month":
+            const dateNumber = days[0];
+            const invalidDate = (dateNumber <= currDate) && invalidTime;
+            newDeadline = getSafeDate(newDeadline, dateNumber, 
+                currMonth + (invalidDate ? 1 : 0));
+        break;
+        default:
+            break;
     }
-    return newDeadline
+
+    return newDeadline;
 }
 
-export function getDateToday() {
-    let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-    const now = new Date();
+export function updateTodoDeadline(type, oldDeadline, days) {
+    const { now, currMonth, currDate, currDay } = getCurrentDateTime();
 
-    return now.toLocaleString().split(",")[0] + ", " + days[now.getDay()];
+    let newDeadline = new Date(setDateToday(oldDeadline));
+    const pastDeadlineDue = now > oldDeadline;
+    const pastTimeDue = now > setDateToday(oldDeadline);
+    if (pastDeadlineDue) {
+        switch (type) {
+            case "timeonly":
+                pastTimeDue && newDeadline.setDate(currDate + 1);
+            break;
+            case "day":
+                const sortedDays = days.toSorted();
+                const nextDeadlineDay = (
+                    pastTimeDue ? 
+                    sortedDays.find(num => num > currDay) : 
+                    sortedDays.find(num => num >= currDay) 
+                ) ?? sortedDays[0];
+                const daysUntilNext = (nextDeadlineDay - currDay + 7) % 7;
+                const addDays = daysUntilNext === 0 && pastTimeDue ? 7 : daysUntilNext;
+
+                newDeadline.setDate(currDate + addDays);
+            break;
+            case "month":
+                const dateNumber = days[0];
+                const isNotValidDate = (dateNumber <= currDate) && pastTimeDue;
+                newDeadline = 
+                    getSafeDate(newDeadline, dateNumber, 
+                        currMonth + (isNotValidDate ? 1 : 0))
+            break;
+            default:
+            break;
+        }
+    }
+
+    return newDeadline;
+}
+
+export function getDateTodayString() {
+    let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const now = newDateVar();
+    const [date, time] = now.toLocaleString().split(",");
+    const hour = time.split(":")[0];
+    const meridiem = time.split(" ")[2];
+
+    return date + ", " + days[now.getDay()] + hour + " " + meridiem;
 } 
 
-export function getTodosNearDeadline(todos) {
+export function getTodosNearDeadline(todos, notifs) {
     let nearDeadlines = [];
     const todoList = todos;
     const now = new Date();
+    let notifCount = notifs.length;
     todoList.map((todo) => {
         let todoDate = todo.deadline.dueDate;
         if (todo.status === "Pending" && now < todoDate) {
-            let diffMinutes = Math.floor((todoDate - now) / (1000 * 60));
-            let diffHours = Math.floor((todoDate - now) / (1000 * 60 * 60));
-            if (diffMinutes > 1 && diffMinutes < 60) {
+            let diffMinutes = Math.ceil((todoDate - now) / (1000 * 60));
+            let diffHours = Math.ceil((todoDate - now) / (1000 * 60 * 60));
+            if (diffMinutes > 0 && diffMinutes < 60) {
                 nearDeadlines.push({
-                    title: `DEADLINE WARNING: LESS THAN ${diffMinutes} MINUTES LEFT!`, 
-                    body: `COMPLETE YOUR TODO\nTODO: "${todo.label}"\nDEADLINE: ${toLocaleDate(todoDate)}`, 
+                    id: `n_${notifCount++}-${todo.id}`,
+                    title: `DEADLINE WARNING:\nLESS THAN ${diffMinutes} MINUTES LEFT!`, 
+                    body: `Title: "${todo.label}"\nDEADLINE: ${toLocaleDate(todoDate)}`, 
                     clicked: false
                 }) 
             } else if (diffHours > 0 && diffHours < 24) {
                 nearDeadlines.push({
-                    title: `DEADLINE WARNING: LESS THAN ${diffHours} HOURS LEFT!`, 
-                    body: `COMPLETE YOUR TODO\nTODO: "${todo.label}"\nDEADLINE: ${toLocaleDate(todoDate)}`, 
+                    id: `n_${notifCount++}-${todo.id}`,
+                    title: `DEADLINE WARNING:\nLESS THAN ${diffHours} HOURS LEFT!`, 
+                    body: `Title: "${todo.label}"\nDEADLINE: ${toLocaleDate(todoDate)}`, 
                     clicked: false
                 })
             }
         }
     })
-    console.log(nearDeadlines);
+    return nearDeadlines;
 }
 
-export function getSafeDate(oldDate, dayNumber, month = "") {
-    const newDate = new Date(oldDate);
-    month && newDate.setMonth(month, 1);
-    // Find last day of the month
+function getSafeDate(oldDate, dayNumber, month = "") {
+    const newDate = new Date(oldDate); // Preserve oldDate time
+    month && newDate.setMonth(month, 1); // Specify a month (optional)
     const lastDay = new Date(
         newDate.getFullYear(),
         newDate.getMonth() + 1,
         0
-    ).getDate();
-
-    newDate.setDate(Math.min(dayNumber, lastDay));
+    ).getDate(); // Get the last day of the month
+    newDate.setDate(Math.min(dayNumber, lastDay)); // Set new date
     return newDate;
 }
 
-export function setDateToday(date) {
-    const newDate = new Date(date);
-    newDate.setMonth(new Date().getMonth());
-    newDate.setDate(new Date().getDate());
+function setDateToday(date) {
+    // Convert a date to today's date. Time is preserved.
+    const oldDate = new Date(date);
+    const newDate = new Date();
+    newDate.setHours(oldDate.getHours(), oldDate.getMinutes(), 0, 0);
+    return newDate;
+}
+
+function getCurrentDateTime() {
+    const now = new Date();
+    const currYear = now.getFullYear();
+    const currMonth = now.getMonth();
+    const currDate = now.getDate();
+    const currDay = now.getDay();
+    const currHour = now.getHours();
+    const currMinute = now.getMinutes();
+    const currSecond = now.getSeconds();
+    const currMillis = now.getMilliseconds();
+
+    return { now, currYear, currMonth, currDate, currDay, currHour, currMinute, currSecond, currMillis }
+}
+
+function newDateVar() {
+    const { now } = getCurrentDateTime();
+    const newDate = now;
+    newDate.setSeconds(0,0);
     return newDate;
 }

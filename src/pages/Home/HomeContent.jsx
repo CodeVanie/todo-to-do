@@ -11,11 +11,11 @@ import { Outlet } from "react-router-dom";
 import { getTodosNearDeadline } from "../../utils.js";
 
 export default function HomeContent() {
-    // console.log("HomeContent rendered");
+    console.log("HomeContent rendered");
     const { setFilteredCategory, setSelectedSort } = useContext(AppContext);
     const { controlledList, selectedSort, filteredCategory } = useControlledList();
-    const [filterList, sortList] = useControls();
-    getTodosNearDeadline(controlledList);
+    const { filterList, sortList } = useControls();
+   
     return (
         <HomeContentWrapper>
             <Controls>

@@ -44,7 +44,7 @@ function onSave(e) {
             prev.map((category) => 
                 (category.id === editCategData.id ? newCategory : category)))
         setSubmitting(false);
-        setNewCategory({});
+        setNewCategory({id: null, label: null, active: null});
         handleClose();
     }, 1000);
 }
@@ -67,8 +67,19 @@ function onAnimationEnd() {
             <SmallModalWrapper title={`Add\nCategory`} isOpen={isOpen} onClose={handleClose}>
                 <EraseButton onErase={() => setNewCategory(prev =>  ({...prev, label: ""}))} />
                 <FormWrapper onSubmit={onSave}>
-                    <label className="mt-3">CATEGORY NAME</label>
-                    <input className="border-2 p-2 border-yellow-700 rounded-lg text-xl outline-0 text-red-950 caret-red-950 w-full hover:outline-1 hover:border-red-950 valid:border-red-950" 
+                    <div className="flex justify-between items-end">
+                        <label htmlFor="category-name" className="text-start">
+                            CATEGORY NAME
+                        </label>
+                        <button type="button" 
+                        onClick={() => setNewCategory(prev => ({...prev, active: !newCategory.active}))} 
+                        className={`py-1 px-2 text-white font-bold tracking-widest self-end rounded-lg cursor-pointer hover:scale-105 transition-out-200 active:scale-97 
+                            ${newCategory.active ? "shadow-[1px_1px_5px_#26800a,3px_3px_5px_#26800a] bg-green-500" : 
+                                                   "shadow-[1px_1px_5px_#430c0a,3px_3px_5px_#430c0a] bg-red-500"}`}>
+                            {newCategory.active ? "ACTIVE" : "INACTIVE"}
+                        </button>
+                    </div>
+                    <input id="category-name" className="border-2 p-2 border-yellow-700 rounded-lg text-xl outline-0 text-red-950 caret-red-950 w-full hover:outline-1 hover:border-red-950 valid:border-red-950" 
                     placeholder='Add a category name...' type="text" value={newCategory.label ?? ""} onChange={(e) => handleInputChange(e)} required/>
                     <SubmitButton
 						isSubmitting={submitting}

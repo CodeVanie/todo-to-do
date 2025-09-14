@@ -6,17 +6,18 @@ import { FormWrapper, Title, Priority, Category, Details, Deadline, Time, Deadli
 import { SubmitButton, EraseButton } from '../Button/buttons.js'
 import ModalBackground from "./ModalBackground.jsx";
 import TodoFormModalWrapper from "../../../layouts/TodoFormModalWrapper.jsx";
-import { getDateToday, getDefaultDueDate, toLocaleDate } from "../../../utils.js";
+import { getDateTodayString, getDefaultDueDate, getTodosNearDeadline, toLocaleDate } from "../../../utils.js";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { NotifContext } from "../../../context/notif-context.jsx";
 
 export default function TodoFormModal() {
 	const { pathname } = useLocation();
 	const { action, todoid } = useParams();
     const navigate = useNavigate();
     const { listData, setTodos } = useContext(AppContext);
+    const { setNotifs } = useContext(NotifContext);
 	const [isOpen, setIsOpen] = useState(true);
     const [isShowing, setIsShowing] = useState(isOpen);
-    const [formType, setFormType] = useState(action);
 	const editTodoData = action === "edit" ? listData[1].list.find(t => t.id === todoid) : null;
 
     const defaultFormValues = {
@@ -32,7 +33,7 @@ export default function TodoFormModal() {
 		  time: "23:59"
         },
         favorite: false,
-		completed: false
+		status: "Pending"
     };
     const {
       register,
@@ -60,7 +61,6 @@ export default function TodoFormModal() {
     useEffect(() => {
         if (isOpen) {
             setIsShowing(true);
-            setFormType(action);
             action === "add" ? setValue("id", `t_${listData[1].list.length}`) : reset(editTodoData);
             document.body.style.overflow = "hidden";
         } else {
@@ -69,7 +69,7 @@ export default function TodoFormModal() {
         return () => {
             document.body.style.overflow = "auto";
         };
-    }, [isOpen, action]);
+    }, [isOpen]);
 
 async function onSave(data) {
 	try {
@@ -81,6 +81,11 @@ async function onSave(data) {
 				prev.map((todo) => 
 					(todo.id === data.id ? data : todo)));
 
+		setNotifs(prev => {
+			const newItems = getTodosNearDeadline([data], prev);
+			console.log(newItems);
+			return newItems.length ? [...prev, ...newItems] : prev;
+		});
 		handleClose();
 		reset();
 	} catch (error) {
@@ -101,8 +106,8 @@ function onAnimationEnd() {
     return isShowing ? createPortal(
 		<ModalBackground isOpen={isOpen} onAnimationEnd={onAnimationEnd}>
 			<TodoFormModalWrapper isOpen={isOpen} onClose={handleClose} 
-				title={formType === "add" ? "Add Todo" : "Edit Todo"} >
-				<p className="text-xs text-center">{getDateToday()}</p>
+				title={action === "add" ? "Add Todo" : "Edit Todo"} >
+				<p className="text-xs text-center">{getDateTodayString()}</p>
 				<EraseButton onErase={() => reset()} />
 				<FormWrapper onSubmit={handleSubmit(onSave)}>
 					<Title register={register} />
@@ -120,7 +125,10 @@ function onAnimationEnd() {
 							return "Time is required.";
 							}
 							if (!/^([01]\d|2[0-3]):([0-5]\d)$/.test(value.time)) {
-							return "Invalid time format. Please use HH:MM.";
+							return "Time format is invalid. Please use HH:MM.";
+							}
+							if (value.datenums.length === 7) {
+								return "You can use the time field for daily tasks.";
 							}
 							return true;
 						},
@@ -131,9 +139,9 @@ function onAnimationEnd() {
 							<Time
 								value={field.value}
 								onChange={field.onChange}
-								error={fieldState.error?.message}/>
+								error={fieldState.error?.message.split(" ")[0] === "Time"}/>
 							</DeadlineHeader>
-							<DeadlinePicker value={field.value} onChange={field.onChange}/>
+							<DeadlinePicker value={field.value} onChange={field.onChange} setError={setError}/>
 							<Statement errors={errors} statement={deadlineStatement} />
 						</Deadline>
 						)}

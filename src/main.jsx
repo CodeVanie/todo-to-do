@@ -8,6 +8,7 @@ import ViewTodoModal from './shared/components/Modal/ViewTodoModal.jsx'
 import TodoFormModal from './shared/components/Modal/TodoFormModal.jsx'
 import CategoryFormModal from './shared/components/Modal/CategoryFormModal.jsx'
 import AlertModal from './shared/components/Modal/AlertModal.jsx'
+import SortFormModal from './shared/components/Modal/SortFormModal.jsx'
 
 const router = createBrowserRouter([
   	{
@@ -29,6 +30,7 @@ const router = createBrowserRouter([
 					{path: "view/:todoid", Component: ViewTodoModal},
 					{path: ":action/todo/:todoid?", Component: TodoFormModal},
 					{path: ":action/category/:categid?", Component: CategoryFormModal},
+					{path: "edit/sort/:sortid?", Component: SortFormModal},
 					{path: "alert/:alertid", Component: AlertModal}
 				]
 			},
@@ -38,7 +40,7 @@ const router = createBrowserRouter([
 ]);
 
 createRoot(document.getElementById('root')).render(
-  // <StrictMode>
+  <StrictMode>
     <RouterProvider router={router} />
-  // </StrictMode>,
+  </StrictMode>,
 )

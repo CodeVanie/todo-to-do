@@ -1,4 +1,4 @@
-import { getDeadline, getDefaultDeadline, getSafeDate, setDateToday } from "../../../utils";
+import { createTodoDeadline, getDefaultDeadline, getDefaultDueDate } from "../../../utils";
 
 const days = [
     {id: 0, name: "Su"},
@@ -19,11 +19,7 @@ function onDeadlineClick(e) {
     if (newDues.includes(id)) {
         newDues = newDues.filter((dayId) => dayId !== id);
         if (newDues.length === 0)
-            return handleUpdate({
-                type: "timeonly", 
-                dueDate: setDateToday(value.dueDate), 
-                datenums: []
-            });
+            return handleUpdate(getDefaultDeadline(getDefaultDueDate(value.time)));
     } else {
         newDues.push(id);
         newDues.sort();
@@ -31,18 +27,14 @@ function onDeadlineClick(e) {
 
     handleUpdate({
         type: deadlineType,
-        dueDate: getDeadline({
-                    type: deadlineType, 
-                    dueDate: getSafeDate(setDateToday(value.dueDate), new Date().getDate()), 
-                    datenums: newDues
-                }),
+        dueDate: createTodoDeadline(deadlineType, value.time, newDues),
         datenums: newDues
     });
 }
 
     return (
         <div className={`flex border-2 items-center p-1 rounded-2xl mx-auto max-xs:pt-7 relative max-w-md z-1
-            ${value.type === "day" ? "border-red-950" : "border-yellow-700"}`}>
+            ${value.type === "day" ? value.datenums.length !== 7 ? "border-red-950" : "border-wrong" : "border-yellow-700"}`}>
             <h3 className='text-left tracking-widest max-xs:absolute max-xs:top-1'>DAYS</h3>
             <ol className='flex gap-x-1 w-full justify-end'>
                 {days.map((day, index) => 
@@ -50,8 +42,7 @@ function onDeadlineClick(e) {
                         onClick={onDeadlineClick} 
                         className={`max-w-13 grid aspect-square rounded-full flex-1 place-items-center cursor-pointer text-sm hover:scale-110 
                         ${(value.datenums.includes(day.id) && value.type === "day") ? 
-                        "border-2 scale-110 border-red-950" : 
-                        "border border-yellow-700"}`}>
+                            "border-2 scale-110 border-red-950" : "border border-yellow-700"}`}>
                         {day.name}
                     </li>
                 )}
