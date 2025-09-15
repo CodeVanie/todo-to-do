@@ -9,6 +9,7 @@ import TodoFormModal from './shared/components/Modal/TodoFormModal.jsx'
 import CategoryFormModal from './shared/components/Modal/CategoryFormModal.jsx'
 import AlertModal from './shared/components/Modal/AlertModal.jsx'
 import SortFormModal from './shared/components/Modal/SortFormModal.jsx'
+import ConfirmModal from './shared/components/Modal/ConfirmModal.jsx'
 
 const router = createBrowserRouter([
   	{
@@ -31,10 +32,15 @@ const router = createBrowserRouter([
 					{path: ":action/todo/:todoid?", Component: TodoFormModal},
 					{path: ":action/category/:categid?", Component: CategoryFormModal},
 					{path: "edit/sort/:sortid?", Component: SortFormModal},
+					{path: ":action/confirm", Component: ConfirmModal},
 					{path: "alert/:alertid", Component: AlertModal}
 				]
 			},
-			{path: 'notif', Component: NotifContent},
+			{path: 'notif', Component: NotifContent, 
+				children: [
+					{path: "view/:todoid", Component: ViewTodoModal}
+				]
+			},
 		]
   	}
 ]);

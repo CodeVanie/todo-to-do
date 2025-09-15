@@ -71,43 +71,44 @@ export default function TodoFormModal() {
         };
     }, [isOpen]);
 
-async function onSave(data) {
-	try {
-		await new Promise((resolve) => setTimeout(resolve, 1000));
+	async function onSave(data) {
+		try {
+			await new Promise((resolve) => setTimeout(resolve, 1000));
 
-		action === "add" ? 
-			setTodos((prev) => [...prev, data]) : 
-			setTodos((prev) => 
-				prev.map((todo) => 
-					(todo.id === data.id ? data : todo)));
+			action === "add" ? 
+				setTodos((prev) => [...prev, data]) : 
+				setTodos((prev) => 
+					prev.map((todo) => 
+						(todo.id === data.id ? data : todo)));
 
-		setNotifs(prev => {
-			const newItems = getTodosNearDeadline([data], prev);
-			console.log(newItems);
-			return newItems.length ? [...prev, ...newItems] : prev;
-		});
-		handleClose();
-		reset();
-	} catch (error) {
-		setError("root", { message: "Error submitting form." });
-		console.error("Error submitting form:", error);
+			setNotifs(prev => {
+				const newItems = getTodosNearDeadline([data], prev);
+				console.log(newItems);
+				return newItems.length ? [...prev, ...newItems] : prev;
+			});
+			
+			setIsOpen(false);
+			reset();
+		} catch (error) {
+			setError("root", { message: "Error submitting form." });
+			console.error("Error submitting form:", error);
+		}
 	}
-}
-function handleClose() {
-    setIsOpen(false);
-}
-function onAnimationEnd() {
-    if (!isOpen) {
-        setIsShowing(false);
-        navigate(`/${pathname.split("/")[1]}`);
-    }
-}
+
+	function onAnimationEnd() {
+		if (!isOpen) {
+			setIsShowing(false);
+			navigate(`/${pathname.split("/")[1]}`);
+		}
+	}
 
     return isShowing ? createPortal(
 		<ModalBackground isOpen={isOpen} onAnimationEnd={onAnimationEnd}>
-			<TodoFormModalWrapper isOpen={isOpen} onClose={handleClose} 
+			<TodoFormModalWrapper isOpen={isOpen} onClose={() => setIsOpen(false)} 
 				title={action === "add" ? "Add Todo" : "Edit Todo"} >
-				<p className="text-xs text-center">{getDateTodayString()}</p>
+				<p className="text-xs text-center font-bold">
+					<span>Today: </span>{getDateTodayString()}
+				</p>
 				<EraseButton onErase={() => reset()} />
 				<FormWrapper onSubmit={handleSubmit(onSave)}>
 					<Title register={register} />

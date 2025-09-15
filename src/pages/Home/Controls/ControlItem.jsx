@@ -4,10 +4,11 @@ import { ControlContext } from "./Controls"
 export default function ControlItem({ itemLabel, onClick, isActive }) {
     const {setShowControl} = useContext(ControlContext);
 
-function closeControl() {
-    setShowControl(false);
-    onClick()
-}
+    function closeControl() {
+        setShowControl(false);
+        onClick()
+    }
+    
     return (
         <li className="grid">
             <button className={`py-2 rounded-3xl cursor-pointer font-bold border-2

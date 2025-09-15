@@ -1,3 +1,5 @@
+import { useAutosizeTextArea } from "../../../hooks";
+
 export default function Details({ register }) {
 
     return (
@@ -13,15 +15,9 @@ export default function Details({ register }) {
             })} 
             ref={(el) => {
                 register("details").ref(el);
-                if (el) {
-                    el.style.height = "auto";
-                    el.style.height = el.scrollHeight + "px";
-                }
-            }}
-            onInput={(e) => {
-                e.target.style.height = "auto";
-                e.target.style.height = e.target.scrollHeight + "px";
-            }} />
+                useAutosizeTextArea(el); // Auto resize based on initial content
+            }} 
+            onInput={(e) => useAutosizeTextArea(e.target)} />
         </div>
     )
 }

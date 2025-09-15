@@ -44,6 +44,31 @@
 }
 /* COMPONENTS */
 @layer components {
+  /* HOME CONTENT */
+  .home-todo {
+    @apply flex flex-col shrink-0 h-14 text-ptlbrown-100 rounded-4xl items-center cursor-pointer transition ease-out duration-200 relative justify-between overflow-hidden;
+  }
+  .home-todo-completed {
+    @apply border-green-800 hover:border-green-700 border-3 bg-green-950;
+  }
+  .home-todo-notcompleted {
+    @apply border-red-950/50 hover:border-ptlbrown-100 border-2 bg-yellow-950;
+  }
+  .home-todo-heart {
+    @apply absolute w-5 h-5 top-[19px] xs:top-[17px] right-2 xs:right-4 xs:scale-140;
+  }
+  .home-todo-title {
+    @apply font-bold text-xl xs:text-2xl whitespace-nowrap text-center overflow-hidden w-full max-w-6/8;
+  }
+  .home-todo-deets {
+    @apply flex justify-evenly h-5 text-sm border tracking-widest overflow-hidden rounded-t-4xl mx-auto transition-all ease-out duration-200;
+  }
+  .home-todo-deets-completed {
+    @apply bg-green-800 text-ptlbrown-100 font-extrabold w-3/8 border-solid border-red-950/50;
+  }
+  .home-todo-deets-notcompleted {
+    @apply font-medium bg-red-950/50 max-xs:w-9/11 w-6/8 border-ptlbrown-100/50 border-dashed;
+  }
   /* ADD TODO FORM FIELDS*/
   .select-category-button {
     @apply flex w-full text-base bg-ptlbrown-100 border-2 text-red-950 px-4 py-2 rounded  cursor-pointer hover:text-lg transition-[font-size] duration-200 tracking-widest text-center justify-between;

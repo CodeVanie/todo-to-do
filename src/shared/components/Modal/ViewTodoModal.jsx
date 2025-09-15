@@ -4,7 +4,7 @@ import { createPortal } from "react-dom";
 import TodoFormModalWrapper from "../../../layouts/TodoFormModalWrapper";
 import FavoriteButton from "../Button/FavoriteButton";
 import { AppContext } from "../../../context/app-context";
-import { toLocaleDate } from "../../../utils";
+import { getDateTodayString, toDayNames, toLocaleDate } from "../../../utils";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 export default function ViewTodoModal() {
@@ -56,8 +56,10 @@ function onAnimationEnd() {
     return isShowing ? createPortal(
         <ModalBackground isOpen={isOpen} onAnimationEnd={onAnimationEnd}>
             <TodoFormModalWrapper title="To-Do Info" isOpen={isOpen} onClose={handleClose}>
+                <p className="text-xs text-center font-bold">
+                    <span>Today: </span>{getDateTodayString()}
+                </p>
                 <dl className={`relative rounded-2xl p-3 border-3 text-ptlbrown-100 tracking-widest whitespace-pre-line ${viewData.status === "Completed" ? "bg-green-950 border-green-700" : "bg-red-950/75"}`}>
-
                     <FavoriteButton todo={viewData} onClick={() => handleFavoriteButton({...viewData, favorite: !viewData.favorite})}/>
                     <dt className="text-start italic text-lg xs:absolute xs:text-red-950 -top-10">
                         ID: {viewData.id}
@@ -87,9 +89,14 @@ function onAnimationEnd() {
                     </>
                     )}
                     <dt>DEADLINE</dt>
-                    <dd>{toLocaleDate(viewData.deadline.dueDate)}</dd>
+                    <dd>Type: {
+                        viewData.deadline.type === "month" ? `Monthly (${viewData.deadline.datenums[0]})` : 
+                        viewData.deadline.type === "day" ? `Day/s (${toDayNames(viewData.deadline.datenums)})` : 
+                        "Time only"
+                    }</dd>
+                    <dd>Complete Before: {toLocaleDate(viewData.deadline.dueDate)}</dd>
                     <hr />
-                    <button class={`mt-3 py-2 px-4 border-2 border-green-900 rounded-4xl  cursor-pointer bg-green-800 hover:bg-green-700 block mx-auto transition-allin-300 w-full 
+                    <button className={`mt-3 py-2 px-4 border-2 border-green-900 rounded-4xl  cursor-pointer bg-green-800 hover:bg-green-700 block mx-auto transition-allin-300 w-full 
                         ${viewData.status === "Completed" ? "inset-shadow-sm tracking-[10px] inset-shadow-green-900 text-ptlbrown-100 font-extrabold max-w-3xs hover:max-w-full" : 
                         "text-ptlbrown-100 shadow-md shadow-black font-bold active:scale-95"}`} 
                         onClick={() => handleCompleteButton(viewData.status)}>

@@ -1,13 +1,11 @@
-import { useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { useCallback, useContext, useMemo, useState } from "react";
 import { AppContext } from "./context/app-context";
 
-export function useAutosizeTextArea(textAreaRef, value) {
-  useEffect(() => {
-    if (textAreaRef.current) {
-      textAreaRef.current.style.height = "auto";
-      textAreaRef.current.style.height = textAreaRef.current.scrollHeight + "px";
+export function useAutosizeTextArea(textAreaRef) {
+    if (textAreaRef) {
+        textAreaRef.style.height = "auto";
+        textAreaRef.style.height = textAreaRef.scrollHeight + "px";
     }
-  }, [value]);
 }
 
 export function useControlledList() {
@@ -86,4 +84,21 @@ export function useControls() {
     },[listData[2].list]);
 
     return { filterList, sortList };
+}
+
+export function useLocalStorage(key) {
+
+    function setItem(value) {
+        window.localStorage.setItem(key, JSON.stringify(value));
+    }
+
+    function getItem() {
+        return window.localStorage.getItem(key);
+    }
+
+    function removeItem() {
+        return window.localStorage.removeItem(key);
+    }
+
+    return { setItem, getItem, removeItem }
 }

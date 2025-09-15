@@ -9,20 +9,23 @@ const initialNotifs = [
         id: "n_0",
         title: "Welcome to TODO-To-Do!",
         body: `Please check the "App Guide" section to learn more about the app.`,
-        clicked: true
+        path: "/aboutapp",
+        clicked: false
     },
     {
         id: "n_1",
         title: "Welcome TODO User!",
         body: `You can use this To-Do List application to list all your tasks.`,
-        clicked: true
+        path: "/home",
+        clicked: false
     },
-    {
-        id: "n_2",
-        title: "Wanna see more from CodeVANIE?",
-        body: `Check CodeVANIE's Portfolio!`,
-        clicked: true
-    }
+    // {
+    //     id: "n_2",
+    //     title: "Wanna see more from CodeVANIE?",
+    //     body: `Check CodeVANIE's Portfolio!`,
+    //     path: "/home",
+    //     clicked: false
+    // }
 ]
 
 export default function NotifContextProvider({ children }) {
@@ -36,6 +39,7 @@ export default function NotifContextProvider({ children }) {
             return newItems.length ? [...prev, ...newItems] : prev;
         });
     },[])
+    
     return (
         <NotifContext.Provider value={{notifs, hasNotif, setNotifs}}>
             {children}

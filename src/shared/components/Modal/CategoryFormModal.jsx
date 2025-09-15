@@ -4,8 +4,7 @@ import ModalBackground from "./ModalBackground";
 import SmallModalWrapper from "../../../layouts/SmallModalWrapper";
 import { AppContext } from "../../../context/app-context";
 import FormWrapper from "../Form/FormWrapper.jsx";
-import EraseButton from "../Button/EraseButton";
-import SubmitButton from "../Button/SubmitButton.jsx";
+import { SubmitButton, EraseButton, ControlStatusButton } from "../Button/buttons.js"
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 export default function CategoryFormModal() {
@@ -33,51 +32,46 @@ export default function CategoryFormModal() {
         };
     }, [isOpen, action]);
 
-function onSave(e) {
-    e.preventDefault();
-	setSubmitting(true);
+    function onSave(e) {
+        e.preventDefault();
+        setSubmitting(true);
 
-    setTimeout(() => {
-        action === "add" ? 
-        setCategories((prev) => [...prev, newCategory]) : 
-        setCategories((prev) => 
-            prev.map((category) => 
-                (category.id === editCategData.id ? newCategory : category)))
-        setSubmitting(false);
-        setNewCategory({id: null, label: null, active: null});
-        handleClose();
-    }, 1000);
-}
-function handleInputChange(e) {
-    const { value } = e.target;
-    setNewCategory(prev =>  ({...prev, label: value}));
-}
-function handleClose() {
-    setIsOpen(false);
-}
-function onAnimationEnd() {
-    if (!isOpen) {
-        setIsShowing(false);
-        navigate(`/${pathname.split("/")[1]}`);
+        setTimeout(() => {
+            action === "add" ? 
+            setCategories((prev) => [...prev, newCategory]) : 
+            setCategories((prev) => 
+                prev.map((category) => 
+                    (category.id === editCategData.id ? newCategory : category)))
+
+            setSubmitting(false);
+            setNewCategory({id: null, label: null, active: null});
+            setIsOpen(false);
+        }, 1000);
     }
-}
+
+    function handleInputChange(e) {
+        const { value } = e.target;
+        setNewCategory(prev =>  ({...prev, label: value}));
+    }
+    
+    function onAnimationEnd() {
+        if (!isOpen) {
+            setIsShowing(false);
+            navigate(`/${pathname.split("/")[1]}`);
+        }
+    }
 
     return isShowing ? createPortal(
         <ModalBackground isOpen={isOpen} onAnimationEnd={onAnimationEnd}>
-            <SmallModalWrapper title={`Add\nCategory`} isOpen={isOpen} onClose={handleClose}>
+            <SmallModalWrapper title={`Add\nCategory`} isOpen={isOpen} onClose={() => setIsOpen(false)}>
                 <EraseButton onErase={() => setNewCategory(prev =>  ({...prev, label: ""}))} />
                 <FormWrapper onSubmit={onSave}>
                     <div className="flex justify-between items-end">
                         <label htmlFor="category-name" className="text-start">
                             CATEGORY NAME
                         </label>
-                        <button type="button" 
-                        onClick={() => setNewCategory(prev => ({...prev, active: !newCategory.active}))} 
-                        className={`py-1 px-2 text-white font-bold tracking-widest self-end rounded-lg cursor-pointer hover:scale-105 transition-out-200 active:scale-97 
-                            ${newCategory.active ? "shadow-[1px_1px_5px_#26800a,3px_3px_5px_#26800a] bg-green-500" : 
-                                                   "shadow-[1px_1px_5px_#430c0a,3px_3px_5px_#430c0a] bg-red-500"}`}>
-                            {newCategory.active ? "ACTIVE" : "INACTIVE"}
-                        </button>
+                        <ControlStatusButton isActive={newCategory.active} 
+                        onClick={() => setNewCategory(prev => ({...prev, active: !newCategory.active}))} />
                     </div>
                     <input id="category-name" className="border-2 p-2 border-yellow-700 rounded-lg text-xl outline-0 text-red-950 caret-red-950 w-full hover:outline-1 hover:border-red-950 valid:border-red-950" 
                     placeholder='Add a category name...' type="text" value={newCategory.label ?? ""} onChange={(e) => handleInputChange(e)} required/>

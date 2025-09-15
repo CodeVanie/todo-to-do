@@ -5,11 +5,12 @@ export default function CategoryOptions({ onChange, showOptions, setShowOptions 
     const { listData } = useContext(AppContext);
     const categoryList = listData[0].list.filter((c,_) => c.active);
 
-function handleCategorySelect(e) {
-    document.getElementById("select-category-options").classList.add("hidden");
-    setShowOptions(!showOptions);
-    onChange(e.target.dataset.value);
-}
+    function handleCategorySelect(e) {
+        document.getElementById("select-category-options").classList.add("hidden");
+        setShowOptions(!showOptions);
+        onChange(e.target.dataset.value);
+    }
+    
     return (
         <ul id="select-category-options" className={showOptions ? "max-h-36" : "max-h-0"}>
             {categoryList.map((c, index) => 

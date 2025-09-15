@@ -27,19 +27,16 @@ export default function AlertModal() {
         };
     }, [isOpen]);
 
-function handleClose() {
-    setIsOpen(false);
-}
-function onAnimationEnd() {
-    if (!isOpen) {
-        setIsShowing(false);
-        navigate(`/${pathname.split("/")[1]}`);
+    function onAnimationEnd() {
+        if (!isOpen) {
+            setIsShowing(false);
+            navigate(`/${pathname.split("/")[1]}`);
+        }
     }
-}
 
     return isShowing ? createPortal(
         <ModalBackground isOpen={isOpen} onAnimationEnd={onAnimationEnd}>
-            <SmallModalWrapper title="Chill!" isOpen={isOpen} onClose={handleClose}>
+            <SmallModalWrapper title={alertMessage.title} isOpen={isOpen} onClose={() => setIsOpen(false)}>
                 <AlertMessage message={alertMessage.message} />
             </SmallModalWrapper>
         </ModalBackground>,

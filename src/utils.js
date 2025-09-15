@@ -1,4 +1,5 @@
 
+const DAYNAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 const { currHour } = getCurrentDateTime();
 const lateNight = currHour > 21;
 
@@ -96,15 +97,14 @@ export function updateTodoDeadline(type, oldDeadline, days) {
                 pastTimeDue && newDeadline.setDate(currDate + 1);
             break;
             case "day":
-                const sortedDays = days.toSorted();
                 const nextDeadlineDay = (
                     pastTimeDue ? 
-                    sortedDays.find(num => num > currDay) : 
-                    sortedDays.find(num => num >= currDay) 
-                ) ?? sortedDays[0];
+                    days.find(num => num > currDay) : 
+                    days.find(num => num >= currDay) 
+                ) ?? days[0];
                 const daysUntilNext = (nextDeadlineDay - currDay + 7) % 7;
                 const addDays = daysUntilNext === 0 && pastTimeDue ? 7 : daysUntilNext;
-
+                
                 newDeadline.setDate(currDate + addDays);
             break;
             case "month":
@@ -117,19 +117,24 @@ export function updateTodoDeadline(type, oldDeadline, days) {
             default:
             break;
         }
+        return newDeadline;
     }
 
-    return newDeadline;
+    return oldDeadline;
 }
 
 export function getDateTodayString() {
-    let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     const now = newDateVar();
     const [date, time] = now.toLocaleString().split(",");
     const hour = time.split(":")[0];
     const meridiem = time.split(" ")[2];
 
-    return date + ", " + days[now.getDay()] + hour + " " + meridiem;
+    return date + ", " + DAYNAMES[now.getDay()] + hour + " " + meridiem;
+}
+
+export function toDayNames(days) {
+    const newArray = days.map((day) => DAYNAMES[day]);
+    return newArray.join(", ");
 } 
 
 export function getTodosNearDeadline(todos, notifs) {
@@ -144,16 +149,18 @@ export function getTodosNearDeadline(todos, notifs) {
             let diffHours = Math.ceil((todoDate - now) / (1000 * 60 * 60));
             if (diffMinutes > 0 && diffMinutes < 60) {
                 nearDeadlines.push({
-                    id: `n_${notifCount++}-${todo.id}`,
+                    id: `n_${notifCount++}`,
                     title: `DEADLINE WARNING:\nLESS THAN ${diffMinutes} MINUTES LEFT!`, 
                     body: `Title: "${todo.label}"\nDEADLINE: ${toLocaleDate(todoDate)}`, 
+                    path: `view/${todo.id}`,
                     clicked: false
                 }) 
             } else if (diffHours > 0 && diffHours < 24) {
                 nearDeadlines.push({
-                    id: `n_${notifCount++}-${todo.id}`,
+                    id: `n_${notifCount++}`,
                     title: `DEADLINE WARNING:\nLESS THAN ${diffHours} HOURS LEFT!`, 
                     body: `Title: "${todo.label}"\nDEADLINE: ${toLocaleDate(todoDate)}`, 
+                    path: `view/${todo.id}`,
                     clicked: false
                 })
             }

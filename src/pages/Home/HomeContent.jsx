@@ -7,11 +7,11 @@ import ControlSection from "./Controls/ControlSection.jsx";
 import { AppContext } from "../../context/app-context";
 import { useControls, useControlledList } from "../../hooks.js";
 import HomeContentWrapper from "../../layouts/HomeContentWrapper.jsx";
-import { Outlet } from "react-router-dom";
-import { getTodosNearDeadline } from "../../utils.js";
+import { Outlet, useNavigate } from "react-router-dom";
 
 export default function HomeContent() {
-    console.log("HomeContent rendered");
+    // console.log("HomeContent rendered");
+    const navigate = useNavigate();
     const { setFilteredCategory, setSelectedSort } = useContext(AppContext);
     const { controlledList, selectedSort, filteredCategory } = useControlledList();
     const { filterList, sortList } = useControls();
@@ -26,7 +26,7 @@ export default function HomeContent() {
                     onControlClick={setFilteredCategory} control={filteredCategory}/>
             </Controls>
             <TodoList>
-                <ListAddButton />
+                <ListAddButton onClick={() => navigate(`list/add`)}/>
                 <ol className="p-2 space-y-1">
                 {controlledList.map((todo, index) => 
                     <TodoItem key={index} todo={todo} />

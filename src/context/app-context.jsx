@@ -56,14 +56,14 @@ const initialTodos = [
         },
         {
             id: "t_3",
-            label: "Learn React JS",
+            label: "Learn React (Days Deadline)",
             priority: "!!!",
             category: "Programming",
             details: "Local Storage\nZustand\nRedux", 
             deadline: {
                 type: "day",
                 dueDate: new Date("2025-09-09T20:15:00+08:00"),
-                datenums: [2,4,0],
+                datenums: [0, 2, 4],
                 time: "20:15"
             },
             favorite: true,
@@ -71,7 +71,7 @@ const initialTodos = [
         },
         {
             id: "t_4",
-            label: "Walk in the Morning",
+            label: "Morning Walk (Time Only Deadline)",
             priority: "!",
             category: "Fitness",
             details: "Record walk via strava.\nTake a picture", 
@@ -86,7 +86,7 @@ const initialTodos = [
         },
         {
             id: "t_5",
-            label: "Brace Adjustment",
+            label: "Brace Adjustment (Monthly Deadline)",
             priority: "!!",
             category: "Dentist",
             details: "Cleaning every 6 months\nFillings every other month", 
