@@ -4,7 +4,7 @@ import ModalBackground from "./ModalBackground";
 import SmallModalWrapper from "../../../layouts/SmallModalWrapper";
 import { AppContext } from "../../../context/app-context";
 import FormWrapper from "../Form/FormWrapper.jsx";
-import { SubmitButton, EraseButton, ControlStatusButton } from "../Button/buttons.js"
+import { SubmitButton, EraseButton, StatusButton } from "../Button/buttons.js"
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 export default function CategoryFormModal() {
@@ -70,7 +70,7 @@ export default function CategoryFormModal() {
                         <label htmlFor="category-name" className="text-start">
                             CATEGORY NAME
                         </label>
-                        <ControlStatusButton isActive={newCategory.active} 
+                        <StatusButton isActive={newCategory.active} 
                         onClick={() => setNewCategory(prev => ({...prev, active: !newCategory.active}))} />
                     </div>
                     <input id="category-name" className="border-2 p-2 border-yellow-700 rounded-lg text-xl outline-0 text-red-950 caret-red-950 w-full hover:outline-1 hover:border-red-950 valid:border-red-950" 

@@ -4,7 +4,7 @@ import CloseButton from "./CloseButton.jsx";
 import SubmitButton from "./SubmitButton.jsx";
 import EraseButton from "./EraseButton.jsx";
 import FavoriteButton from "./FavoriteButton.jsx";
-import ControlStatusButton from "./ControlStatusButton.jsx";
+import StatusButton from "./StatusButton.jsx";
 
 export {
     ActionButton,
@@ -13,5 +13,5 @@ export {
     SubmitButton,
     EraseButton,
     FavoriteButton,
-    ControlStatusButton
+    StatusButton
 }

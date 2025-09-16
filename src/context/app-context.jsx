@@ -102,32 +102,32 @@ const initialTodos = [
     ];
 const initialCategories = [
             {
-                id: "c_2",
+                id: "c_3",
                 label: "Food",
                 active: true
             }, 
             {
-                id: "c_3",
+                id: "c_4",
                 label: "Fitness",
                 active: true
             }, 
             {
-                id: "c_4",
+                id: "c_5",
                 label: "Self",
                 active: false
             }, 
             {
-                id: "c_5",
+                id: "c_6",
                 label: "Dentist",
                 active: true
             }, 
             {
-                id: "c_6",
+                id: "c_7",
                 label: "Programming",
                 active: true
             }, 
             {
-                id: "c_7",
+                id: "c_8",
                 label: "Cooking",
                 active: true
             }];
@@ -144,7 +144,7 @@ const initialSortTypes = [
             },
             {
                 id: "s_3",
-                label: "Letters",
+                label: "A-Z",
                 active: false
             }];
 

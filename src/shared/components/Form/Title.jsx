@@ -1,8 +1,8 @@
 
 export default function Title({ register }) {
     return (
-        <div className='modal-form-field'>
-            <label htmlFor="title">TITLE*</label>
+        <div className='xxs:text-start mt-5'>
+            <label htmlFor="title" className="">TITLE*</label>
             <input id="title" {...register("label", {
                 required: "Title is required.",
                 maxLength: {

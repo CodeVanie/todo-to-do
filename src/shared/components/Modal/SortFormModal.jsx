@@ -4,7 +4,7 @@ import ModalBackground from "./ModalBackground.jsx";
 import SmallModalWrapper from "../../../layouts/SmallModalWrapper.jsx";
 import { AppContext } from "../../../context/app-context.jsx";
 import FormWrapper from "../Form/FormWrapper.jsx";
-import { SubmitButton, ControlStatusButton } from "../Button/buttons.js"
+import { SubmitButton, StatusButton } from "../Button/buttons.js"
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 export default function SortFormModal() {
@@ -60,7 +60,7 @@ export default function SortFormModal() {
                         <label htmlFor="sort-name" className="text-start">
                             SORT TYPE
                         </label>
-                        <ControlStatusButton isActive={newSort.active} 
+                        <StatusButton isActive={newSort.active} 
                         onClick={() => setNewSort(prev => ({...prev, active: !newSort.active}))} />
                     </div>
                     <input id="sort-name" className="border-0 text-xl text-red-950 w-full" 

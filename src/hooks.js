@@ -13,24 +13,36 @@ export function useControlledList() {
     const controlledList = useMemo(() => {
         let list = listData[1].list.filter((t,_) => t.status !== "Inactive");
 
-
         if (filteredCategory === "c_1") {
-          return list.filter((t,_) => t.favorite);
+          list =  list.filter((t,_) => t.favorite);
+        } else if (filteredCategory === "c_2") {
+            list =  list.filter((t,_) => t.status === "Completed");
         } else if (filteredCategory !== "c_0") {
-            return list.filter((t,_) => t.category === 
+            list =  list.filter((t,_) => t.category === 
             listData[0].list.find(c => c.id === filteredCategory).label);
         }
 
-        if (selectedSort === "s_0") {
-            return list.sort((a, b) => b.id.localeCompare(a.id, undefined, { numeric: true }));
-        } else if (selectedSort === "s_1") {
-            return list.sort((a, b) => b.priority.length - a.priority.length);
-        } else if (selectedSort === "s_3") {
-            return list.sort((a, b) => a.label.localeCompare(b.label));
-        }
+        list = [...list]
+        list.sort((a, b) => {
+
+            if (a.status === "Completed" && b.status !== "Completed") return 1;
+            if (b.status === "Completed" && a.status !== "Completed") return -1;
+
+            if (selectedSort === "s_0") {
+                return b.id.localeCompare(a.id, undefined, { numeric: true });
+            } else if (selectedSort === "s_1") {
+                return b.priority.length - a.priority.length;
+            } else if (selectedSort === "s_2") {
+                return a.deadline.dueDate - b.deadline.dueDate;
+            } else if (selectedSort === "s_3") {
+                return a.label.localeCompare(b.label);
+            }
+
+            return 0;
+        });
 
         return list;
-    },[listData[1].list, filteredCategory, selectedSort]);
+    },[listData[1].list, listData[0].list, filteredCategory, selectedSort]);
 
 	return { controlledList, selectedSort, filteredCategory }
 }
@@ -70,6 +82,7 @@ export function useControls() {
         let list = [
             {id: "c_0", label: "All", active: true}, 
             {id: "c_1", label: "Favorites", active: true}, 
+            {id: "c_2", label: "Completed", active: true}, 
         ...listData[0].list];
 
         return list.filter((c,_) => c.active);

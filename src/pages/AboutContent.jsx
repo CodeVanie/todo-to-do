@@ -1,6 +1,8 @@
-import { ActionButtonIcon, HeartIcon, NavIcon } from "../shared/icons/IconCollection";
+import { ActionButtonIcon, HeartIcon, NavIcon, PortfolioIcon } from "../shared/icons/IconCollection";
 import todoform from "../assets/images/addtodoform.png";"../assets/images/addtodoform.png";
 import viewtodo from "../assets/images/viewtodo.png";
+import { useState } from "react";
+import NotifContentWrapper from "../layouts/NotifContentWrapper";
 
 export default function AboutContent() {
     // console.log("AboutContent rendered");
@@ -20,17 +22,17 @@ export default function AboutContent() {
                 <h1 className="text-3xl text-center font-bold">How to use TODO-To-DO?</h1>
                 <div>
                     <h2 className="text-xl font-semibold">How to add a To-Do?</h2>
-                    <ul className="list-decimal ml-7 space-y-2">
+                    <ul className="list-decimal ml-10 space-y-2">
                         <li>
                             In "Home <NavIcon name="home" className="inline w-6"/>" page, you can click this button <ListAddButton /> .
-                            In "List Manager <NavIcon name="modify" className="inline w-6"/>" page, you can click this button <ActionButton /> .
+                            In "List Manager <NavIcon name="modify" className="inline w-6"/>" page, you can click this button <ActionButton name="addrow" /> .
                         </li>
                         <li>
                             "Add Todo" form will show
                             <img src={todoform} width="600px" alt="todoform" className="mx-auto" />
                         </li>
                         <li>
-                            The only field required is TITLE and TIME. Time has a default value of <Time /> which is 11:59 PM. You can simply create a To-Do with just clicking the <ListAddButton /> or <ActionButton />, typing a title and clicking <SubmitButton />.
+                            The only field required is TITLE and TIME. Time has a default value of <Time /> which is 11:59 PM. You can simply create a To-Do with just clicking the <ListAddButton /> or <ActionButton name="addrow" />, typing a title and clicking <SubmitButton />.
                         </li>
                         <li>
                             Default PRIORITY is set to Low Priority (!). You can choose between the three priority levels: Low Priority (!), Mid Priority (!!), or High Priority (!!!).
@@ -46,7 +48,7 @@ export default function AboutContent() {
                         </li>
                         <li>
                             You can choose between 3 deadline types "Time Only", "Day/s", or "Monthly".
-                            <ol className="ml-7 list-[lower-alpha] space-y-2">
+                            <ol className="ml-10 list-[lower-alpha] space-y-2">
                                 <li>
                                     <span className="font-bold"><Time /> Time Only:</span> If you want to create a To-Do for a single-use or everyday task, you can use Time Only deadline type.
                                 </li>
@@ -62,9 +64,9 @@ export default function AboutContent() {
                 </div>
                 <div>
                     <h2 className="text-xl font-semibold">
-                        What's inside the "Home <NavIcon name="home" className="inline w-6"/>" page?
+                        What's inside the "Home <NavIcon name="home" className="inline w-6"/> " page?
                     </h2>
-                    <ol className="list-decimal ml-7 space-y-2">
+                    <ol className="list-decimal ml-10 space-y-2">
                         <li>
                             At the very top of the page, you will see the " <Controls /> " bar. You can use this to either sort or filter the To-Do list in your "Home" page.
                         </li>
@@ -72,10 +74,10 @@ export default function AboutContent() {
                             Under the " <Controls /> " bar is your list of To-Do's. Three types of To-Do's are "Pending", "Completed", and "Inactive". Inactive To-Do's are not visible in "Home <NavIcon name="home" className="inline w-6"/>" page
                         </li>
                         <li>
-                            <PendingTodo />
+                            <TodoItem isCompleted={false} />
                         </li>
                         <li>
-                            <CompletedTodo />
+                            <TodoItem isCompleted={true} />
                         </li>
                         <li>
                             You can "Left-Click" a To-Do to View all the information about your To-Do.
@@ -86,6 +88,100 @@ export default function AboutContent() {
                         </li>
                     </ol>
                 </div>
+                <div>
+                    <h2 className="text-xl font-semibold">
+                        What's inside the "List Manager <NavIcon name="modify" className="inline w-6"/> " page?
+                    </h2>
+                    <ol className="list-decimal ml-10 space-y-2">
+                        <li>
+                            These <ActionButton name="addrow" /> <ActionButton name="editrow" /> <ActionButton name="deleterow" /> <ActionButton name="reset" /> are called the Action Buttons.
+                            <ol className="list-[lower-alpha] ml-10 space-y-2">
+                                <li>
+                                    The first one is the <span className="font-semibold">"Add Row"</span> <ActionButton name="addrow" /> button. You can use this to either add a list or category depends on the current selected list.
+                                </li>
+                                <li>
+                                    Beside the "Add Row" button is the <span className="font-semibold">"Edit Row"</span> <ActionButton name="editrow" /> button. It is used for editing an item in the list.
+                                </li>
+                                <li>
+                                    The third button is the <span className="font-semibold">"Delete"</span> <ActionButton name="deleterow" /> button. You can delete 1 or more selected items.
+                                </li>
+                                <li>
+                                    The last button is called <span className="font-semibold">"Reset"</span> <ActionButton name="reset" /> button. You can use this to unselect all selected items and list in just one click. 
+                                </li>
+                            </ol>
+                        </li>
+                        <li>
+                            Under the Action Buttons, you will see 3 list types: Category List, To-Do List, and Sort List.
+                            <ol className="list-[lower-alpha] ml-10 space-y-2">
+                                <li>
+                                    <span className="font-semibold">Category List: </span>You can add, edit, and delete categories.
+                                </li>
+                                <li>
+                                    <span className="font-semibold">To-Do List: </span>You can add, edit, and delete To-Do's.
+                                </li>
+                                <li>
+                                    <span className="font-semibold">Sort List: </span> You can only change the active status of sort types using the "Edit Row" <ActionButton name="editrow" /> button.
+                                </li>
+                            </ol>
+                        </li>
+                        <li>
+                            <span className="font-semibold">Active Status: </span> You can change the active status of an item by toggling the button <ControlStatusButton /> and change it between "Active" and "Inactive" using the "Edit Row" <ActionButton name="editrow" /> button.
+                        </li>
+                    </ol>
+                </div>
+                <div>
+                    <h2 className="text-xl font-semibold">
+                        What's inside the "Notifications <NavIcon name="notif" hasnotif={true} className="inline w-6"/> " page?
+                    </h2>
+                    <ol className="list-decimal ml-10 space-y-2">
+                        <li>
+                            You will see all your app notifications here including:
+                            <ol className="list-[lower-alpha] ml-10 space-y-2">
+                                <li>
+                                    To-Do's that have a deadline for today.
+                                </li>
+                                <li>
+                                    Application new version release updates.
+                                </li>
+                            </ol>
+                        </li>
+                        <li>
+                            There are 2 types of notifications:
+                            <ol className="list-[lower-alpha] ml-10 space-y-2">
+                                <li>
+                                    Clicked notifications
+                                    <NotifContent clicked={true} />
+                                </li>
+                                <li>
+                                    Unclicked notifications
+                                    <NotifContent clicked={false} />
+                                </li>
+                            </ol>
+                        </li>
+                        <li>
+                            Clicking all active notifications will remove the red dot on the bell icon of the Notifications <NavIcon name="notif" className="inline w-6"/> page.
+                        </li>
+                    </ol>
+                </div>
+            </section>
+            <section className="space-y-5 p-3">
+                <h1 className="text-3xl text-center font-bold">More in TODO-To-DO</h1>
+                <div>
+                    <h2 className="text-xl font-semibold">
+                        What's inside the "Projects <NavIcon name="projects" className="inline w-6"/> " page?
+                    </h2>
+                    <ul className="list-disc ml-10 space-y-2">
+                        <li>You will see all other CodeVANIE's Projects in this page.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h2 className="text-xl font-semibold">
+                        What's " <Portfolio />"?
+                    </h2>
+                    <ul className="list-disc ml-10 space-y-2">
+                        <li>You will see all other CodeVANIE's Projects in this page.</li>
+                    </ul>
+                </div>
             </section>
         </article>
     )
@@ -95,19 +191,19 @@ function ListAddButton() {
     
     return (
         <button
-            className="inline-block bg-yellow-950/75 rounded-full shadow-[2px_0_8px_#160403,-2px_0_8px_#160403] cursor-pointer p-1 hover:scale-110 hover:bg-yellow-950 border-2 border-ptlbrown-200 transition-out-200 active:bg-yellow-950 w-8 active:scale-105">
+            className="inline-block bg-yellow-950/75 rounded-full shadow-[2px_0_8px_#160403,-2px_0_8px_#160403] cursor-pointer p-1 hover:scale-110 border-2 border-ptlbrown-200 transition-out-200 w-8">
 
             <ActionButtonIcon name="addrow" className="text-ptlbrown-200" fillInside="#e7b57400"/>
         </button> 
     )
 }
 
-function ActionButton() {
+function ActionButton({ name }) {
     
     return (
         <button 
-        className='bg-ptlbrown-100 rounded-full border-2 border-red-950 w-8 p-1 enabled:cursor-pointer enabled:hover:scale-110 transition-out-200 disabled:bg-ptlbrown-100/20 disabled:border-red-950/20 shadow-[2px_0_8px_#160403,-2px_0_8px_#160403]'>
-            <ActionButtonIcon name="addrow" className="text-red-950"/>
+        className='bg-ptlbrown-100 rounded-full border-2 border-red-950 w-8 p-1 cursor-pointer hover:scale-110 transition-out-200 shadow-[2px_0_8px_#160403,-2px_0_8px_#160403]'>
+            <ActionButtonIcon name={name} className="text-red-950"/>
         </button>
     )    
 }
@@ -116,7 +212,7 @@ function SubmitButton() {
     
     return (
         <button type='button'
-        className="bg-red-950 w-20 self-center cursor-pointer text-white py-2 rounded-3xl  font-bold tracking-widest hover:scale-110 transition-out-200" >
+        className="bg-red-950 w-20 cursor-pointer text-white py-2 rounded-3xl font-bold tracking-widest hover:scale-110 transition-out-200" >
             Save
         </button>
     )
@@ -134,7 +230,7 @@ function Controls() {
 function Time() {
 
     return(
-        <input className="font-semibold border-2 rounded-lg p-1 outline-0 text-center w-24 tracking-[2px] placeholder:text-yellow-800/50" 
+        <input className="font-semibold border-2 rounded-lg p-1 text-center w-24 tracking-[2px]" 
         type="text" placeholder='HH:MM' value="23:59" disabled={true} />
     )
 }
@@ -182,34 +278,65 @@ function DeadlineDay() {
     )
 }
 
-function PendingTodo() {
+function TodoItem({ isCompleted }) {
     
     return (
         <section className="bg-yellow-900/70 rounded-4xl p-2">
-            <div className="home-todo home-todo-notcompleted">
-                <h2 className="home-todo-title">Pending To-Do</h2>
-                <div className="home-todo-deets home-todo-deets-notcompleted">
-                    <span className="max-xs:hidden">!!!</span>
-                    <span className="max-md:hidden">Category</span>
-                    <span>Today, 11:59 PM</span>
+            <div className={`home-todo ${isCompleted ? "home-todo-completed group" : "home-todo-notcompleted"}`}>
+                <h2 className="home-todo-title">{isCompleted ? "Completed" : "Pending"} To-Do</h2>
+                <div className={`home-todo-deets ${isCompleted ? "home-todo-deets-completed group-hover:w-7/8" : "home-todo-deets-notcompleted"}`}>
+                {isCompleted ? 
+                    <span className="tracking-widest md:tracking-[10px] transition-allout-200">COMPLETED</span> : 
+                    <>
+                        <span className="max-xs:hidden">!!!</span>
+                        <span className="max-md:hidden">Category</span>
+                        <span>Today, 11:59 PM</span>
+                    </>
+                }
                 </div>
-                <HeartIcon className="home-todo-heart" fill={`${false ? "#e7b574" : "#00000000"}`}/>
+                <HeartIcon className="home-todo-heart" fill={`${!isCompleted ? "#e7b574" : "#00000000"}`}/>
             </div>
         </section>
     )
 }
 
-function CompletedTodo() {
+function ControlStatusButton() {
+    const [isActive, setIsActive] = useState(true);
+    return (
+        <button type="button" onClick={() => setIsActive(!isActive)}
+        className={`py-1 px-2 text-white font-bold tracking-widest self-end rounded-lg cursor-pointer hover:scale-105 transition-out-200 active:scale-97 
+            ${isActive ? "shadow-[1px_1px_5px_#26800a,3px_3px_5px_#26800a] bg-green-500" : 
+                                    "shadow-[1px_1px_5px_#430c0a,3px_3px_5px_#430c0a] bg-red-500"}`}>
+            {isActive ? "ACTIVE" : "INACTIVE"}
+        </button>
+    )
+}
+
+function NotifContent({ clicked }) {
+
+    return (
+        <div 
+            className={`relative cursor-pointer border p-6 overflow-hidden text-ptlbrown-100 whitespace-pre-line hover:before:absolute hover:before:inset-0 hover:before:bg-red-800/20 active:before:absolute active:before:inset-0 active:before:bg-red-800/20 
+            ${clicked ? "bg-red-950/50" : "bg-red-950"}`}>
+            <h1 className="text-xl font-bold"><span>Welcome to TODO-To-Do!</span></h1>
+            <span className={`absolute flex size-3 right-4 top-4 ${clicked && "hidden"}`}>
+                <span className={`absolute h-full w-full animate-ping rounded-4xl bg-red-400 opacity-75`}></span>
+                <span className="relative size-3 rounded-full bg-red-500"></span>
+            </span>
+            <hr />
+            <p className="mt-4">Please check the "App Guide" section to learn more about the app.</p>
+        </div>
+    )
+}
+
+function Portfolio() {
     
     return (
-        <section className="bg-yellow-900/70 rounded-4xl p-2">
-            <div className="home-todo home-todo-completed group">
-                <h2 className="home-todo-title">Completed To-Do</h2>
-                <div className="home-todo-deets home-todo-deets-completed group-hover:w-7/8">
-                    <span className="tracking-widest md:tracking-[10px] transition-allout-200">COMPLETED</span>
-                </div>
-                <HeartIcon className="home-todo-heart" fill={`${true ? "#e7b574" : "#00000000"}`}/>
-            </div>
-        </section>
+        <a href="/" className='inline-flex justify-start gap-x-3 items-center pr-2 hover:scale-110 transition-out-200'>
+            <h1 className="leading-4 text-lg font-bold whitespace-pre-line text-end pt-1">
+                {`CodeVANIE's\nPortfolio`}
+            </h1>
+            <PortfolioIcon className={`w-6 xs:scale-115`}/>
+        </a>
     )
 }

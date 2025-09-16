@@ -20,7 +20,7 @@ export default function NotifContent() {
             <ul>
             {controlledNotif.map((notif) => 
                 <li key={notif.id} onClick={() => handleNotifClick(notif)}
-                    className={`relative cursor-pointer border p-6 overflow-hidden text-ptlbrown-100 whitespace-pre-line hover:before:absolute hover:before:inset-0 hover:before:bg-red-800/20
+                    className={`relative cursor-pointer border p-6 overflow-hidden text-ptlbrown-100 whitespace-pre-line hover:before:absolute hover:before:inset-0 hover:before:bg-red-800/20 active:before:absolute active:before:inset-0 active:before:bg-red-800/20
                     ${notif.clicked ? "bg-red-950/50" : "bg-red-950"}`}>
                     <h1 className="text-xl font-bold"><span>{notif.title}</span></h1>
                     <span className={`absolute flex size-3 right-4 top-4 ${notif.clicked && "hidden"}`}>

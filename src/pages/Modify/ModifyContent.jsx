@@ -25,8 +25,10 @@ export default function ModifyContent() {
     const { listData } = useContext(AppContext);
 
     useEffect(() => {
-        setSelectedItems(new Set());
-        setSelectedType(null);
+        if (selectedItems.size !== 0) {
+            setSelectedItems(new Set());
+            setSelectedType(null);
+        }
     },[listData])
 
     function handleAddButton() {
@@ -34,6 +36,7 @@ export default function ModifyContent() {
         selectedType === "category" ? navigate(`add/category`) : 
         navigate(`alert/a_0`);
     }
+
     function handleEditButton() {
         if (selectedItems.size === 1) {
             const id = [...selectedItems][0];
@@ -49,6 +52,7 @@ export default function ModifyContent() {
             navigate(`alert/a_2`);
         }
     }
+
     function handleDeleteButton() {
         selectedItems.size !== 0 ? 
         navigate("delete/confirm", { 
@@ -64,10 +68,10 @@ export default function ModifyContent() {
         <ModifyContentWrapper>
             <ActionButtonWrapper>
                 <ActionButton isActive={selectedType !== "sort"} name="addrow" onClick={handleAddButton}/>
-                <ActionButton isActive={selectedItems.size !== 0} name="editrow" onClick={handleEditButton}/>
+                <ActionButton isActive={selectedItems.size === 1} name="editrow" onClick={handleEditButton}/>
                 <ActionButton isActive={selectedType !== "sort" && selectedItems.size !== 0} 
                 name="deleterow" onClick={handleDeleteButton}/>
-                <ActionButton isActive={selectedItems.size !== 0 || selectedType} name="reset" onClick={unselectAll}/>
+                <ActionButton isActive={selectedItems.size !== 0} name="reset" onClick={unselectAll}/>
             </ActionButtonWrapper>
             <SheetsSection>
             {listData.map((data) => 

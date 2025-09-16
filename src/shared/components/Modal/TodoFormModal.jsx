@@ -3,7 +3,7 @@ import { useForm, Controller } from "react-hook-form";
 import { createPortal } from "react-dom";
 import { AppContext } from "../../../context/app-context.jsx";
 import { FormWrapper, Title, Priority, Category, Details, Deadline, Time, DeadlineHeader, DeadlinePicker, Statement } from '../Form/form.js'
-import { SubmitButton, EraseButton } from '../Button/buttons.js'
+import { SubmitButton, EraseButton, StatusButton } from '../Button/buttons.js'
 import ModalBackground from "./ModalBackground.jsx";
 import TodoFormModalWrapper from "../../../layouts/TodoFormModalWrapper.jsx";
 import { getDateTodayString, getDefaultDueDate, getTodosNearDeadline, toLocaleDate } from "../../../utils.js";
@@ -56,7 +56,8 @@ export default function TodoFormModal() {
 			let warnNoDate = `\n (If that date doesn’t exist in a month, your deadline will move to the last day of that month.)`; 
 			return `Complete Before: [ ${toLocaleDate(getValues("deadline.dueDate"))} ] ${getValues("deadline.dueDate").getDate() > 28 ? warnNoDate : ""}`
 		}
-    },[watch("deadline")])
+    },[watch("deadline")]);
+	console.log(getValues("status"));
 
     useEffect(() => {
         if (isOpen) {
@@ -83,7 +84,6 @@ export default function TodoFormModal() {
 
 			setNotifs(prev => {
 				const newItems = getTodosNearDeadline([data], prev);
-				console.log(newItems);
 				return newItems.length ? [...prev, ...newItems] : prev;
 			});
 			
@@ -111,6 +111,9 @@ export default function TodoFormModal() {
 				</p>
 				<EraseButton onErase={() => reset()} />
 				<FormWrapper onSubmit={handleSubmit(onSave)}>
+					<div className="absolute top-0 right-0">
+						<StatusButton isActive={getValues("status") !== "Inactive"} onClick={() => setValue("status", `${action === "edit" ? getValues("status") !== "Inactive" ? "Inactive" : editTodoData.status === "Inactive" ? "Pending" : editTodoData.status : "Pending" }`, { shouldDirty: true, shouldValidate: true, shouldTouch: true })} />
+					</div>
 					<Title register={register} />
 					<div className="flex max-sm:flex-col max-sm:gap-y-3 sm:gap-x-3 sm:justify-around">
 						<Controller name="priority" control={control} render={({ field }) => (
