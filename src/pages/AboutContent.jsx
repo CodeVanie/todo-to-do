@@ -18,8 +18,8 @@ export default function AboutContent() {
                     What sets TODO-To-Do apart is its unique approach to deadlines. Unlike most todo apps that only handle single-use tasks, this one adapts to your routines. When a deadline is reached, the app automatically rolls the task over to the next cycle — perfect for things like weekly reports, monthly bills, or any recurring responsibility. It’s not just a todo list, it’s your personal system for keeping up with the tasks that keep coming back.
                 </p>
             </section>
-            <section className="space-y-5 p-3">
-                <h1 className="text-3xl text-center font-bold">How to use TODO-To-DO?</h1>
+            <section className="space-y-5 p-3 max-xxs:whitespace-pre-line">
+                <h1 className="text-3xl text-center font-bold">How to use{`\n`}TODO-To-Do?</h1>
                 <div>
                     <h2 className="text-xl font-semibold">How to add a To-Do?</h2>
                     <ul className="list-decimal ml-10 space-y-2">
@@ -64,7 +64,7 @@ export default function AboutContent() {
                 </div>
                 <div>
                     <h2 className="text-xl font-semibold">
-                        What's inside the "Home <NavIcon name="home" className="inline w-6"/> " page?
+                        What's inside "Home <NavIcon name="home" className="inline w-6"/> " page?
                     </h2>
                     <ol className="list-decimal ml-10 space-y-2">
                         <li>
@@ -90,7 +90,7 @@ export default function AboutContent() {
                 </div>
                 <div>
                     <h2 className="text-xl font-semibold">
-                        What's inside the "List Manager <NavIcon name="modify" className="inline w-6"/> " page?
+                        What's inside "List Manager <NavIcon name="modify" className="inline w-6"/> " page?
                     </h2>
                     <ol className="list-decimal ml-10 space-y-2">
                         <li>
@@ -131,7 +131,7 @@ export default function AboutContent() {
                 </div>
                 <div>
                     <h2 className="text-xl font-semibold">
-                        What's inside the "Notifications <NavIcon name="notif" hasnotif={true} className="inline w-6"/> " page?
+                        What's inside "Notifications <NavIcon name="notif" hasnotif={true} className="inline w-6"/> " page?
                     </h2>
                     <ol className="list-decimal ml-10 space-y-2">
                         <li>
@@ -179,7 +179,7 @@ export default function AboutContent() {
                         What's " <Portfolio />"?
                     </h2>
                     <ul className="list-disc ml-10 space-y-2">
-                        <li>You will see all other CodeVANIE's Projects in this page.</li>
+                        <li>You will see everything about CodeVANIE in this website. (Work - In progress)</li>
                     </ul>
                 </div>
             </section>

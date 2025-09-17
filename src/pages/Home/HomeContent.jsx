@@ -25,9 +25,9 @@ export default function HomeContent() {
                 <ControlSection title="Filter By" items={filterList} 
                     onControlClick={setFilteredCategory} control={filteredCategory}/>
             </Controls>
-            <TodoList>
-                <ListAddButton onClick={() => navigate(`list/add`)}/>
-                <ol className="p-2 space-y-1">
+            <TodoList hasTodo={controlledList.length > 0} onClick={() => navigate(`list/add`)}>
+                {controlledList.length > 0 && <ListAddButton onClick={() => navigate(`list/add`)}/>} 
+                <ol className="space-y-1">
                 {controlledList.map((todo, index) => 
                     <TodoItem key={index} todo={todo} />
                 )}

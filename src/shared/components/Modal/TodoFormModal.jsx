@@ -1,4 +1,4 @@
-import { useContext, useEffect, useMemo, useState } from "react";
+import { memo, useContext, useEffect, useMemo, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { createPortal } from "react-dom";
 import { AppContext } from "../../../context/app-context.jsx";
@@ -6,35 +6,34 @@ import { FormWrapper, Title, Priority, Category, Details, Deadline, Time, Deadli
 import { SubmitButton, EraseButton, StatusButton } from '../Button/buttons.js'
 import ModalBackground from "./ModalBackground.jsx";
 import TodoFormModalWrapper from "../../../layouts/TodoFormModalWrapper.jsx";
-import { getDateTodayString, getDefaultDueDate, getTodosNearDeadline, toLocaleDate } from "../../../utils.js";
+import { getDateTodayString, getDefaultDueDate, toLocaleDate } from "../../../utils.js";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { NotifContext } from "../../../context/notif-context.jsx";
 
-export default function TodoFormModal() {
+const defaultFormValues = {
+	id: "",
+	label: "",
+	priority: "!",
+	category: "",
+	details: "",
+	deadline: {
+		type: "timeonly",
+		dueDate: getDefaultDueDate(),
+		datenums: [],
+		time: "23:59"
+	},
+	favorite: false,
+	status: "Pending"
+};
+
+const TodoFormModal = memo(function TodoFormModal() {
 	const { pathname } = useLocation();
 	const { action, todoid } = useParams();
     const navigate = useNavigate();
     const { listData, setTodos } = useContext(AppContext);
-    const { setNotifs } = useContext(NotifContext);
 	const [isOpen, setIsOpen] = useState(true);
     const [isShowing, setIsShowing] = useState(isOpen);
 	const editTodoData = action === "edit" ? listData[1].list.find(t => t.id === todoid) : null;
 
-    const defaultFormValues = {
-        id: "",
-        label: "",
-        priority: "!",
-        category: "",
-        details: "",
-        deadline: {
-          type: "timeonly",
-		  dueDate: getDefaultDueDate(),
-          datenums: [],
-		  time: "23:59"
-        },
-        favorite: false,
-		status: "Pending"
-    };
     const {
       register,
       control,
@@ -49,6 +48,7 @@ export default function TodoFormModal() {
       defaultValues: { ...defaultFormValues },
       mode: "onChange",
     });
+
     const deadlineStatement = useMemo(() => {
 		if (getValues("deadline.type") !== "month") {
 			return `Complete Before: [ ${toLocaleDate(getValues("deadline.dueDate"))} ]`;
@@ -57,7 +57,6 @@ export default function TodoFormModal() {
 			return `Complete Before: [ ${toLocaleDate(getValues("deadline.dueDate"))} ] ${getValues("deadline.dueDate").getDate() > 28 ? warnNoDate : ""}`
 		}
     },[watch("deadline")]);
-	console.log(getValues("status"));
 
     useEffect(() => {
         if (isOpen) {
@@ -81,11 +80,6 @@ export default function TodoFormModal() {
 				setTodos((prev) => 
 					prev.map((todo) => 
 						(todo.id === data.id ? data : todo)));
-
-			setNotifs(prev => {
-				const newItems = getTodosNearDeadline([data], prev);
-				return newItems.length ? [...prev, ...newItems] : prev;
-			});
 			
 			setIsOpen(false);
 			reset();
@@ -150,13 +144,12 @@ export default function TodoFormModal() {
 						</Deadline>
 						)}
 					/>
-					<SubmitButton
-						isSubmitting={isSubmitting}
-						isValid={isValid}
-					/>
+					<SubmitButton isSubmitting={isSubmitting} isValid={isValid} />
 				</FormWrapper>
 			</TodoFormModalWrapper>
 		</ModalBackground>,
       	document.body
     ) : null;
-};
+});
+
+export default TodoFormModal

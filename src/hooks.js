@@ -1,4 +1,4 @@
-import { useCallback, useContext, useMemo, useState } from "react";
+import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { AppContext } from "./context/app-context";
 
 export function useAutosizeTextArea(textAreaRef) {
@@ -99,19 +99,15 @@ export function useControls() {
     return { filterList, sortList };
 }
 
-export function useLocalStorage(key) {
+export function useLocalStorage(key, initVal) {
+    const [value, setValue] = useState(() => {
+        const storedItem = localStorage.getItem(key);
+        return storedItem ? JSON.parse(storedItem) : initVal;
+    })
 
-    function setItem(value) {
-        window.localStorage.setItem(key, JSON.stringify(value));
-    }
+    useEffect(() => {
+        localStorage.setItem(key, JSON.stringify(value));
+    }, [key, value])
 
-    function getItem() {
-        return window.localStorage.getItem(key);
-    }
-
-    function removeItem() {
-        return window.localStorage.removeItem(key);
-    }
-
-    return { setItem, getItem, removeItem }
+    return [value, setValue]
 }

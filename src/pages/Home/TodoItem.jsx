@@ -5,7 +5,6 @@ import { toLocaleDate } from "../../utils"
 export default function TodoItem({ todo }) {
     const navigate = useNavigate();
     const isCompleted = todo.status === "Completed";
-    
     return (
         <li className={`home-todo ${isCompleted ? "home-todo-completed group" : "home-todo-notcompleted"}`} onClick={() => navigate(`view/${todo.id}`)}>
             <h2 className="home-todo-title">{todo.label}</h2>

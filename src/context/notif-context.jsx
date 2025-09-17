@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react"
 import { AppContext } from "./app-context";
 import { getTodosNearDeadline } from "../utils";
+import { useLocalStorage } from "../hooks";
 
 export const NotifContext = createContext();
 
@@ -30,15 +31,24 @@ const initialNotifs = [
 
 export default function NotifContextProvider({ children }) {
     const { listData } = useContext(AppContext);
-    const [notifs, setNotifs] = useState(initialNotifs);
+    const [notifs, setNotifs] = useLocalStorage("notifs", initialNotifs);
     const hasNotif = notifs.find((notif) => !notif.clicked) ? true : false;
 
     useEffect(() => {
         setNotifs(prev => {
-            const newItems = getTodosNearDeadline(listData[1].list, prev); 
-            return newItems.length ? [...prev, ...newItems] : prev;
+            const newTodoNotifs = getTodosNearDeadline(listData[1].list, prev);
+
+            const existingNotifIds = new Set(prev.map(n => n.id.split("-")[1] ?? ""));
+
+            const newNotifs = newTodoNotifs.filter(n => !existingNotifIds.has(n.id.split("-")[1]));
+            
+            const updatedNotifs = [...prev, ...newNotifs];
+
+            const limitToFifty = updatedNotifs.slice(-50);
+            
+            return limitToFifty
         });
-    },[])
+    },[listData[1].list])
     
     return (
         <NotifContext.Provider value={{notifs, hasNotif, setNotifs}}>

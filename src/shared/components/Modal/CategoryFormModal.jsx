@@ -22,7 +22,7 @@ export default function CategoryFormModal() {
     useEffect(() => {
         if (isOpen) {
             setIsShowing(true);
-            setNewCategory(action === "add" ? {id: `c_${listData[0].length+2}`, label: "", active: true} : editCategData);
+            setNewCategory(action === "add" ? {id: `c_${listData[0].list.length+3}`, label: "", active: true} : editCategData);
             document.body.style.overflow = "hidden";
         } else {
             document.body.style.overflow = "auto";

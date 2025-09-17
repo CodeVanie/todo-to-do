@@ -24,16 +24,17 @@ export function getDefaultDueDate(time) {
 
 export function toLocaleDate(date) {
     let localeDateString = "Deadline"
-    const now = new Date();
+    const { currYear, currMonth, currDate } = getCurrentDateTime();
+    const dueDate = new Date(date);
     const isSameDate = 
-    now.getFullYear() === date.getFullYear() &&
-    now.getMonth() === date.getMonth() &&
-    now.getDate() === date.getDate();
+    currYear === dueDate.getFullYear() &&
+    currMonth === dueDate.getMonth() &&
+    currDate === dueDate.getDate();
     const isTomorrow = 
-    now.getFullYear() === date.getFullYear() &&
-    now.getMonth() === date.getMonth() &&
-    now.getDate() + 1 === date.getDate();
-    const dateLocaleString = date.toLocaleString("en-US", {
+    currYear === dueDate.getFullYear() &&
+    currMonth === dueDate.getMonth() &&
+    currDate + 1 === dueDate.getDate();
+    const dateLocaleString = dueDate.toLocaleString("en-US", {
         month: "2-digit",
         day: "2-digit",
         hour: "2-digit",
@@ -77,6 +78,8 @@ export function createTodoDeadline(type, time, days) {
             const invalidDate = (dateNumber <= currDate) && invalidTime;
             newDeadline = getSafeDate(newDeadline, dateNumber, 
                 currMonth + (invalidDate ? 1 : 0));
+            console.log(newDeadline);
+            
         break;
         default:
             break;
@@ -140,7 +143,7 @@ export function toDayNames(days) {
 export function getTodosNearDeadline(todos, notifs) {
     let nearDeadlines = [];
     const todoList = todos;
-    const now = new Date();
+    const { now } = getCurrentDateTime();
     let notifCount = notifs.length;
     todoList.map((todo) => {
         let todoDate = todo.deadline.dueDate;
@@ -149,7 +152,7 @@ export function getTodosNearDeadline(todos, notifs) {
             let diffHours = Math.ceil((todoDate - now) / (1000 * 60 * 60));
             if (diffMinutes > 0 && diffMinutes < 60) {
                 nearDeadlines.push({
-                    id: `n_${notifCount++}`,
+                    id: `n_${notifCount++}-${todo.id}M${diffMinutes}`,
                     title: `DEADLINE WARNING:\nLESS THAN ${diffMinutes} MINUTES LEFT!`, 
                     body: `Title: "${todo.label}"\nDEADLINE: ${toLocaleDate(todoDate)}`, 
                     path: `view/${todo.id}`,
@@ -157,7 +160,7 @@ export function getTodosNearDeadline(todos, notifs) {
                 }) 
             } else if (diffHours > 0 && diffHours < 24) {
                 nearDeadlines.push({
-                    id: `n_${notifCount++}`,
+                    id: `n_${notifCount++}-${todo.id}H${diffHours}`,
                     title: `DEADLINE WARNING:\nLESS THAN ${diffHours} HOURS LEFT!`, 
                     body: `Title: "${todo.label}"\nDEADLINE: ${toLocaleDate(todoDate)}`, 
                     path: `view/${todo.id}`,

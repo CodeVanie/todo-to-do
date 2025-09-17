@@ -5,6 +5,7 @@ import SmallModalWrapper from "../../../layouts/SmallModalWrapper";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import ConfirmMessage from "./ConfirmMessage";
 import { AppContext } from "../../../context/app-context";
+import { SpinnerIcon } from "../../icons/IconCollection";
 
 export default function ConfirmModal() {
     const { listData, setTodos, setCategories } = useContext(AppContext);
@@ -13,6 +14,7 @@ export default function ConfirmModal() {
     const navigate = useNavigate();
 	const [isOpen, setIsOpen] = useState(true);
     const [isShowing, setIsShowing] = useState(isOpen);
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const selectedItemsIDs = state.selectedItems ?? [];
     const selectedType = state.selectedType;
     const itemLabels = converToLabels(selectedItemsIDs);
@@ -42,6 +44,7 @@ export default function ConfirmModal() {
     }
     
     function handleYesButton() {
+        setIsSubmitting(true);
         let list = selectedType === "todo" ? listData[1].list : listData[0].list;
         var newList = [];
 
@@ -60,6 +63,7 @@ export default function ConfirmModal() {
     function onAnimationEnd() {
         if (!isOpen) {
             setIsShowing(false);
+            setIsSubmitting(false);
             navigate(`/${pathname.split("/")[1]}`);
         }
     }
@@ -76,7 +80,9 @@ export default function ConfirmModal() {
                     </ul>
                 <div className="flex gap-x-10 justify-evenly mt-7 text-white font-bold text-lg">
                     <button className="flex-1 px-4 py-2 bg-green-800 hover:bg-green-700 rounded-3xl cursor-pointer transition-out-200" onClick={handleYesButton}>
-                        Yes
+                        {!isSubmitting ? "Yes" : 
+                            <SpinnerIcon className="w-6 mx-auto animate-spin"/>
+                        }
                     </button>
                     <button className="flex-1 px-4 py-2 bg-red-800 hover:bg-red-700 rounded-3xl cursor-pointer transition-out-200" onClick={() => setIsOpen(false)}>
                         No
