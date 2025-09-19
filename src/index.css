@@ -15,6 +15,7 @@
   --animate-modalexit: modalExit 0.5s ease-in-out forwards;
   --animate-bgmodalfadein: bgModalFadeIn 0.5s ease-in-out forwards;
   --animate-bgmodalfadeout: bgModalFadeOut 0.5s ease-in-out forwards;
+  --animate-tileentry: tileEntry 0.5s ease-out forwards;
   --breakpoint-xm: 56rem; /* 896px */
   --breakpoint-xs: 32rem; /* 512px */
   --breakpoint-xxs: 24rem; /* 384px */
@@ -69,6 +70,10 @@
   .home-todo-deets-notcompleted {
     @apply font-medium bg-red-950/50 max-xs:w-9/11 w-6/8 border-ptlbrown-100/50 border-dashed;
   }
+  	/* PROJECTS */
+	.project-tiles {
+		@apply grid relative gap-3 z-10 bg-ptlbrown-300/30 rounded-br-[60px] rounded-tl-[60px] border-2 border-yellow-950/30 p-3 cursor-pointer hover:border-ptlbrown-100 inset-shadow-sm inset-shadow-black h-70 opacity-0 animate-tileentry shadow-lg w-full;
+	}
   /* ADD TODO FORM FIELDS*/
   .select-category-button {
     @apply flex w-full text-base bg-ptlbrown-100 border-2 text-red-950 px-4 py-2 rounded  cursor-pointer hover:text-lg transition-[font-size] duration-200 tracking-widest text-center justify-between;
@@ -83,10 +88,10 @@
 /* UTILITIES */
 @layer utilities {
   .bg-rough-brown {
-    @apply bg-[url(/images/content-bg.jpg)];
+    @apply bg-[url(/images/todo-bg.webp)];
   }
   .bg-smooth-brown {
-    @apply bg-[url(/images/header-bg.jpg)];
+    @apply bg-[url(/images/header-bg.webp)];
   }
   .transition-out-200 {
     @apply transition ease-out duration-200;
@@ -99,6 +104,9 @@
   }
   .transition-allout-500 {
     @apply transition-all ease-out duration-500;
+  }
+  .grid-auto-fill {
+	  @apply grid-cols-[repeat(auto-fit,minmax(min(275px,100%),1fr))];
   }
   @keyframes modalEntry {
     from {
@@ -132,4 +140,14 @@
       background-color: rgba(0, 0, 0, 0);
     }
   }
+  @keyframes tileEntry {
+	from {
+		opacity: 0;
+		transform: scale(0);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
 }

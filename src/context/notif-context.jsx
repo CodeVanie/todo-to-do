@@ -20,13 +20,13 @@ const initialNotifs = [
         path: "/home",
         clicked: false
     },
-    // {
-    //     id: "n_2",
-    //     title: "Wanna see more from CodeVANIE?",
-    //     body: `Check CodeVANIE's Portfolio!`,
-    //     path: "/home",
-    //     clicked: false
-    // }
+    {
+        id: "n_2",
+        title: "Wanna see more from CodeVANIE?",
+        body: `Check CodeVANIE's Portfolio!`,
+        path: "/home",
+        clicked: false
+    }
 ]
 
 export default function NotifContextProvider({ children }) {

@@ -2,7 +2,6 @@ import { ActionButtonIcon, HeartIcon, NavIcon, PortfolioIcon } from "../shared/i
 import todoform from "../assets/images/addtodoform.png";"../assets/images/addtodoform.png";
 import viewtodo from "../assets/images/viewtodo.png";
 import { useState } from "react";
-import NotifContentWrapper from "../layouts/NotifContentWrapper";
 
 export default function AboutContent() {
     // console.log("AboutContent rendered");

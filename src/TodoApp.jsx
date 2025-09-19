@@ -6,7 +6,7 @@ import AppWrapper from "./layouts/AppWrapper.jsx"
 import ContentWrapper from "./layouts/ContentWrapper.jsx"
 import NotifContextProvider from "./context/notif-context.jsx"
 
-function TodoApp() {
+export default function TodoApp() {
     return (
         <AppWrapper>
             <AppContextProvider>
@@ -21,5 +21,3 @@ function TodoApp() {
         </AppWrapper>
     )
 }
-
-export default TodoApp

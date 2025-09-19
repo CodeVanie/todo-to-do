@@ -1,6 +1,6 @@
 import HomeContent from "./Home/HomeContent";
 import AboutContent from "./AboutContent";
-import ProjectsContent from "./ProjectsContent";
+import ProjectsContent from "./Projects/ProjectsContent";
 import ModifyContent from "./Modify/ModifyContent";
 import NotifContent from "./Notifications/NotifContent";
 import NotFoundPage from "./NotFoundPage"
