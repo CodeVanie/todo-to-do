@@ -17,11 +17,11 @@ export default function AboutContent() {
                     What sets TODO-To-Do apart is its unique approach to deadlines. Unlike most todo apps that only handle single-use tasks, this one adapts to your routines. When a deadline is reached, the app automatically rolls the task over to the next cycle — perfect for things like weekly reports, monthly bills, or any recurring responsibility. It’s not just a todo list, it’s your personal system for keeping up with the tasks that keep coming back.
                 </p>
             </section>
-            <section className="space-y-5 p-3 max-xxs:whitespace-pre-line">
+            <section className="space-y-5 p-3 max-xxs:whitespace-pre-line leading-10">
                 <h1 className="text-3xl text-center font-bold">How to use{`\n`}TODO-To-Do?</h1>
                 <div>
-                    <h2 className="text-xl font-semibold">How to add a To-Do?</h2>
-                    <ul className="list-decimal ml-10 space-y-2">
+                    <h2 className="text-[clamp(1rem,0.5vw+0.5rem,1.5vw)] font-semibold">How to add a To-Do?</h2>
+                    <ul className="list-decimal xs:ml-10 ml-5 space-y-2">
                         <li>
                             In "Home <NavIcon name="home" className="inline w-6"/>" page, you can click this button <ListAddButton /> .
                             In "List Manager <NavIcon name="modify" className="inline w-6"/>" page, you can click this button <ActionButton name="addrow" /> .
@@ -47,7 +47,7 @@ export default function AboutContent() {
                         </li>
                         <li>
                             You can choose between 3 deadline types "Time Only", "Day/s", or "Monthly".
-                            <ol className="ml-10 list-[lower-alpha] space-y-2">
+                            <ol className="list-[lower-alpha] xs:ml-10 ml-5 space-y-2">
                                 <li>
                                     <span className="font-bold"><Time /> Time Only:</span> If you want to create a To-Do for a single-use or everyday task, you can use Time Only deadline type.
                                 </li>
@@ -62,10 +62,10 @@ export default function AboutContent() {
                     </ul>
                 </div>
                 <div>
-                    <h2 className="text-xl font-semibold">
+                    <h2 className="text-[clamp(1rem,0.5vw+0.5rem,1.5vw)] font-semibold">
                         What's inside "Home <NavIcon name="home" className="inline w-6"/> " page?
                     </h2>
-                    <ol className="list-decimal ml-10 space-y-2">
+                    <ol className="list-decimal xs:ml-10 ml-5 space-y-2">
                         <li>
                             At the very top of the page, you will see the " <Controls /> " bar. You can use this to either sort or filter the To-Do list in your "Home" page.
                         </li>
@@ -88,13 +88,13 @@ export default function AboutContent() {
                     </ol>
                 </div>
                 <div>
-                    <h2 className="text-xl font-semibold">
+                    <h2 className="text-[clamp(1rem,0.5vw+0.5rem,1.5vw)] font-semibold">
                         What's inside "List Manager <NavIcon name="modify" className="inline w-6"/> " page?
                     </h2>
-                    <ol className="list-decimal ml-10 space-y-2">
+                    <ol className="list-decimal xs:ml-10 ml-5  space-y-2">
                         <li>
                             These <ActionButton name="addrow" /> <ActionButton name="editrow" /> <ActionButton name="deleterow" /> <ActionButton name="reset" /> are called the Action Buttons.
-                            <ol className="list-[lower-alpha] ml-10 space-y-2">
+                            <ol className="list-[lower-alpha] xs:ml-10 ml-5 space-y-2">
                                 <li>
                                     The first one is the <span className="font-semibold">"Add Row"</span> <ActionButton name="addrow" /> button. You can use this to either add a list or category depends on the current selected list.
                                 </li>
@@ -111,7 +111,7 @@ export default function AboutContent() {
                         </li>
                         <li>
                             Under the Action Buttons, you will see 3 list types: Category List, To-Do List, and Sort List.
-                            <ol className="list-[lower-alpha] ml-10 space-y-2">
+                            <ol className="list-[lower-alpha] xs:ml-10 ml-5 space-y-2">
                                 <li>
                                     <span className="font-semibold">Category List: </span>You can add, edit, and delete categories.
                                 </li>
@@ -129,13 +129,13 @@ export default function AboutContent() {
                     </ol>
                 </div>
                 <div>
-                    <h2 className="text-xl font-semibold">
+                    <h2 className="text-[clamp(1rem,0.5vw+0.5rem,1.5vw)] font-semibold">
                         What's inside "Notifications <NavIcon name="notif" hasnotif={true} className="inline w-6"/> " page?
                     </h2>
-                    <ol className="list-decimal ml-10 space-y-2">
+                    <ol className="list-decimal xs:ml-10 ml-5 space-y-2">
                         <li>
                             You will see all your app notifications here including:
-                            <ol className="list-[lower-alpha] ml-10 space-y-2">
+                            <ol className="list-[lower-alpha] xs:ml-10 ml-5  space-y-2">
                                 <li>
                                     To-Do's that have a deadline for today.
                                 </li>
@@ -146,7 +146,7 @@ export default function AboutContent() {
                         </li>
                         <li>
                             There are 2 types of notifications:
-                            <ol className="list-[lower-alpha] ml-10 space-y-2">
+                            <ol className="list-[lower-alpha] xs:ml-10 ml-5 space-y-2">
                                 <li>
                                     Clicked notifications
                                     <NotifContent clicked={true} />
@@ -166,19 +166,19 @@ export default function AboutContent() {
             <section className="space-y-5 p-3">
                 <h1 className="text-3xl text-center font-bold">More in TODO-To-DO</h1>
                 <div>
-                    <h2 className="text-xl font-semibold">
+                    <h2 className="text-[clamp(1rem,0.5vw+0.5rem,1.5vw)] font-semibold">
                         What's inside the "Projects <NavIcon name="projects" className="inline w-6"/> " page?
                     </h2>
-                    <ul className="list-disc ml-10 space-y-2">
-                        <li>You will see all other CodeVANIE's Projects in this page.</li>
+                    <ul className="list-disc xs:ml-10 ml-5 space-y-2">
+                        <li>You will see all CodeVANIE's Projects in this page.</li>
                     </ul>
                 </div>
                 <div>
-                    <h2 className="text-xl font-semibold">
+                    <h2 className="text-[clamp(1rem,0.5vw+0.5rem,1.5vw)] font-semibold">
                         What's " <Portfolio />"?
                     </h2>
                     <ul className="list-disc ml-10 space-y-2">
-                        <li>You will see everything about CodeVANIE in this website. (Work - In progress)</li>
+                        <li>Click this and you'll see everything about CodeVANIE.</li>
                     </ul>
                 </div>
             </section>
@@ -285,7 +285,7 @@ function TodoItem({ isCompleted }) {
                 <h2 className="home-todo-title">{isCompleted ? "Completed" : "Pending"} To-Do</h2>
                 <div className={`home-todo-deets ${isCompleted ? "home-todo-deets-completed group-hover:w-7/8" : "home-todo-deets-notcompleted"}`}>
                 {isCompleted ? 
-                    <span className="tracking-widest md:tracking-[10px] transition-allout-200">COMPLETED</span> : 
+                    <span className="tracking-widest md:tracking-[10px] max-xs:text-xs transition-allout-200">COMPLETED</span> : 
                     <>
                         <span className="max-xs:hidden">!!!</span>
                         <span className="max-md:hidden">Category</span>
