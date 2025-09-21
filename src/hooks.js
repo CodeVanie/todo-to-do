@@ -123,7 +123,7 @@ export default function useNotifSound(path = "/sounds/notif-sound.mp3") {
     const audioRef = useRef(null);
 
     useEffect(() => {
-        audioRef.current = new Audio("/sounds/notif-sound.mp3");
+        audioRef.current = new Audio(path);
         audioRef.current.load();
     }, [])
 

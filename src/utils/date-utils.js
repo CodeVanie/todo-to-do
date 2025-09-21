@@ -1,6 +1,5 @@
 
 const DAYNAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-const { currHour } = getCurrentDateTime();
 
 export function getDefaultDeadline(date) {
     return { type: "timeonly", dueDate: date, datenums: [] };
@@ -124,11 +123,21 @@ export function updateTodoDeadline(type, oldDeadline, days) {
 
 export function getDateTodayString() {
     const now = newDateVar();
-    const [date, time] = now.toLocaleString().split(",");
-    const hour = time.split(":")[0];
-    const meridiem = time.split(" ")[2];
+    
+    const date = new Intl.DateTimeFormat("en-US", {
+        month: "numeric",
+        day: "numeric",
+        year: "numeric",
+    }).format(now);
 
-    return date + ", " + DAYNAMES[now.getDay()] + hour + " " + meridiem;
+    const dayName = new Intl.DateTimeFormat("en-US", { weekday: "long" }).format(now);
+
+    const time = new Intl.DateTimeFormat("en-US", {
+        hour: "numeric",
+        hour12: true, // ensures AM/PM
+    }).format(now);
+
+    return `${date}, ${dayName} ${time}`;
 }
 
 export function toDayNames(days) {
