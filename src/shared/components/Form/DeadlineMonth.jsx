@@ -1,4 +1,4 @@
-import { createTodoDeadline, getDefaultDeadline, getDefaultDueDate } from "../../../utils";
+import { createTodoDeadline, getDefaultDeadline, getDefaultDueDate } from "../../../utils/date-utils";
 
 const DATES = Array.from({ length: 31 }, (_,i) => i + 1);
 const DTYPE = "month";
@@ -21,7 +21,7 @@ export default function DeadlineMonth ({ value, handleUpdate }) {
 
     return (
         <div className={`border-2 px-1 py-1 rounded-2xl ${isDTypeMonth ? "border-red-950" : "border-yellow-700"}`}>
-            <h3 className='text-left'>DAY OF THE MONTH ( 1 ~ 31 )</h3>
+            <h3 className='text-left font-normal'>DAY OF THE MONTH ( 1 ~ 31 )</h3>
             <ol className='w-full flex sm:justify-center sm:flex-wrap gap-1 p-1 max-sm:overflow-x-auto scrollbar-hide'>
                 {DATES.map((num, index) => 
                     <li key={index} data-value={num} onClick={onDeadlineClick} 

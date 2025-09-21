@@ -1,8 +1,6 @@
 
-function ModalTitle({children}) {
+export default function ModalTitle({children}) {
     return (
-        <h1 className="font-bold text-4xl font-quicks text-red-950 text-center w-full">{children}</h1>
+        <h1 className="text-4xl text-red-950 text-center">{children}</h1>
     )
 }
-
-export default ModalTitle

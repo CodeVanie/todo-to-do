@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { AppContext } from "./context/app-context";
 
 export function useAutosizeTextArea(textAreaRef) {
@@ -68,11 +68,18 @@ export function useSelect() {
     
     const unselectAll = useCallback(() => {
         setSelectedItems(new Set());
-        setSelectedType("");
     }, []);
 
+
+    const handleSheetSelect = useCallback((sheetType) => {
+        if (selectedType !== sheetType) {
+            setSelectedItems(new Set());
+            setSelectedType(sheetType);
+        }
+    },[selectedType]);
+
 	return { selectedItems, setSelectedItems, selectedType, 
-        setSelectedType, handleSelectedItems, unselectAll }
+        setSelectedType, handleSelectedItems, handleSheetSelect, unselectAll }
 }
 
 export function useControls() {
@@ -110,4 +117,22 @@ export function useLocalStorage(key, initVal) {
     }, [key, value])
 
     return [value, setValue]
+}
+
+export default function useNotifSound(path = "/sounds/notif-sound.mp3") {
+    const audioRef = useRef(null);
+
+    useEffect(() => {
+        audioRef.current = new Audio("/sounds/notif-sound.mp3");
+        audioRef.current.load();
+    }, [])
+
+    function playNotifSound() {
+        if (audioRef.current) {
+            const sound = audioRef.current.cloneNode();
+            sound.play();
+        }
+    }
+
+    return playNotifSound;
 }

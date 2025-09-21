@@ -4,7 +4,7 @@ export default function ContentWrapper({ children }) {
     const { pathname } = useLocation();
     
     return (
-        <main className={`grow relative before:absolute before:inset-0 bg-center bg-no-repeat bg-cover bg-fixed before:bg-black/60 
+        <main className={`grow bg-black/60 bg-blend-multiply bg-center bg-no-repeat bg-cover bg-fixed  
         ${/^\/modify/.test(pathname) ? "bg-smooth-brown" : "bg-rough-brown"}`}>
 
             {children}

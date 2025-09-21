@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { updateTodoDeadline } from "../utils";
+import { updateTodoDeadline } from "../utils/date-utils";
 import { useLocalStorage } from "../hooks";
 
 export const AppContext = createContext();

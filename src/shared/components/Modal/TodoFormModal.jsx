@@ -5,8 +5,9 @@ import { AppContext } from "../../../context/app-context.jsx";
 import { FormWrapper, Title, Priority, Category, Details, Deadline, Time, DeadlineHeader, DeadlinePicker, Statement } from '../Form/form.js'
 import { SubmitButton, EraseButton, StatusButton } from '../Button/buttons.js'
 import ModalBackground from "./ModalBackground.jsx";
+import DateToday from "./DateToday.jsx";
 import TodoFormModalWrapper from "../../../layouts/TodoFormModalWrapper.jsx";
-import { getDateTodayString, getDefaultDueDate, toLocaleDate } from "../../../utils.js";
+import { getDefaultDueDate, toLocaleDate } from "../../../utils/date-utils.js";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 const defaultFormValues = {
@@ -100,9 +101,7 @@ const TodoFormModal = memo(function TodoFormModal() {
 		<ModalBackground isOpen={isOpen} onAnimationEnd={onAnimationEnd}>
 			<TodoFormModalWrapper isOpen={isOpen} onClose={() => setIsOpen(false)} 
 				title={action === "add" ? "Add Todo" : "Edit Todo"} >
-				<p className="text-xs text-center font-bold">
-					<span>Today: </span>{getDateTodayString()}
-				</p>
+				<DateToday />
 				<EraseButton onErase={() => reset()} />
 				<FormWrapper onSubmit={handleSubmit(onSave)}>
 					<div className="absolute top-0 right-0">

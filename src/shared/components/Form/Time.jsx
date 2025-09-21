@@ -1,4 +1,4 @@
-import { createTodoDeadline } from '../../../utils';
+import { createTodoDeadline } from '../../../utils/date-utils';
 import { CorrectIcon, WrongIcon } from '../../icons/IconCollection'
 
 export default function Time({ value, onChange, error }) {

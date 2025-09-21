@@ -4,9 +4,9 @@ export default function FavoriteButton({ todo, onClick }) {
     
     return (
         <button onClick={onClick} 
-            className={`absolute right-3 top-3  hover:scale-110 active:scale-110 transition-out-200 cursor-pointer 
+            className={`absolute right-3 top-3 intrct-btn-2 transition-out-200 
             ${todo.favorite ? "text-ptlbrown-100" : 
-                              "text-ptlbrown-100/0"}`}>
+                              "text-transparent"}`}>
             <HeartIcon stroke="#e7b574"/>
         </button>
     )

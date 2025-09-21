@@ -18,7 +18,7 @@ export default function ModifyContent() {
         selectedItems, 
         selectedType, 
         setSelectedItems, 
-        setSelectedType, 
+        handleSheetSelect, 
         handleSelectedItems, 
         unselectAll 
     } = useSelect();
@@ -27,7 +27,6 @@ export default function ModifyContent() {
     useEffect(() => {
         if (selectedItems.size !== 0) {
             setSelectedItems(new Set());
-            setSelectedType(null);
         }
     },[listData])
 
@@ -67,22 +66,25 @@ export default function ModifyContent() {
     return (
         <ModifyContentWrapper>
             <ActionButtonWrapper>
-                <ActionButton isActive={selectedType !== "sort"} name="addrow" onClick={handleAddButton}/>
-                <ActionButton isActive={selectedItems.size === 1} name="editrow" onClick={handleEditButton}/>
-                <ActionButton isActive={selectedType !== "sort" && selectedItems.size !== 0} 
-                name="deleterow" onClick={handleDeleteButton}/>
-                <ActionButton isActive={selectedItems.size !== 0} name="reset" onClick={unselectAll}/>
+                <ActionButton onClick={handleAddButton} name="addrow" size="md" variant="cream" isActive={selectedType !== "sort"} />
+                <ActionButton onClick={handleEditButton} name="editrow" size="md" variant="cream" isActive={selectedItems.size === 1} />
+                <ActionButton onClick={handleDeleteButton} name="deleterow" size="md" variant="cream" isActive={selectedType !== "sort" && selectedItems.size !== 0} />
+                <ActionButton onClick={unselectAll} name="reset" size="md" variant="cream" isActive={selectedItems.size !== 0} />
             </ActionButtonWrapper>
-            <SheetsSection>
+            <SheetsSection onSheetChange={handleSheetSelect} selectedType={selectedType}>
             {listData.map((data) => 
                 <Sheet key={data.type} title={`Edit ${data.label} List`} 
-                onSelect={() => setSelectedType(data.type)} 
+                onSelect={() => handleSheetSelect(data.type)} 
                 isSelected={selectedType === data.type}>
                     <SheetList>
                         {data.list.map((item) => 
                             <SheetItem key={item.id} item={item} onSelect={() => 
                             handleSelectedItems(item.id, data.type)} selected={selectedItems} />
                         )}
+                        {data.list.length === 0 && 
+                        <li className="pointer-events-none text-center py-4 px-3 font-bold border-b-3 border-yellow-900 text-2xl text-ptlbrown-100 cursor-pointer hover:bg-ptlbrown-300/10 active:bg-ptlbrown-300/10">
+                            <span className="block overflow-hidden w-full whitespace-nowrap">No item available</span>
+                        </li>}
                     </SheetList>
                 </Sheet>
             )}

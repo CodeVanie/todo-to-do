@@ -5,6 +5,7 @@ import AppContextProvider from "./context/app-context.jsx"
 import AppWrapper from "./layouts/AppWrapper.jsx"
 import ContentWrapper from "./layouts/ContentWrapper.jsx"
 import NotifContextProvider from "./context/notif-context.jsx"
+import ScrollToTop from "./shared/ScrollToTop.jsx"
 
 export default function TodoApp() {
     return (
@@ -13,6 +14,7 @@ export default function TodoApp() {
             <NotifContextProvider>
             <Header />
                 <ContentWrapper> 
+                    <ScrollToTop />
                     <Outlet />
                 </ContentWrapper>
             </NotifContextProvider>

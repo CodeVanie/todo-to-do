@@ -1,7 +1,7 @@
-import { createContext, useContext, useEffect, useState } from "react"
+import { createContext, useContext, useEffect, useRef, useState } from "react"
 import { AppContext } from "./app-context";
-import { getTodosNearDeadline } from "../utils";
-import { useLocalStorage } from "../hooks";
+import { getTodosNearDeadline } from "../utils/date-utils";
+import useNotifSound, { useLocalStorage } from "../hooks";
 
 export const NotifContext = createContext();
 
@@ -31,8 +31,10 @@ const initialNotifs = [
 
 export default function NotifContextProvider({ children }) {
     const { listData } = useContext(AppContext);
+    const playNotifSound = useNotifSound();
     const [notifs, setNotifs] = useLocalStorage("notifs", initialNotifs);
     const hasNotif = notifs.find((notif) => !notif.clicked) ? true : false;
+
 
     useEffect(() => {
         setNotifs(prev => {
@@ -41,8 +43,21 @@ export default function NotifContextProvider({ children }) {
             const existingNotifIds = new Set(prev.map(n => n.id.split("-")[1] ?? ""));
 
             const newNotifs = newTodoNotifs.filter(n => !existingNotifIds.has(n.id.split("-")[1]));
-            
-            const updatedNotifs = [...prev, ...newNotifs];
+
+            const polishPreviousNotifs = prev.filter((n,_) => {
+                if (/^view/.test(n.path)) {
+                    const todoid = n.path.split("/")[1];
+                    const exist = listData[1].list.some(todo => todo.id === todoid);
+
+                    if (exist) {return n;}
+                } else {
+                    return n;
+                }
+            })
+
+            newNotifs.length !== 0 && playNotifSound();
+
+            const updatedNotifs = [...polishPreviousNotifs, ...newNotifs];
 
             const limitToFifty = updatedNotifs.slice(-50);
             

@@ -8,7 +8,7 @@ export default function ProjectsContent() {
     
     return (
         <ProjectsContentWrapper>
-            <h1 className="text-[clamp(2rem,2vw+1rem,7vw)] font-semibold text-ptlbrown-100 text-shadow-lg text-shadow-ptlbrown-100/50 text-center animate-titleentry"><span className="underline-from-left">CodeVANIE's Projects</span></h1>
+            <h1 className="text-[clamp(2rem,2vw+1rem,7vw)] text-ptlbrown-100 text-shadow-lg text-shadow-ptlbrown-100/50 text-center">CodeVANIE's Projects</h1>
             <ProjectsWrapper>
                 <ProjectTodoTile />
                 <ProjectsTilesSoon classDelay="[animation-delay:0.1s]" />

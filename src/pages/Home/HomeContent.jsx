@@ -1,8 +1,8 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import Controls from "./Controls/Controls.jsx"
 import TodoList from "./TodoList";
 import TodoItem from "./TodoItem";
-import { ListAddButton } from "../../shared/components/Button/buttons.js";
+import { ActionButton } from "../../shared/components/Button/buttons.js";
 import ControlSection from "./Controls/ControlSection.jsx";
 import { AppContext } from "../../context/app-context";
 import { useControls, useControlledList } from "../../hooks.js";
@@ -15,7 +15,7 @@ export default function HomeContent() {
     const { setFilteredCategory, setSelectedSort } = useContext(AppContext);
     const { controlledList, selectedSort, filteredCategory } = useControlledList();
     const { filterList, sortList } = useControls();
-   
+
     return (
         <HomeContentWrapper>
             <Controls>
@@ -26,13 +26,17 @@ export default function HomeContent() {
                     onControlClick={setFilteredCategory} control={filteredCategory}/>
             </Controls>
             <TodoList hasTodo={controlledList.length > 0} onClick={() => navigate(`list/add`)}>
-                {controlledList.length > 0 && <ListAddButton onClick={() => navigate(`list/add`)}/>} 
                 <ol className="space-y-1">
                 {controlledList.map((todo, index) => 
                     <TodoItem key={index} todo={todo} />
                 )}
                 </ol>
             </TodoList>
+            {controlledList.length > 0 && 
+                <ActionButton 
+                    onClick={() => navigate(`list/add`)} 
+                    name="addrow" size="lg" variant="wine" 
+                    className="fixed bottom-18 right-5"/>}
             <Outlet />
         </HomeContentWrapper>
     )

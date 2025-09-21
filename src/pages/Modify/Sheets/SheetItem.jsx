@@ -1,7 +1,5 @@
-import { useNavigate } from "react-router-dom"
 
 export default function SheetItem({ item, onSelect, selected }) {
-    const navigate = useNavigate();
     
     return (
         <li onMouseDown={onSelect}

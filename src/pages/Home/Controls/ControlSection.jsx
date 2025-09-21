@@ -1,11 +1,10 @@
 import ControlItem from "./ControlItem";
 
 export default function ControlSection({ title, items, onControlClick, control }) {
+    
     return (
         <section>
-            <h3 className="font-bold text-center">
-                {title}
-            </h3>
+            <h3>{title}</h3>
 
             <ol className="grid grid-cols-3 gap-2 pb-2">
                 {items.map((item, index) => 

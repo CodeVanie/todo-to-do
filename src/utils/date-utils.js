@@ -1,7 +1,6 @@
 
 const DAYNAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 const { currHour } = getCurrentDateTime();
-const lateNight = currHour > 21;
 
 export function getDefaultDeadline(date) {
     return { type: "timeonly", dueDate: date, datenums: [] };
@@ -9,10 +8,8 @@ export function getDefaultDeadline(date) {
 
 export function getDefaultDueDate(time) {
     // DEFAULT DUE DATE OF A TODO IS TODAY 11:59 PM
-    // IF IT'S PAST 6 PM, DEFAULT IS TOMORROW 11:59 PM
     const { currYear, currMonth, currDate } = getCurrentDateTime();
     let defaultDate = new Date(currYear, currMonth, currDate, 23, 59, 0, 0 );
-    lateNight && defaultDate.setDate(currDate + 1);
 
     if (time) {
         const [hour, minute] = time.split(":");
@@ -50,14 +47,15 @@ export function toLocaleDate(date) {
 }
 
 export function createTodoDeadline(type, time, days) {
-    const { currMonth, currDate, currHour, currDay } = getCurrentDateTime();
+    const { now, currMonth, currDate, currHour, currDay } = getCurrentDateTime();
 
     let newDeadline = newDateVar();
     const [hour, minute] = time.split(":");
+    const todayOneHourMore = new Date(now);
+    todayOneHourMore.setHours(currHour+1);
     newDeadline.setHours(hour, minute, 0, 0);
 
-    const invalidTime = lateNight || hour <= currHour;
-
+    const invalidTime = newDeadline < todayOneHourMore;
     switch (type) {
         case "timeonly":
             invalidTime && newDeadline.setDate(currDate + 1);
@@ -75,11 +73,9 @@ export function createTodoDeadline(type, time, days) {
         break;
         case "month":
             const dateNumber = days[0];
-            const invalidDate = (dateNumber <= currDate) && invalidTime;
+            const invalidDate = (dateNumber < currDate) || ((dateNumber === currDate) && invalidTime);
             newDeadline = getSafeDate(newDeadline, dateNumber, 
                 currMonth + (invalidDate ? 1 : 0));
-            console.log(newDeadline);
-            
         break;
         default:
             break;

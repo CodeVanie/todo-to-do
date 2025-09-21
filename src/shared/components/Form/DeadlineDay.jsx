@@ -1,4 +1,4 @@
-import { createTodoDeadline, getDefaultDeadline, getDefaultDueDate } from "../../../utils";
+import { createTodoDeadline, getDefaultDeadline, getDefaultDueDate } from "../../../utils/date-utils";
 
 const DAYS = [
     {id: 0, name: "Su"},
@@ -38,7 +38,7 @@ export default function DeadlineDay ({ value, handleUpdate }) {
     return (
         <div className={`flex border-2 items-center p-1 rounded-2xl mx-auto max-xs:pt-7 relative max-w-md z-1
             ${isDTypeDay ? isEveryday ? "border-red-950" : "border-wrong" : "border-yellow-700"}`}>
-            <h3 className='text-left tracking-widest max-xs:absolute max-xs:top-1'>DAYS</h3>
+            <h3 className='text-left tracking-widest max-xs:absolute max-xs:top-1 font-normal'>DAYS</h3>
             <ol className='flex gap-x-1 w-full justify-end'>
                 {DAYS.map((day, index) => 
                     <li key={index} data-value={day.id} 

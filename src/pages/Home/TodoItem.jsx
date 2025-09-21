@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import { HeartIcon } from "../../shared/icons/IconCollection"
-import { toLocaleDate } from "../../utils"
+import { toLocaleDate } from "../../utils/date-utils"
 
 export default function TodoItem({ todo }) {
     const navigate = useNavigate();

@@ -1,16 +1,37 @@
-import { useEffect, useRef } from "react";
+import { memo, useEffect, useRef } from "react";
+import { isBetween } from "../../../utils/other-utils";
 
-export default function SheetsSection({ children }) {
+const SheetsSection = memo(function SheetsSection({ onSheetChange, selectedType, children }) {
+    // console.log("SheetsSection Rendered!");
     const scrollRef = useRef(null);
 
     useEffect(() => {
         scrollRef.current && (scrollRef.current.scrollLeft = 
             scrollRef.current.scrollWidth / 2 - scrollRef.current.clientWidth / 2);
-    },[]);
+    }, [])
+
+    function handleSheetScroll() {
+        const isMobile = window.innerWidth <= 768;
+
+        if (!isMobile || !scrollRef.current) return;
+
+        const {scrollLeft, scrollWidth, clientWidth} = scrollRef.current;
+        const betCandT = scrollWidth/2 - clientWidth;
+        const betTandS = scrollWidth/2;
+        if (scrollLeft < betCandT && selectedType !== "category") {
+            onSheetChange("category");
+        } else if (scrollLeft > betTandS && selectedType !== "sort") {
+            onSheetChange("sort");
+        } else if (isBetween(scrollLeft,betCandT,betTandS) && selectedType !== "todo") {
+            onSheetChange("todo");
+        }
+    }
     
     return (
-        <section ref={scrollRef} className="relative flex xl:justify-center items-start gap-x-2 px-5 snap-x snap-mandatory z-5 scrollbar-hide overflow-x-auto">
+        <section ref={scrollRef} onScroll={handleSheetScroll} className="flex items-start gap-x-2 px-5 2xl:justify-center snap-x snap-mandatory scrollbar-hide overflow-x-auto h-full">
             {children}
         </section>
     )
-}
+});
+
+export default SheetsSection;
