@@ -36,7 +36,7 @@ export default function HomeContent() {
                 <ActionButton 
                     onClick={() => navigate(`list/add`)} 
                     name="addrow" size="lg" variant="wine" 
-                    className="fixed bottom-18 right-5"/>}
+                    className="fixed bottom-18 right-5 z-21"/>}
             <Outlet />
         </HomeContentWrapper>
     )
