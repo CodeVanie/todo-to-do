@@ -19,7 +19,6 @@ export default function TodoApp() {
                 </ContentWrapper>
             </NotifContextProvider>
             </AppContextProvider>
-            <Footer />
         </AppWrapper>
     )
 }

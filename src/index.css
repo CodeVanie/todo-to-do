@@ -23,8 +23,8 @@
 
 /* BASE */
 @layer base {
-	html, body {
-		@apply font-quicks min-w-[360px] bg-[url(/images/todo-bg.webp)] bg-black/60 bg-blend-multiply bg-center bg-no-repeat bg-cover bg-fixed;
+	body {
+		@apply font-quicks bg-yellow-950;
 	}
 	input:-webkit-autofill {
 		-webkit-box-shadow: 0 0 0px 1000px #e7b574 inset !important;
@@ -53,7 +53,7 @@
 @layer components {
 	/* APP GUIDE CONTENT */
 	.guide {
-		@apply flex flex-col text-justify px-3 py-10 gap-y-10 max-w-6xl text-ptlbrown-100 mx-auto;
+		@apply flex flex-col text-justify px-3 py-10 gap-y-10 max-w-6xl text-ptlbrown-100 mx-auto bg-yellow-950/50 rounded-xl;
 	}
 	.guide section {
 		@apply space-y-5 nth-[2]:leading-10;
