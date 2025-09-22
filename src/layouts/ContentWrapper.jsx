@@ -2,7 +2,7 @@
 export default function ContentWrapper({ children }) {
     
     return (
-        <main className="grow bg-black/60 p-2">
+        <main className="grow bg-black/80">
             {children}
         </main>
     )

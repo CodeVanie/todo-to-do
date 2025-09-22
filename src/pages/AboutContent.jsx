@@ -4,194 +4,197 @@ import viewtodo from "../assets/images/viewtodo.png";
 import { useState } from "react";
 import ActionButton from "../shared/components/Button/ActionButton";
 import useNotifSound from "../hooks";
+import AboutContentWrapper from "../layouts/AboutContentWrapper";
 
 export default function AboutContent() {
     // console.log("AboutContent rendered");
     return (
-        <article className="guide">
-            <section>
-                <h1 className="text-3xl text-center">What is TODO-To-Do?</h1>
-                <p className="indent-7">
-                    TODO-To-Do is a smart and simple task management app designed to help you stay on top of both one-time and recurring tasks. With all the essentials like creating, updating, deleting, sorting, and filtering tasks, it makes organizing your day effortless. You’ll also get handy features such as notifications, task completion tracking, favorites, and an easy-to-follow app guide — all wrapped with smooth routing so every task has its own place.
-                </p>
-                <p className="indent-7">
-                    What sets TODO-To-Do apart is its unique approach to deadlines. Unlike most todo apps that only handle single-use tasks, this one adapts to your routines. When a deadline is reached, the app automatically rolls the task over to the next cycle — perfect for things like weekly reports, monthly bills, or any recurring responsibility. It’s not just a todo list, it’s your personal system for keeping up with the tasks that keep coming back.
-                </p>
-            </section>
-            <section>
-                <h1 className="text-[clamp(1.5rem,0.5vw+1.4rem,4vw)] text-center">
-                    How to use TODO-To-Do?
-                </h1>
-                <div>
-                    <h2 className="text-[clamp(1rem,0.5vw+0.5rem,1.5vw)]">How to add a To-Do?</h2>
-                    <ul className="list-decimal xs:ml-10 ml-5 space-y-2">
-                        <li>
-                            In "Home <NavIcon name="home" className="inline w-6"/>" page, you can click this button <ActionButton name="addrow" size="sm" variant="wine" /> .
-                            In "List Manager <NavIcon name="modify" className="inline w-6"/>" page, you can click this button <ActionButton name="addrow" size="sm" variant="cream" /> .
-                        </li>
-                        <li>
-                            "Add Todo" form will show
-                            <img src={todoform} width="600px" alt="todoform" className="mx-auto" />
-                        </li>
-                        <li>
-                            The only field required is TITLE and TIME. Time has a default value of <Time /> which is 11:59 PM. You can simply create a To-Do with just clicking the <ActionButton name="addrow" size="sm" variant="wine" /> or <ActionButton name="addrow" size="sm" variant="cream" />, typing a title and clicking <SubmitButton />.
-                        </li>
-                        <li>
-                            Default PRIORITY is set to Low Priority (!). You can choose between the three priority levels: Low Priority (!), Mid Priority (!!), or High Priority (!!!).
-                        </li>
-                        <li>
-                            CATEGORY field is optional. You can categorize your To-Do's and filter your To-Do list in "Home <NavIcon name="home" className="inline w-6"/>" page using the <Controls />.
-                        </li>
-                        <li>
-                            If you do not want a long TITLE, you can use the DETAILS field for more details about your To-Do.
-                        </li>
-                        <li>
-                            The default deadline for a new To-Do is today at 11:59 PM. Deadlines must be set <strong>at least 1 hour</strong> from the current time. If you choose a time less than 1 hour away, the deadline will automatically shift to the next occurrence based on the selected deadline type.
-                            <ol className="list-[lower-alpha] xs:ml-10 ml-5 space-y-2">
-                                <li>Time Only sets it tomorrow</li>
-                                <li>Day/s sets it to the next day you have set or next week if you only selected 1 day (ex. Monday)</li>
-                                <li>Monthly sets it to next month</li>
-                            </ol>
-                        </li>
-                        <li>
-                            You can choose between 3 deadline types "Time Only", "Day/s", or "Monthly".
-                            <ol className="list-[lower-alpha] xs:ml-10 ml-5 space-y-2">
-                                <li>
-                                    <b><Time /> Time Only:</b> If you want to create a To-Do for a single-use or everyday task, you can use Time Only deadline type.
-                                </li>
-                                <li>
-                                    <b>Day/s:</b> If you want to create a To-Do based on day of the week (Sun, Mon, Tue, Wed, Thu, Fri, Sat). You can use this deadline type.<DeadlineDay />
-                                </li>
-                                <li>
-                                    <DeadlineMonth />
-                                </li>
-                            </ol>
-                        </li>
-                    </ul>
-                </div>
-                <div>
-                    <h2 className="text-[clamp(1rem,0.5vw+0.5rem,1.5vw)]">
-                        What's inside "Home <NavIcon name="home" className="inline w-6"/> " page?
-                    </h2>
-                    <ol className="list-decimal xs:ml-10 ml-5 space-y-2">
-                        <li>
-                            At the very top of the page, you will see the " <Controls /> " bar. You can use this to either sort or filter the To-Do list in your "Home" page.
-                        </li>
-                        <li>
-                            Under the " <Controls /> " bar is your list of To-Do's. Three types of To-Do's are "Pending", "Completed", and "Inactive". Inactive To-Do's are not visible in "Home <NavIcon name="home" className="inline w-6"/>" page
-                        </li>
-                        <li>
-                            <TodoItem isCompleted={false} />
-                        </li>
-                        <li>
-                            <TodoItem isCompleted={true} />
-                        </li>
-                        <li>
-                            You can "Left-Click" a To-Do to View all the information about your To-Do.
-                            <img src={viewtodo} width="600px" alt="viewtodo" className="mx-auto" />
-                        </li>
-                        <li>
-                            Inside the To-Do Info, you can also click the <HeartIcon className="w-6 inline" fill={`${false ? "#e7b574" : "#00000000"}`}/> icon to mark your To-Do as "Favorite". You can also use the " <Controls /> " bar to filter your list by "Favorites".
-                        </li>
-                    </ol>
-                </div>
-                <div>
-                    <h2 className="text-[clamp(1rem,0.5vw+0.5rem,1.5vw)]">
-                        What's inside "List Manager <NavIcon name="modify" className="inline w-6"/> " page?
-                    </h2>
-                    <ol className="list-decimal xs:ml-10 ml-5  space-y-2">
-                        <li>
-                            These <ActionButton name="addrow" size="sm" variant="cream" /> <ActionButton name="editrow" size="sm" variant="cream" /> <ActionButton name="deleterow" size="sm" variant="cream" /> <ActionButton name="reset" size="sm" variant="cream" /> are called the Action Buttons.
-                            <ol className="list-[lower-alpha] xs:ml-10 ml-5 space-y-2">
-                                <li>
-                                    The first one is the <b>"Add Row"</b> <ActionButton name="addrow" size="sm" variant="cream" /> button. You can use this to either add a list or category depends on the current selected list.
-                                </li>
-                                <li>
-                                    Beside the "Add Row" button is the <b>"Edit Row"</b> <ActionButton name="editrow" size="sm" variant="cream" /> button. It is used for editing an item in the list.
-                                </li>
-                                <li>
-                                    The third button is the <b>"Delete"</b> <ActionButton name="deleterow" size="sm" variant="cream" /> button. You can delete 1 or more selected items.
-                                </li>
-                                <li>
-                                    The last button is called <b>"Reset"</b> <ActionButton name="reset" size="sm" variant="cream" /> button. You can use this to unselect all selected items and list in just one click. 
-                                </li>
-                            </ol>
-                        </li>
-                        <li>
-                            Under the Action Buttons, you will see 3 list types: Category List, To-Do List, and Sort List.
-                            <ol className="list-[lower-alpha] xs:ml-10 ml-5 space-y-2">
-                                <li>
-                                    <b>Category List: </b>You can add, edit, and delete categories.
-                                </li>
-                                <li>
-                                    <b>To-Do List: </b>You can add, edit, and delete To-Do's.
-                                </li>
-                                <li>
-                                    <b>Sort List: </b> You can only change the active status of sort types using the "Edit Row" <ActionButton name="editrow" /> button.
-                                </li>
-                            </ol>
-                        </li>
-                        <li>
-                            <b>Active Status: </b> You can change the active status of an item by toggling the button <ControlStatusButton /> and change it between "Active" and "Inactive" using the "Edit Row" <ActionButton name="editrow" /> button.
-                        </li>
-                    </ol>
-                </div>
-                <div>
-                    <h2 className="text-[clamp(1rem,0.5vw+0.5rem,1.5vw)]">
-                        What's inside "Notifications <NavIcon name="notif" hasnotif={true} className="inline w-6"/> " page?
-                    </h2>
-                    <ol className="list-decimal xs:ml-10 ml-5 space-y-2">
-                        <li>
-                            You will see all your app notifications here including:
-                            <ol className="list-[lower-alpha] xs:ml-10 ml-5  space-y-2">
-                                <li>
-                                    To-Do's that have a deadline for today.
-                                </li>
-                                <li>
-                                    Application new version release updates.
-                                </li>
-                            </ol>
-                        </li>
-                        <li>
-                            There are 2 types of notifications:
-                            <ol className="list-[lower-alpha] xs:ml-10 ml-5 space-y-2">
-                                <li>
-                                    Clicked notifications
-                                    <NotifContent clicked={true} />
-                                </li>
-                                <li>
-                                    Unclicked notifications
-                                    <NotifContent clicked={false} />
-                                </li>
-                            </ol>
-                        </li>
-                        <li>
-                            Clicking all active notifications will remove the red dot on the bell icon of the Notifications <NavIcon name="notif" className="inline w-6"/> page.
-                        </li>
-                        <li>You will here this sound <NotifSoundButton /> if you have a new notification!</li>
-                    </ol>
-                </div>
-            </section>
-            <section>
-                <h1 className="text-3xl text-center">More in TODO-To-DO</h1>
-                <div>
-                    <h2 className="text-[clamp(1rem,0.5vw+0.5rem,1.5vw)]">
-                        What's inside the "Projects <NavIcon name="projects" className="inline w-6"/> " page?
-                    </h2>
-                    <ul className="list-disc xs:ml-10 ml-5 space-y-2">
-                        <li>You will see all CodeVANIE's Projects in this page.</li>
-                    </ul>
-                </div>
-                <div>
-                    <h2 className="text-[clamp(1rem,0.5vw+0.5rem,1.5vw)]">
-                        What's <Portfolio />?
-                    </h2>
-                    <ul className="list-disc ml-10 space-y-2">
-                        <li>Click this and you'll see everything about CodeVANIE.</li>
-                    </ul>
-                </div>
-            </section>
-        </article>
+        <AboutContentWrapper>
+            <article className="guide">
+                <section>
+                    <h1 className="text-3xl text-center">What is TODO-To-Do?</h1>
+                    <p className="indent-7">
+                        TODO-To-Do is a smart and simple task management app designed to help you stay on top of both one-time and recurring tasks. With all the essentials like creating, updating, deleting, sorting, and filtering tasks, it makes organizing your day effortless. You’ll also get handy features such as notifications, task completion tracking, favorites, and an easy-to-follow app guide — all wrapped with smooth routing so every task has its own place.
+                    </p>
+                    <p className="indent-7">
+                        What sets TODO-To-Do apart is its unique approach to deadlines. Unlike most todo apps that only handle single-use tasks, this one adapts to your routines. When a deadline is reached, the app automatically rolls the task over to the next cycle — perfect for things like weekly reports, monthly bills, or any recurring responsibility. It’s not just a todo list, it’s your personal system for keeping up with the tasks that keep coming back.
+                    </p>
+                </section>
+                <section>
+                    <h1 className="text-[clamp(1.5rem,0.5vw+1.4rem,4vw)] text-center">
+                        How to use TODO-To-Do?
+                    </h1>
+                    <div>
+                        <h2 className="text-[clamp(1rem,0.5vw+0.5rem,1.5vw)]">How to add a To-Do?</h2>
+                        <ul className="list-decimal xs:ml-10 ml-5 space-y-2">
+                            <li>
+                                In "Home <NavIcon name="home" className="inline w-6"/>" page, you can click this button <ActionButton name="addrow" size="sm" variant="wine" /> .
+                                In "List Manager <NavIcon name="modify" className="inline w-6"/>" page, you can click this button <ActionButton name="addrow" size="sm" variant="cream" /> .
+                            </li>
+                            <li>
+                                "Add Todo" form will show
+                                <img src={todoform} width="600px" alt="todoform" className="mx-auto" />
+                            </li>
+                            <li>
+                                The only field required is TITLE and TIME. Time has a default value of <Time /> which is 11:59 PM. You can simply create a To-Do with just clicking the <ActionButton name="addrow" size="sm" variant="wine" /> or <ActionButton name="addrow" size="sm" variant="cream" />, typing a title and clicking <SubmitButton />.
+                            </li>
+                            <li>
+                                Default PRIORITY is set to Low Priority (!). You can choose between the three priority levels: Low Priority (!), Mid Priority (!!), or High Priority (!!!).
+                            </li>
+                            <li>
+                                CATEGORY field is optional. You can categorize your To-Do's and filter your To-Do list in "Home <NavIcon name="home" className="inline w-6"/>" page using the <Controls />.
+                            </li>
+                            <li>
+                                If you do not want a long TITLE, you can use the DETAILS field for more details about your To-Do.
+                            </li>
+                            <li>
+                                The default deadline for a new To-Do is today at 11:59 PM. Deadlines must be set <strong>at least 1 hour</strong> from the current time. If you choose a time less than 1 hour away, the deadline will automatically shift to the next occurrence based on the selected deadline type.
+                                <ol className="list-[lower-alpha] xs:ml-10 ml-5 space-y-2">
+                                    <li>Time Only sets it tomorrow</li>
+                                    <li>Day/s sets it to the next day you have set or next week if you only selected 1 day (ex. Monday)</li>
+                                    <li>Monthly sets it to next month</li>
+                                </ol>
+                            </li>
+                            <li>
+                                You can choose between 3 deadline types "Time Only", "Day/s", or "Monthly".
+                                <ol className="list-[lower-alpha] xs:ml-10 ml-5 space-y-2">
+                                    <li>
+                                        <b><Time /> Time Only:</b> If you want to create a To-Do for a single-use or everyday task, you can use Time Only deadline type.
+                                    </li>
+                                    <li>
+                                        <b>Day/s:</b> If you want to create a To-Do based on day of the week (Sun, Mon, Tue, Wed, Thu, Fri, Sat). You can use this deadline type.<DeadlineDay />
+                                    </li>
+                                    <li>
+                                        <DeadlineMonth />
+                                    </li>
+                                </ol>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h2 className="text-[clamp(1rem,0.5vw+0.5rem,1.5vw)]">
+                            What's inside "Home <NavIcon name="home" className="inline w-6"/> " page?
+                        </h2>
+                        <ol className="list-decimal xs:ml-10 ml-5 space-y-2">
+                            <li>
+                                At the very top of the page, you will see the " <Controls /> " bar. You can use this to either sort or filter the To-Do list in your "Home" page.
+                            </li>
+                            <li>
+                                Under the " <Controls /> " bar is your list of To-Do's. Three types of To-Do's are "Pending", "Completed", and "Inactive". Inactive To-Do's are not visible in "Home <NavIcon name="home" className="inline w-6"/>" page
+                            </li>
+                            <li>
+                                <TodoItem isCompleted={false} />
+                            </li>
+                            <li>
+                                <TodoItem isCompleted={true} />
+                            </li>
+                            <li>
+                                You can "Left-Click" a To-Do to View all the information about your To-Do.
+                                <img src={viewtodo} width="600px" alt="viewtodo" className="mx-auto" />
+                            </li>
+                            <li>
+                                Inside the To-Do Info, you can also click the <HeartIcon className="w-6 inline" fill={`${false ? "#e7b574" : "#00000000"}`}/> icon to mark your To-Do as "Favorite". You can also use the " <Controls /> " bar to filter your list by "Favorites".
+                            </li>
+                        </ol>
+                    </div>
+                    <div>
+                        <h2 className="text-[clamp(1rem,0.5vw+0.5rem,1.5vw)]">
+                            What's inside "List Manager <NavIcon name="modify" className="inline w-6"/> " page?
+                        </h2>
+                        <ol className="list-decimal xs:ml-10 ml-5  space-y-2">
+                            <li>
+                                These <ActionButton name="addrow" size="sm" variant="cream" /> <ActionButton name="editrow" size="sm" variant="cream" /> <ActionButton name="deleterow" size="sm" variant="cream" /> <ActionButton name="reset" size="sm" variant="cream" /> are called the Action Buttons.
+                                <ol className="list-[lower-alpha] xs:ml-10 ml-5 space-y-2">
+                                    <li>
+                                        The first one is the <b>"Add Row"</b> <ActionButton name="addrow" size="sm" variant="cream" /> button. You can use this to either add a list or category depends on the current selected list.
+                                    </li>
+                                    <li>
+                                        Beside the "Add Row" button is the <b>"Edit Row"</b> <ActionButton name="editrow" size="sm" variant="cream" /> button. It is used for editing an item in the list.
+                                    </li>
+                                    <li>
+                                        The third button is the <b>"Delete"</b> <ActionButton name="deleterow" size="sm" variant="cream" /> button. You can delete 1 or more selected items.
+                                    </li>
+                                    <li>
+                                        The last button is called <b>"Reset"</b> <ActionButton name="reset" size="sm" variant="cream" /> button. You can use this to unselect all selected items and list in just one click. 
+                                    </li>
+                                </ol>
+                            </li>
+                            <li>
+                                Under the Action Buttons, you will see 3 list types: Category List, To-Do List, and Sort List.
+                                <ol className="list-[lower-alpha] xs:ml-10 ml-5 space-y-2">
+                                    <li>
+                                        <b>Category List: </b>You can add, edit, and delete categories.
+                                    </li>
+                                    <li>
+                                        <b>To-Do List: </b>You can add, edit, and delete To-Do's.
+                                    </li>
+                                    <li>
+                                        <b>Sort List: </b> You can only change the active status of sort types using the "Edit Row" <ActionButton name="editrow" /> button.
+                                    </li>
+                                </ol>
+                            </li>
+                            <li>
+                                <b>Active Status: </b> You can change the active status of an item by toggling the button <ControlStatusButton /> and change it between "Active" and "Inactive" using the "Edit Row" <ActionButton name="editrow" /> button.
+                            </li>
+                        </ol>
+                    </div>
+                    <div>
+                        <h2 className="text-[clamp(1rem,0.5vw+0.5rem,1.5vw)]">
+                            What's inside "Notifications <NavIcon name="notif" hasnotif={true} className="inline w-6"/> " page?
+                        </h2>
+                        <ol className="list-decimal xs:ml-10 ml-5 space-y-2">
+                            <li>
+                                You will see all your app notifications here including:
+                                <ol className="list-[lower-alpha] xs:ml-10 ml-5  space-y-2">
+                                    <li>
+                                        To-Do's that have a deadline for today.
+                                    </li>
+                                    <li>
+                                        Application new version release updates.
+                                    </li>
+                                </ol>
+                            </li>
+                            <li>
+                                There are 2 types of notifications:
+                                <ol className="list-[lower-alpha] xs:ml-10 ml-5 space-y-2">
+                                    <li>
+                                        Clicked notifications
+                                        <NotifContent clicked={true} />
+                                    </li>
+                                    <li>
+                                        Unclicked notifications
+                                        <NotifContent clicked={false} />
+                                    </li>
+                                </ol>
+                            </li>
+                            <li>
+                                Clicking all active notifications will remove the red dot on the bell icon of the Notifications <NavIcon name="notif" className="inline w-6"/> page.
+                            </li>
+                            <li>You will here this sound <NotifSoundButton /> if you have a new notification!</li>
+                        </ol>
+                    </div>
+                </section>
+                <section>
+                    <h1 className="text-3xl text-center">More in TODO-To-DO</h1>
+                    <div>
+                        <h2 className="text-[clamp(1rem,0.5vw+0.5rem,1.5vw)]">
+                            What's inside the "Projects <NavIcon name="projects" className="inline w-6"/> " page?
+                        </h2>
+                        <ul className="list-disc xs:ml-10 ml-5 space-y-2">
+                            <li>You will see all CodeVANIE's Projects in this page.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h2 className="text-[clamp(1rem,0.5vw+0.5rem,1.5vw)]">
+                            What's <Portfolio />?
+                        </h2>
+                        <ul className="list-disc ml-10 space-y-2">
+                            <li>Click this and you'll see everything about CodeVANIE.</li>
+                        </ul>
+                    </div>
+                </section>
+            </article>
+        </AboutContentWrapper>
     )
 }
 

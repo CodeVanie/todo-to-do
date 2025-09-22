@@ -39,7 +39,7 @@ export default function NotifContextProvider({ children }) {
     useEffect(() => {
         setNotifs(prev => {
             const newTodoNotifs = getTodosNearDeadline(listData[1].list, prev);
-
+            
             const existingNotifIds = new Set(prev.map(n => n.id.split("-")[1] ?? ""));
 
             const newNotifs = newTodoNotifs.filter(n => !existingNotifIds.has(n.id.split("-")[1]));

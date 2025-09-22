@@ -24,7 +24,7 @@
 /* BASE */
 @layer base {
 	body {
-		@apply font-quicks bg-yellow-950;
+		@apply font-quicks bg-ptlbrown-300;
 	}
 	input:-webkit-autofill {
 		-webkit-box-shadow: 0 0 0px 1000px #e7b574 inset !important;
@@ -53,7 +53,7 @@
 @layer components {
 	/* APP GUIDE CONTENT */
 	.guide {
-		@apply flex flex-col text-justify px-3 py-10 gap-y-10 max-w-6xl text-ptlbrown-100 mx-auto bg-yellow-950/50 rounded-xl;
+		@apply flex flex-col text-justify px-3 py-10 gap-y-10 text-ptlbrown-100 bg-yellow-950/50 rounded-2xl;
 	}
 	.guide section {
 		@apply space-y-5 nth-[2]:leading-10;

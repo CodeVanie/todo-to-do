@@ -9,7 +9,7 @@ export function getDefaultDueDate(time) {
     // DEFAULT DUE DATE OF A TODO IS TODAY 11:59 PM
     const { currYear, currMonth, currDate } = getCurrentDateTime();
     let defaultDate = new Date(currYear, currMonth, currDate, 23, 59, 0, 0 );
-
+    console.log(defaultDate);
     if (time) {
         const [hour, minute] = time.split(":");
         defaultDate.setHours(hour, minute);
@@ -53,7 +53,7 @@ export function createTodoDeadline(type, time, days) {
     const todayOneHourMore = new Date(now);
     todayOneHourMore.setHours(currHour+1);
     newDeadline.setHours(hour, minute, 0, 0);
-
+    
     const invalidTime = newDeadline < todayOneHourMore;
     switch (type) {
         case "timeonly":
@@ -153,8 +153,9 @@ export function getTodosNearDeadline(todos, notifs) {
     todoList.map((todo) => {
         let todoDate = todo.deadline.dueDate;
         if (todo.status === "Pending" && now < todoDate) {
-            let diffMinutes = Math.ceil((todoDate - now) / (1000 * 60));
-            let diffHours = Math.ceil((todoDate - now) / (1000 * 60 * 60));
+            console.log(todoDate);
+            let diffMinutes = Math.floor((todoDate - now) / (1000 * 60));
+            let diffHours = Math.floor((todoDate - now) / (1000 * 60 * 60));
             if (diffMinutes > 0 && diffMinutes < 60) {
                 nearDeadlines.push({
                     id: `n_${notifCount++}-${todo.id}M${diffMinutes}`,
@@ -207,7 +208,6 @@ function getCurrentDateTime() {
     const currMinute = now.getMinutes();
     const currSecond = now.getSeconds();
     const currMillis = now.getMilliseconds();
-
     return { now, currYear, currMonth, currDate, currDay, currHour, currMinute, currSecond, currMillis }
 }
 
