@@ -23,8 +23,8 @@
 
 /* BASE */
 @layer base {
-	body {
-		@apply font-quicks min-w-[360px];
+	html, body {
+		@apply font-quicks min-w-[360px] bg-[url(/images/todo-bg.webp)] bg-black/60 bg-blend-multiply bg-center bg-no-repeat bg-cover bg-fixed;
 	}
 	input:-webkit-autofill {
 		-webkit-box-shadow: 0 0 0px 1000px #e7b574 inset !important;
