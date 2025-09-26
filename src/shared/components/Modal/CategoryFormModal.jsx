@@ -23,13 +23,7 @@ export default function CategoryFormModal() {
         if (isOpen) {
             setIsShowing(true);
             setNewCategory(action === "add" ? {id: `c_${listData[0].list.length+3}`, label: "", active: true} : editCategData);
-            document.body.style.overflow = "hidden";
-        } else {
-            document.body.style.overflow = "auto";
         }
-        return () => {
-            document.body.style.overflow = "auto";
-        };
     }, [isOpen, action]);
 
     function onSave(e) {

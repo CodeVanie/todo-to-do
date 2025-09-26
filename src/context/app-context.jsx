@@ -22,9 +22,7 @@ const initialSortTypes = [
     }
 ];
 
-export default function AppContextProvider({ children }) {
-    console.log("AppContextProvider");
-    
+export default function AppContextProvider({ children }) {   
     const [categories, setCategories] = useLocalStorage("categories", []);
     const [sortTypes, setSortTypes] = useLocalStorage("sorttypes", initialSortTypes);
     const [filteredCategory, setFilteredCategory] = useLocalStorage("filteredcategory", "c_0");

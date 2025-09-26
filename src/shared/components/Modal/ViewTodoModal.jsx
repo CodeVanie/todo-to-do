@@ -27,13 +27,8 @@ export default function ViewTodoModal() {
     useEffect(() => {
         if (isOpen) {
             setIsShowing(true);
-            document.body.style.overflow = "hidden"
-        } else {
-            document.body.style.overflow = "auto"
+            setViewData(viewedTodo);
         }
-        return () => {
-            document.body.style.overflow = "auto";
-        };
     }, [isOpen]);
 
     function handleFavoriteButton(newTodo) {

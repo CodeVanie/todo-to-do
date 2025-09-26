@@ -63,13 +63,7 @@ const TodoFormModal = memo(function TodoFormModal() {
         if (isOpen) {
             setIsShowing(true);
             action === "add" ? setValue("id", `t_${listData[1].list.length}`) : reset(editTodoData);
-            document.body.style.overflow = "hidden";
-        } else {
-            document.body.style.overflow = "auto";
         }
-        return () => {
-            document.body.style.overflow = "auto";
-        };
     }, [isOpen]);
 
 	async function onSave(data) {
