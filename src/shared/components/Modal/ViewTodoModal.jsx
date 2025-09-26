@@ -4,21 +4,26 @@ import { createPortal } from "react-dom";
 import TodoFormModalWrapper from "../../../layouts/TodoFormModalWrapper";
 import FavoriteButton from "../Button/FavoriteButton";
 import { AppContext } from "../../../context/app-context";
-import { toDayNames, toLocaleDate } from "../../../utils/date-utils";
+import { toDayNames, toLocaleDate, updateTodoDeadline } from "../../../utils/date-utils";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import DateToday from "./DateToday";
 import CompleteButton from "../Button/CompleteButton";
+import { NotifContext } from "../../../context/notif-context";
+import useNotifSound from "../../../hooks";
 
 export default function ViewTodoModal() {
     const { pathname } = useLocation();
     const { todoid } = useParams();
     const navigate = useNavigate();
+    const playNotifSound = useNotifSound();
     const { listData, setTodos } = useContext(AppContext);
+    const { notifs, setNotifs } = useContext(NotifContext);
     const viewedTodo = listData[1].list.find(t => t.id === todoid);
     const [viewData, setViewData] = useState(viewedTodo);
+    const [newTodo, setNewTodo] = useState(viewedTodo);
     const [isOpen, setIsOpen] = useState(true);
     const [isShowing, setIsShowing] = useState(isOpen);
-    
+
     useEffect(() => {
         if (isOpen) {
             setIsShowing(true);
@@ -37,14 +42,40 @@ export default function ViewTodoModal() {
     }
 
     function handleCompleteButton(status) {
-        let newTodo;
-        if (status === "Completed") {
-            newTodo = {...viewData, status: "Pending"};
-        } else {
-            newTodo = {...viewData, status: "Completed"}
+        let newData;
+        setNewTodo(prev => {
+            if (status === "Completed") {
+                newData = {...prev, status: "Pending"};
+            } else {
+                newData = {...prev, status: "Completed"};
+            }
+            
+            return newData;
+        });
+        setViewData(newData);
+    }
+
+    function handleClose() {
+        if (viewedTodo.status !== "Completed" && newTodo.status === "Completed") {
+            const nextDeadline = updateTodoDeadline(
+                viewData.deadline.type, 
+                viewData.deadline.dueDate, 
+                viewData.deadline.datenums,
+                true);
+            const newNotif = {
+                id: `n_${notifs.length}`,
+                title: "TASK COMPLETED!",
+                body: `You're done with your "${viewData.label}" task!\nThe next deadline will be ${toLocaleDate(nextDeadline)}.\nYou can 'delete' or set the status of this task to 'inactive' in 'List Manager' page.`,
+                path: "/modify",
+                clicked: false
+            }
+            setNotifs(prev => [...prev, newNotif]);
+            playNotifSound();
         }
-        setViewData(newTodo);
-        setTodos((prev) => prev.map((todo) => (todo.id === viewedTodo.id ? newTodo : todo)));
+        if (viewedTodo.status !== newTodo.status) {
+            setTodos((prev) => prev.map((todo) => (todo.id === viewedTodo.id ? newTodo : todo)));
+        }
+        setIsOpen(false);
     }
 
     function onAnimationEnd() {
@@ -56,7 +87,7 @@ export default function ViewTodoModal() {
 
     return isShowing ? createPortal(
         <ModalBackground isOpen={isOpen} onAnimationEnd={onAnimationEnd}>
-            <TodoFormModalWrapper title="To-Do Info" isOpen={isOpen} onClose={() => setIsOpen(false)}>
+            <TodoFormModalWrapper title="To-Do Info" isOpen={isOpen} onClose={handleClose}>
                 <DateToday />
                 <dl className={`relative rounded-2xl p-3 border-3 text-ptlbrown-100 tracking-widest whitespace-pre-line ${viewData.status === "Completed" ? "bg-green-950 border-green-700" : "bg-red-950/75"}`}>
                     <FavoriteButton todo={viewData} onClick={() => handleFavoriteButton({...viewData, favorite: !viewData.favorite})}/>

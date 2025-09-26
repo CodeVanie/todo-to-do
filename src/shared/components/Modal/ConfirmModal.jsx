@@ -6,9 +6,11 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import ConfirmMessage from "./ConfirmMessage";
 import { AppContext } from "../../../context/app-context";
 import { SpinnerIcon } from "../../icons/IconCollection";
+import { NotifContext } from "../../../context/notif-context";
 
 export default function ConfirmModal() {
     const { listData, setTodos, setCategories } = useContext(AppContext);
+    const { notifs, setNotifs } = useContext(NotifContext);
     const { pathname, state } = useLocation();
     const { action } = useParams();
     const navigate = useNavigate();
@@ -46,16 +48,28 @@ export default function ConfirmModal() {
     function handleYesButton() {
         setIsSubmitting(true);
         let list = selectedType === "todo" ? listData[1].list : listData[0].list;
-        var newList = [];
+        const newList = [];
+        const newNotifs = [];
+        let notifCount = notifs.length;
 
         list.forEach(item => { // Create an array for items we don't want to delete
-            !(selectedItemsIDs.includes(item.id)) && newList.push(item)
+            if (!(selectedItemsIDs.includes(item.id))) {
+                newList.push(item);
+            } else {
+                newNotifs.push({
+                    id: `n_${notifCount++}`,
+                    title: "ITEM HAS BEEN DELETED!",
+                    body: `"${item.label}" has been deleted.`,
+                    path: "",
+                    clicked: false
+                });
+            }
         });
 
         setTimeout(() => {
             selectedType === "todo" && setTodos(newList);
             selectedType === "category" && setCategories(newList);
-            
+            setNotifs(prev => [...prev, ...newNotifs]);
             setIsOpen(false);
         }, 1000);
     }

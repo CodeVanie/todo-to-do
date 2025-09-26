@@ -1,14 +1,18 @@
 /* IMPORTS */
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap');
 @import "tailwindcss";
 @plugin "tailwind-scrollbar-hide";
 @plugin "tailwind-scrollbar";
 
 @theme {
   --font-quicks: "Quicksand", sans-serif;
+  --font-zendots: "Zen Dots", sans-serif;
+  --color-ptlpink: #FFB3E3;
   --color-ptlbrown-100: #e7b574;
   --color-ptlbrown-200: #d7a460;
   --color-ptlbrown-300: #c48f4a;
+  --color-maroon: #2B0303;
   --color-correct: #00b303;
   --color-wrong: #d10000;
   --animate-modalentry: modalEntry 0.5s ease-in-out forwards;
@@ -16,123 +20,11 @@
   --animate-bgmodalfadein: bgModalFadeIn 0.5s ease-in-out forwards;
   --animate-bgmodalfadeout: bgModalFadeOut 0.5s ease-in-out forwards;
   --animate-tileentry: tileEntry 0.5s ease-out forwards;
+  --animate-iconpulse: iconPulse 1s linear infinite;
   --breakpoint-xm: 56rem; /* 896px */
   --breakpoint-xs: 32rem; /* 512px */
   --breakpoint-xxs: 24rem; /* 384px */
-}
 
-/* BASE */
-@layer base {
-	body {
-		@apply font-quicks bg-ptlbrown-300;
-	}
-	input:-webkit-autofill {
-		-webkit-box-shadow: 0 0 0px 1000px #e7b574 inset !important;
-		-webkit-text-fill-color: var(--color-red-950) !important;
-	}
-	label {
-		@apply items-center tracking-widest text-red-950;
-	}
-	legend {
-		@apply items-center tracking-widest text-red-950;
-	}
-	dt {
-		@apply font-bold text-lg xs:text-xl my-2;
-	}
-	dd {
-		@apply italic xs:text-lg mb-2 font-semibold;
-	}
-	button {
-		@apply enabled:cursor-pointer transition-[border] ease-out duration-200;
-	}
-	h1, h2, h3, h4, h5, h6 {
-		@apply font-bold;
-	}
-}
-/* COMPONENTS */
-@layer components {
-	/* APP GUIDE CONTENT */
-	.guide {
-		@apply flex flex-col text-justify px-3 py-10 gap-y-10 text-ptlbrown-100 bg-yellow-950/50 rounded-2xl;
-	}
-	.guide section {
-		@apply space-y-5 nth-[2]:leading-10;
-	}
-	/* HOME CONTENT */
-	.home-todo {
-		@apply flex flex-col shrink-0 h-14 text-ptlbrown-100 rounded-4xl items-center cursor-pointer transition ease-out duration-200 relative justify-between overflow-hidden;
-	}
-	.home-todo-completed {
-		@apply border-green-800 hover:border-green-700 border-3 bg-green-950;
-	}
-	.home-todo-notcompleted {
-		@apply border-red-950/50 hover:border-ptlbrown-100 border-2 bg-yellow-950;
-	}
-	.home-todo-heart {
-		@apply absolute w-5 h-5 top-[19px] xs:top-[17px] right-2 xs:right-4 xs:scale-140;
-	}
-	.home-todo-title {
-		@apply font-bold text-xl xs:text-2xl whitespace-nowrap text-center overflow-hidden w-full max-w-6/8;
-	}
-	.home-todo-deets {
-		@apply flex justify-evenly h-5 text-sm border tracking-widest overflow-hidden rounded-t-4xl mx-auto transition-all ease-out duration-200;
-	}
-	.home-todo-deets-completed {
-		@apply bg-green-800 text-ptlbrown-100 font-extrabold w-3/8 border-solid border-red-950/50;
-	}
-	.home-todo-deets-notcompleted {
-		@apply font-medium bg-red-950/50 max-xs:w-9/11 w-6/8 border-ptlbrown-100/50 border-dashed;
-	}
-	/* PROJECTS */
-	.project-tiles {
-		@apply grid relative gap-3 z-10 bg-ptlbrown-300/30 rounded-br-[60px] rounded-tl-[60px] border-2 border-yellow-950/30 p-3 cursor-pointer hover:border-ptlbrown-100 inset-shadow-sm inset-shadow-black h-70 opacity-0 animate-tileentry shadow-lg w-full;
-	}
-	/* ADD TODO FORM FIELDS*/
-	.select-category-button {
-		@apply flex w-full text-base bg-ptlbrown-100 border-2 text-red-950 px-4 py-2 rounded  cursor-pointer hover:text-lg transition-[font-size] duration-200 tracking-widest text-center justify-between;
-	}
-	#select-category-options {
-		@apply absolute w-full border border-yellow-700 text-red-950 bg-ptlbrown-100 select-none rounded shadow mt-1 z-10 transition-[max-height] duration-500 ease-in-out overflow-y-auto scrollbar-hide;
-	}
-	#select-category-options li {
-		@apply px-4 py-2 hover:bg-ptlbrown-200 cursor-pointer text-center;
-	}
-}
-/* UTILITIES */
-@layer utilities {
-	.intrct-btn-1 {
-    	@apply enabled:hover:scale-105 enabled:active:scale-97;
-    }
-    .intrct-btn-2 {
-    	@apply enabled:hover:scale-110 enabled:active:scale-102;
-    }
-	.intrct-grow-5 {
-    	@apply hover:scale-105 active:scale-105 focus:scale-105;
-    }
-	.intrct-grow-10 {
-    	@apply hover:scale-110 active:scale-110 focus:scale-110;
-    }
-    .bg-rough-brown {
-      	@apply bg-[url(/images/todo-bg.webp)];
-    }
-    .bg-smooth-brown {
-      	@apply bg-[url(/images/header-bg.webp)];
-    }
-    .transition-out-200 {
-      	@apply transition ease-out duration-200;
-    }
-    .transition-allout-200 {
-      	@apply transition-all ease-out duration-200;
-    }
-    .transition-allin-300 {
-      	@apply transition-all ease-in  duration-300;
-    }
-    .transition-allout-500 {
-      	@apply transition-all ease-out duration-500;
-    }
-    .grid-auto-fill {
-      	@apply grid-cols-[repeat(auto-fit,minmax(min(275px,100%),1fr))];
-    }
     @keyframes modalEntry {
       	from {
         	bottom: -100%;
@@ -174,5 +66,136 @@
       		opacity: 1;
       		transform: scale(1);
     	}
-  }
+  	}
+	@keyframes iconPulse {
+		25% {
+			transform: scale(1.3);
+		}
+		75% {
+			transform: scale(0.8);
+		}
+	}
+}
+
+/* BASE */
+@layer base {
+	html {
+		@apply bg-[url(/images/pattern-bg-lg.webp)] scrollbar-thin scrollbar-thumb-ptlbrown-100 scrollbar-track-red-950;
+	}
+	body {
+		@apply font-quicks;
+	}
+	input:-webkit-autofill {
+		-webkit-box-shadow: 0 0 0px 1000px #e7b574 inset !important;
+		-webkit-text-fill-color: var(--color-red-950) !important;
+	}
+	label, legend {
+		@apply items-center tracking-widest text-red-950;
+	}
+	dt {
+		@apply font-bold text-lg xs:text-xl my-2;
+	}
+	dd {
+		@apply italic xs:text-lg mb-2 font-semibold;
+	}
+	button {
+		@apply enabled:cursor-pointer transition-[border] ease-out duration-200;
+	}
+	h1, h2, h3, h4, h5, h6 {
+		@apply font-bold;
+	}
+}
+/* COMPONENTS */
+@layer components {
+	/* APP GUIDE CONTENT */
+	.guide {
+		@apply flex flex-col text-justify px-3 py-10 gap-y-10 text-ptlbrown-100 bg-maroon/75 rounded-2xl;
+	}
+	.guide section {
+		@apply space-y-5 nth-[2]:leading-10;
+	}
+	/* HOME CONTENT */
+	.home-todo {
+		@apply flex flex-col shrink-0 h-14 text-ptlbrown-100 rounded-4xl items-center cursor-pointer transition ease-out duration-200 relative justify-between overflow-hidden;
+	}
+	.home-todo-completed {
+		@apply border-green-800 hover:border-green-700 border-3 bg-green-950;
+	}
+	.home-todo-notcompleted {
+		@apply border-maroon/50 hover:border-ptlbrown-100 border-2 bg-yellow-950;
+	}
+	.home-todo-heart {
+		@apply absolute w-5 h-5 top-[19px] xs:top-[17px] right-2 xs:right-4 xs:scale-140;
+	}
+	.home-todo-title {
+		@apply font-bold text-xl xs:text-2xl whitespace-nowrap text-center overflow-hidden w-full max-w-6/8;
+	}
+	.home-todo-deets {
+		@apply flex justify-evenly h-5 text-sm border tracking-widest overflow-hidden rounded-t-4xl mx-auto transition-all ease-out duration-200;
+	}
+	.home-todo-deets-completed {
+		@apply bg-green-800 text-ptlbrown-100 font-extrabold w-3/8 border-solid border-red-950/50;
+	}
+	.home-todo-deets-notcompleted {
+		@apply font-medium bg-red-950/50 max-xs:w-9/11 w-6/8 border-ptlbrown-100/50 border-dashed;
+	}
+	/* PROJECTS */
+	.project-tiles {
+		@apply flex flex-col justify-between relative gap-3 z-10 bg-ptlbrown-300/70 border-ptlbrown-300/30 hover:border-ptlbrown-100 rounded-br-[60px] rounded-tl-[60px] border-2 p-3 cursor-pointer inset-shadow-sm inset-shadow-black h-70 opacity-0 animate-tileentry shadow-lg w-full overflow-hidden;
+	}
+	/* ADD TODO FORM FIELDS*/
+	.select-category-button {
+		@apply flex w-full text-base bg-ptlbrown-100 border-2 text-red-950 px-4 py-2 rounded  cursor-pointer hover:text-lg transition-[font-size] duration-200 tracking-widest text-center justify-between;
+	}
+	#select-category-options {
+		@apply absolute w-full border border-yellow-700 text-red-950 bg-ptlbrown-100 select-none rounded shadow mt-1 z-10 transition-[max-height] duration-500 ease-in-out overflow-y-auto scrollbar-hide;
+	}
+	#select-category-options li {
+		@apply px-4 py-2 hover:bg-ptlbrown-200 cursor-pointer text-center;
+	}
+}
+/* UTILITIES */
+@layer utilities {
+	.intrct-btn-1 {
+    	@apply enabled:hover:scale-105 enabled:active:scale-97;
+    }
+    .intrct-btn-2 {
+    	@apply enabled:hover:scale-110 enabled:active:scale-102;
+    }
+	.intrct-grow-5 {
+    	@apply hover:scale-105 active:scale-105 focus:scale-105;
+    }
+	.intrct-grow-10 {
+    	@apply hover:scale-110 active:scale-110 focus:scale-110;
+    }
+	.bg-smooth-purple {
+		@apply bg-[url(/images/portfoliobg.webp)];
+	}
+    .bg-rough-brown {
+      	@apply bg-[url(/images/todo-bg.webp)];
+    }
+    .bg-smooth-brown {
+      	@apply bg-[url(/images/header-bg.webp)];
+    }
+    .transition-out-200 {
+      	@apply transition ease-out duration-200;
+    }
+    .transition-allout-200 {
+      	@apply transition-all ease-out duration-200;
+    }
+    .transition-allin-300 {
+      	@apply transition-all ease-in  duration-300;
+    }
+    .transition-allout-500 {
+      	@apply transition-all ease-out duration-500;
+    }
+    .grid-auto-fill {
+      	@apply grid-cols-[repeat(auto-fit,minmax(min(275px,100%),1fr))];
+    }
+	.hvr-icon {
+		@apply group-hover:animate-iconpulse group-focus:animate-iconpulse group-active:animate-iconpulse;
+	}
+	.hvr-radial-out {
+		@apply relative overflow-hidden transition-[color] duration-300 before:content-[''] before:absolute before:-z-1 before:inset-0 before:rounded-[100%] before:scale-[0.0001] hover:before:transition-transform hover:before:duration-500 hover:before:ease-out hover:before:scale-[2] focus:before:scale-[2] active:before:scale-[2]
+	}
 }

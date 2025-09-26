@@ -9,7 +9,6 @@ export function getDefaultDueDate(time) {
     // DEFAULT DUE DATE OF A TODO IS TODAY 11:59 PM
     const { currYear, currMonth, currDate } = getCurrentDateTime();
     let defaultDate = new Date(currYear, currMonth, currDate, 23, 59, 0, 0 );
-    console.log(defaultDate);
     if (time) {
         const [hour, minute] = time.split(":");
         defaultDate.setHours(hour, minute);
@@ -83,12 +82,13 @@ export function createTodoDeadline(type, time, days) {
     return newDeadline;
 }
 
-export function updateTodoDeadline(type, oldDeadline, days) {
+export function updateTodoDeadline(type, oldDeadline, days, force = false) {
     const { now, currMonth, currDate, currDay } = getCurrentDateTime();
-
+    
     let newDeadline = new Date(setDateToday(oldDeadline));
-    const pastDeadlineDue = now > oldDeadline;
-    const pastTimeDue = now > setDateToday(oldDeadline);
+    const pastDeadlineDue = force || now > oldDeadline;
+    const pastTimeDue = force || now > setDateToday(oldDeadline);
+
     if (pastDeadlineDue) {
         switch (type) {
             case "timeonly":
@@ -153,7 +153,6 @@ export function getTodosNearDeadline(todos, notifs) {
     todoList.map((todo) => {
         let todoDate = todo.deadline.dueDate;
         if (todo.status === "Pending" && now < todoDate) {
-            console.log(todoDate);
             let diffMinutes = Math.floor((todoDate - now) / (1000 * 60));
             let diffHours = Math.floor((todoDate - now) / (1000 * 60 * 60));
             if (diffMinutes > 0 && diffMinutes < 60) {

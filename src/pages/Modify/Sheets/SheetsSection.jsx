@@ -28,7 +28,7 @@ const SheetsSection = memo(function SheetsSection({ onSheetChange, selectedType,
     }
     
     return (
-        <section ref={scrollRef} onScroll={handleSheetScroll} className="flex items-start gap-x-2 px-5 2xl:justify-center snap-x snap-mandatory scrollbar-hide overflow-x-auto h-full">
+        <section ref={scrollRef} onScroll={handleSheetScroll} className="grow flex items-start gap-x-2 px-5 2xl:justify-center snap-x snap-mandatory scrollbar-hide overflow-x-auto">
             {children}
         </section>
     )

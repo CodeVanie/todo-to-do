@@ -82,7 +82,7 @@ export default function ModifyContent() {
                             handleSelectedItems(item.id, data.type)} selected={selectedItems} />
                         )}
                         {data.list.length === 0 && 
-                        <li className="pointer-events-none text-center py-4 px-3 font-bold border-b-3 border-yellow-900 text-2xl text-ptlbrown-100 cursor-pointer hover:bg-ptlbrown-300/10 active:bg-ptlbrown-300/10">
+                        <li className="pointer-events-none text-center py-4 px-3 font-bold border-yellow-900 text-2xl text-ptlbrown-100 cursor-pointer hover:bg-ptlbrown-300/10 active:bg-ptlbrown-300/10">
                             <span className="block overflow-hidden w-full whitespace-nowrap">No item available</span>
                         </li>}
                     </SheetList>

@@ -7,7 +7,7 @@ const sizes = {
     lg: "w-22 p-3 intrct-btn-2"
 };
 const variants = {
-    cream: "bg-ptlbrown-100 text-red-950 disabled:bg-ptlbrown-100/20",
+    cream: "bg-ptlbrown-100 text-red-950 disabled:bg-ptlbrown-300/30",
     wine: "bg-yellow-950 text-ptlbrown-200 disabled:bg-yellow-950/20"
 }
 

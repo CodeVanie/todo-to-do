@@ -25,7 +25,7 @@ export default function NotifContent() {
 
     function handleNotifClick(notif) {
         setNotifs((prev) => prev.map((n) => (n.id === notif.id ? {...n, clicked: true} : n)));
-        navigate(notif.path)
+        notif.path && navigate(notif.path);
     }
 
     return (
@@ -52,7 +52,7 @@ export default function NotifContent() {
             <ul>
             {controlledNotif.map((notif) => 
 
-                (notif.id === "n_2") ? (
+                (notif.path === "portfolio") ? (
                     <li key={notif.id}><a href="https://vanie-portfolio.vercel.app/" target="_blank" rel="noopener noreferrer" className={`block relative cursor-pointer border p-6 overflow-hidden text-ptlbrown-100 whitespace-pre-line hover:before:absolute hover:before:inset-0 hover:before:bg-red-800/20 active:before:absolute active:before:inset-0 active:before:bg-red-800/20 shadow-xl/30 shadow-black 
                         ${notif.clicked ? "bg-red-950/50" : "bg-red-950"}`}>
                             <h1 className="text-xl">{notif.title}</h1>

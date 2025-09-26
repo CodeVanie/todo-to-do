@@ -24,17 +24,23 @@ const initialNotifs = [
         id: "n_2",
         title: "Wanna see more from CodeVANIE?",
         body: `Check CodeVANIE's Portfolio!`,
-        path: "/home",
+        path: "portfolio",
         clicked: false
     }
 ]
 
 export default function NotifContextProvider({ children }) {
+    const [userHasInteracted, setUserHasInteracted] = useState(false);
     const { listData } = useContext(AppContext);
     const playNotifSound = useNotifSound();
     const [notifs, setNotifs] = useLocalStorage("notifs", initialNotifs);
     const hasNotif = notifs.find((notif) => !notif.clicked) ? true : false;
 
+    useEffect(() => {
+        const enableAudio = () => setUserHasInteracted(true);
+        window.addEventListener("click", enableAudio, { once: true });
+        return () => window.removeEventListener("click", enableAudio);
+    }, []);
 
     useEffect(() => {
         setNotifs(prev => {
@@ -55,8 +61,6 @@ export default function NotifContextProvider({ children }) {
                 }
             })
 
-            newNotifs.length !== 0 && playNotifSound();
-
             const updatedNotifs = [...polishPreviousNotifs, ...newNotifs];
 
             const limitToFifty = updatedNotifs.slice(-50);
@@ -64,6 +68,12 @@ export default function NotifContextProvider({ children }) {
             return limitToFifty
         });
     },[listData[1].list])
+
+    useEffect(() => {
+		if (userHasInteracted) {
+			playNotifSound();
+		}
+    }, [notifs.length])
     
     return (
         <NotifContext.Provider value={{notifs, hasNotif, setNotifs}}>

@@ -14,7 +14,7 @@ export default function Controls({ children }) {
     
     return (
         <section id="control" className={`border-2 border-ptlbrown-100 border-dashed
-           px-2 pb-1 bg-yellow-900/75 absolute z-1 top-3 left-3 right-3 text-center 
+           px-2 pb-1 bg-maroon/75 absolute z-1 top-3 left-3 right-3 text-center 
            rounded-3xl overflow-hidden transition-allin-300 text-ptlbrown-100 font-bold 
            ${showControl ? "max-h-96" : "max-h-10"}`} 
 

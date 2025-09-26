@@ -2,7 +2,7 @@
 export default function HomeContentWrapper({ children }) {
     
     return (
-        <div className="max-w-4xl p-3 mx-auto relative h-full">
+        <div className="grow max-w-4xl p-3 mx-auto relative">
             {children}
         </div>
     )

@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useMemo, useState } from "react";
 import { updateTodoDeadline } from "../utils/date-utils";
 import { useLocalStorage } from "../hooks";
 
@@ -23,27 +23,14 @@ const initialSortTypes = [
 ];
 
 export default function AppContextProvider({ children }) {
+    console.log("AppContextProvider");
+    
     const [categories, setCategories] = useLocalStorage("categories", []);
     const [sortTypes, setSortTypes] = useLocalStorage("sorttypes", initialSortTypes);
     const [filteredCategory, setFilteredCategory] = useLocalStorage("filteredcategory", "c_0");
     const [selectedSort, setSelectedSort] = useLocalStorage("selectedsort", "s_0");
     const [todos, setTodos] = useLocalStorage("todos", []);
 
-    useEffect(() => {
-        if (todos.length > 0) {
-            setTodos(prev => prev.map(todo => {
-                if (todo.status === "Pending") {
-                    const {type, dueDate, datenums} = todo.deadline;
-                    return {...todo,
-                        deadline: {
-                            ...todo.deadline,
-                            dueDate: updateTodoDeadline(type, dueDate, datenums)
-                        }
-                    }
-                } else return todo
-            }));
-        }
-    }, [])
     const listData = [
         {id: "list_c", label: "Category", type: "category", list: categories},
         {id: "list_t", label: "To-Do", type: "todo", list: todos},
