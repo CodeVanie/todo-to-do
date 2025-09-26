@@ -1,15 +1,16 @@
-# CodeVANIE Portfolio
+# TODO-To-Do
 
-A personal portfolio website built with **React 19**, **Vite**, and **Tailwind CSS**, showcasing my projects, skills, and experience as a frontend developer. Designed with a **mobile-first, responsive layout** and a clean UI.
+A To-Do List website built with **React 19**, **Vite**, **JavaScript**, and **Tailwind CSS**, showcasing my logical skills, and creativity. Designed with a **mobile-first approach, responsive layout.**
 
 ---
 
 ## 🚀 Features
 - Mobile-first, responsive design
 - Custom components built with React
-- Tailwind CSS for styling and utility-first workflow
-- Sections: About Me, Projects, and Contact
-- Smooth navigation and clean UI/UX
+- Tailwind CSS for styling, custom scrollbars, and utility-first workflow
+- Sections: App Guide, Projects, Home, List Manager, and Notifications.
+- Smooth navigation, transitions and animations.
+- Routing, modals, and data persistence.
 
 ---
 
@@ -17,35 +18,37 @@ A personal portfolio website built with **React 19**, **Vite**, and **Tailwind C
 - **React 19**
 - **Vite**
 - **Tailwind CSS v4**
+- **JavaScript**
+
+---
+
+## 🚀 Live Demo
+[View App](https://vanie-todo-to-do.vercel.app)  
 
 ---
 
 ## 📦 Installation & Setup
 1. Clone the repository:
    ```
-   git clone https://github.com/CodeVanie/to-do-todo.git
-   cd to-do-todo
+   git clone https://github.com/CodeVanie/todo-to-do.git
+   cd todo-to-do
    ```
 
 2. Install dependencies:
    ```
    npm install
-   npm install tailwindcss @tailwindcss/vite
-   npm install react-router-dom
-   npm install react-hook-form
-   npm install tailwind-scrollbar-hide
+   
    ```
 3. Start the development server:
    ```
-   npm run build
+   npm run dev
   
    ```
-4. Build for production:
-   ```
-    npm run build
-   
-   ```
-5. Open the page in 360x640 dimension. (I'm still not done with mobile devices version since I do mobile-first approach.)
+---
+
+## Usage
+1. Navigate to App Guide to learn about and how to use the app.
+2. Start creating your first todo by going to the **Home** page and clicking the "Click me to create a To-Do! +".
 
 📬 Contact
 
@@ -54,4 +57,6 @@ Created with ❤️ by CodeVANIE
 GitHub: @codevanie
 
 LinkedIn: https://www.linkedin.com/in/codevanie
+
+Mobile: +63 976 484 2947
 
