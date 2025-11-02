@@ -141,7 +141,7 @@
 	}
 	/* PROJECTS */
 	.project-tiles {
-		@apply flex flex-col justify-between relative gap-3 z-10 bg-ptlbrown-300/70 border-ptlbrown-300/30 hover:border-ptlbrown-100 rounded-br-[60px] rounded-tl-[60px] border-2 p-3 cursor-pointer inset-shadow-sm inset-shadow-black h-70 opacity-0 animate-tileentry shadow-lg w-full overflow-hidden;
+		@apply flex flex-col justify-between relative gap-3 z-10 rounded-br-[60px] rounded-tl-[60px] border-2 p-3 cursor-pointer inset-shadow-sm inset-shadow-black h-70 opacity-0 animate-tileentry shadow-lg w-full overflow-hidden;
 	}
 	/* ADD TODO FORM FIELDS*/
 	.select-category-button {
@@ -184,7 +184,7 @@
       	@apply transition-all ease-out duration-200;
     }
     .transition-allin-300 {
-      	@apply transition-all ease-in  duration-300;
+      	@apply transition-all ease-in duration-300;
     }
     .transition-allout-500 {
       	@apply transition-all ease-out duration-500;

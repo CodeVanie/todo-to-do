@@ -44,7 +44,7 @@ export default function ContentWrapper({ children }) {
     }, []);
 
     return (
-        <main className="flex min-h-screen bg-black/75">
+        <main className="grow flex bg-black/75">
             {children}
         </main>
     )

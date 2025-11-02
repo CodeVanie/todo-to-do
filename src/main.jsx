@@ -17,7 +17,7 @@ const router = createBrowserRouter([
 		Component: TodoApp,
 		errorElement: <NotFoundPage />,
 		children: [
-			{index: true, element: <Navigate to="/home" replace />},
+			{index: true, element: <Navigate to="home" replace />},
 			{path: 'aboutapp', Component: AboutContent},
 			{path: 'projects', Component: ProjectsContent},
 			{path: 'home', Component: HomeContent,

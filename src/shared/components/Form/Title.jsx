@@ -2,7 +2,7 @@
 export default function Title({ register }) {
     return (
         <div className='xxs:text-start mt-5'>
-            <label htmlFor="title" className="">TITLE*</label>
+            <label htmlFor="title">TITLE*</label>
             <input id="title" {...register("label", {
                 required: "Title is required.",
                 maxLength: {
